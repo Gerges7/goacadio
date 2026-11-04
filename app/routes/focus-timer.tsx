@@ -1,3 +1,9 @@
+import type { MetaFunction } from 'react-router';
+export const meta: MetaFunction = () => [
+  { title: 'Free Pomodoro Focus Timer | GoAcadio' },
+  { name: 'description', content: 'Stay focused with a simple Pomodoro timer and track study sessions on your device.' },
+  { name: 'robots', content: 'noindex, follow' },
+];
 import { useEffect,useRef,useState } from 'react';
 import { useLocale } from '@/components/locale-provider';
 import { loadLocal,saveLocal,storageKeys,todayKey } from '@/lib/storage';

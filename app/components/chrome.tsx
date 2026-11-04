@@ -10,8 +10,7 @@ export default function Chrome({ children }: { children: React.ReactNode }) {
   const nav = [
     { href: '/tools', ar: 'الأدوات', en: 'Tools' },
     { href: '/universities', ar: 'الجامعات', en: 'Universities' },
-    { href: '/services', ar: 'مساعدة أكاديمية', en: 'Expert Help' },
-    { href: '/pricing', ar: 'الأسعار', en: 'Pricing' }
+    { href: '/services', ar: 'مساعدة أكاديمية', en: 'Expert Help' }
   ];
   return <>
     <header className="site-header">
@@ -33,8 +32,8 @@ export default function Chrome({ children }: { children: React.ReactNode }) {
     <footer className="footer">
       <div className="container footer-inner">
         <div><Link to="/" className="brand brand-footer"><span className="brand-mark">G<span>✦</span></span><span>Go<span className="brand-accent">Acadio</span></span></Link><p>{text('أدوات تساعدك تذاكر بذكاء وتحقق أهدافك.', 'Tools to help you study smarter and move forward.')}</p></div>
-        <div className="footer-links"><Link to="/tools">{text('الأدوات', 'Tools')}</Link><Link to="/roadmap">{text('خطة التطوير', 'Roadmap')}</Link><Link to="/privacy">{text('الخصوصية', 'Privacy')}</Link></div>
-        <span className="footer-note">© {new Date().getFullYear()} GoAcadio · {text('نسخة تجريبية', 'Prototype')}</span>
+        <div className="footer-links"><Link to="/tools">{text('الأدوات', 'Tools')}</Link><Link to="/privacy">{text('الخصوصية', 'Privacy')}</Link></div>
+        <span className="footer-note">© {new Date().getFullYear()} GoAcadio · {text('منصة طلابية', 'Student platform')}</span>
       </div>
     </footer>
   </>;

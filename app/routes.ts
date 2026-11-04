@@ -9,8 +9,7 @@ export default [
   route('dashboard', './routes/dashboard.tsx'),
   route('universities', './routes/universities.tsx'),
   route('services', './routes/services.tsx'),
-  route('pricing', './routes/pricing.tsx'),
   route('privacy', './routes/privacy.tsx'),
-  route('roadmap', './routes/roadmap.tsx'),
+  route('auth', './routes/auth.tsx'),
   route('admin', './routes/admin.tsx'),
 ] satisfies RouteConfig;

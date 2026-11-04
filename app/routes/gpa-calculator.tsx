@@ -1,3 +1,9 @@
+import type { MetaFunction } from 'react-router';
+export const meta: MetaFunction = () => [
+  { title: 'Free GPA & CGPA Calculator | GoAcadio' },
+  { name: 'description', content: 'Calculate semester GPA and cumulative GPA with a free credit-weighted grade point calculator. Sample 4.0 scale.' },
+  { name: 'robots', content: 'noindex, follow' },
+];
 import { useEffect, useMemo, useState } from 'react';
 import { useLocale } from '@/components/locale-provider';
 import { saveLocal, storageKeys } from '@/lib/storage';

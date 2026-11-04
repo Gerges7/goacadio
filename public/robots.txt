@@ -1,2 +1,3 @@
+# Pre-launch: do not index until the legal/privacy and content review is complete.
 User-agent: *
 Disallow: /
