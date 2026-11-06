@@ -57,7 +57,7 @@ export default function Services(){
       {user&&requests.length>0&&<div className="stack" style={{marginTop:24}}><h3>{text('طلباتي السابقة','My inquiries')}</h3>{requests.map(r=><div key={r.id} className="course-item"><div><b>{r.subject}</b><small>{r.service_type} · {new Date(r.created_at).toLocaleDateString()}</small></div><span className="tag">{r.status}</span></div>)}</div>}
     </section>
     <aside className="panel"><h2 className="panel-title">{text('بماذا نقدر نساعدك؟','How we can help')}</h2><div className="stack"><div>✅ {text('شرح وتوجيه خطوة بخطوة','Guided tutoring')}</div><div>✅ {text('مراجعة كود وإصلاح الأخطاء مع شرح','Code review with explanations')}</div><div>✅ {text('إرشاد لمشاريع التخرج','Graduation project mentoring')}</div><div>✅ {text('خطة تعلم حسب احتياجك','Personal study guidance')}</div></div>
-      <div className="note warn" style={{marginTop:20}}>{text('إحنا بنساعدك تتعلم وتنجز شغلك بنفسك، مش بنكتب واجبات أو مشاريع للتسليم باسمك.', 'We help students learn and do original work, not submit assessments on their behalf.')}</div>
+      <div className="note" style={{marginTop:20}}>{text('بنساعدك تفهم المادة وتطوّر مشروعك خطوة بخطوة.', 'Get tailored guidance to learn and improve your project step by step.')}</div>
       <div className="note" style={{marginTop:12}}>{text('إرسال الطلب لا يعني حجز جلسة. لا يوجد دفع إلكتروني داخل الموقع حاليًا.', 'Submitting an inquiry does not guarantee a booking. Payments are not processed by this website yet.')}</div>
     </aside></div></div></>;
 }

@@ -1,0 +1,32 @@
+GoAcadio V2.2 — UI copy + MTI GPA preset
+========================================
+This update changes exactly these app files:
+
+app/routes/services.tsx
+    Removes the Arabic sentence about submitting homework/projects under a student's name,
+    and removes the matching English statement. Replaces it with a short positive description.
+
+app/routes/gpa-calculator.tsx
+    Adds a choice between the existing illustrative 4.0 scale and an MTI-specific scale,
+    with grade/percentage entry, MTI CGPA classification, and a retake-policy warning.
+    Keeps older saved GPA drafts compatible.
+
+app/lib/grading.ts
+    New pure functions and grading tables for the MTI preset.
+
+DEPLOY:
+1. Unzip the patch.
+2. Upload the THREE source files to their EXACT paths in the GitHub repository.
+3. Commit to main. Cloudflare should automatically build and deploy.
+4. Test /services and /tools/gpa-calculator, including EN/AR versions.
+
+Database migration: NOT REQUIRED.
+
+LIMITS:
+- MTI data transcribed from the two regulation photos supplied in the conversation.
+  Verify the official rules if academic regulations have changed.
+- Repeat-course replacement/retake policies are NOT automatically incorporated.
+- Other universities retain the general illustrative scale until specific validated rules are configured.
+- Full Cloudflare/NPM build was not run in this sandbox.
+
+Do not upload UPDATE_INSTRUCTIONS.txt to the public website; it's for the owner only.
