@@ -22,3 +22,7 @@ A bilingual university student portal with public tools and optional authenticat
 Read `docs/DEPLOY_V2.md` and execute `supabase/001_v2_core.sql` in a **new** Supabase project before enabling sign-ups. Promotion to admin is done only using a one-time SQL query in Supabase SQL Editor; it cannot be performed by a website user.
 
 This is a code delivery. The Cloudflare build and the actual Supabase integration must be tested after deployment. Never put a Supabase `service_role` / secret key into `VITE_*` variables or GitHub.
+
+## V2.1 course catalog
+
+For upgrading an existing V2 production project, follow `docs/DEPLOY_V2_1.md`, including running `supabase/002_program_course_catalog.sql` before deploying the updated UI. Course curricula are not prepopulated without a verified official source.

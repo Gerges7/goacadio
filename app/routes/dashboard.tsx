@@ -15,7 +15,8 @@ type Country = { code: string; name_en: string; name_ar: string };
 type University = { id: string; name_en: string; name_ar: string | null };
 type Faculty = { id: string; name_en: string; name_ar: string | null };
 type Program = { id: string; name_en: string; name_ar: string | null };
-type Course = { id: string; name: string; code: string | null };
+type Course = { id: string; name: string; code: string | null; catalog_course_id: string | null };
+type ProgramCourse = { id: string; name_en: string; name_ar: string | null; code: string; credit_hours: number | null; academic_level: number | null; semester: string | null };
 type Profile = {
   display_name: string; country_code: string;
   university_id: string; university_other: string;
@@ -44,6 +45,9 @@ function ConnectedDashboard({ userId, email }: { userId: string; email: string }
   const [faculties, setFaculties] = useState<Faculty[]>([]);
   const [programs, setPrograms] = useState<Program[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
+  const [catalogCourses,setCatalogCourses]=useState<ProgramCourse[]>([]);
+  const [selectedCatalogId,setSelectedCatalogId]=useState('');
+  const [savedProgramId,setSavedProgramId]=useState('');
   const [courseName, setCourseName] = useState('');
   const [courseCode, setCourseCode] = useState('');
   const [busy, setBusy] = useState(false);
@@ -57,7 +61,7 @@ function ConnectedDashboard({ userId, email }: { userId: string; email: string }
     async function load() {
       const [profileRes, courseRes, countriesRes] = await Promise.all([
         client!.from('student_profiles').select('*').eq('user_id', userId).maybeSingle(),
-        client!.from('student_courses').select('id,name,code').eq('user_id', userId).order('created_at',{ascending:false}),
+        client!.from('student_courses').select('id,name,code,catalog_course_id').eq('user_id', userId).order('created_at',{ascending:false}),
         client!.from('countries').select('code,name_en,name_ar').order('name_en'),
       ]);
       if (cancelled) return;
@@ -71,6 +75,7 @@ function ConnectedDashboard({ userId, email }: { userId: string; email: string }
           academic_level: String(d.academic_level ?? '1'),
         });
         setHadProfile(true);
+        setSavedProgramId(String(d.program_id ?? ''));
       }
       if (courseRes.data) setCourses(courseRes.data as Course[]);
       if (countriesRes.data) setCountries(countriesRes.data as Country[]);
@@ -99,6 +104,35 @@ function ConnectedDashboard({ userId, email }: { userId: string; email: string }
     void client.from('programs').select('id,name_en,name_ar').eq('faculty_id',profile.faculty_id).order('name_en').then(({data})=>{if(!cancelled)setPrograms((data??[]) as Program[]);});
     return ()=>{cancelled=true;};
   }, [profile.faculty_id]);
+  useEffect(() => {
+    const client=getSupabase();
+    if(!client||!savedProgramId){setCatalogCourses([]);setSelectedCatalogId('');return;}
+    let cancelled=false;
+    setCatalogCourses([]);setSelectedCatalogId('');
+    void client.from('program_courses')
+      .select('id,name_en,name_ar,code,credit_hours,academic_level,semester')
+      .eq('program_id',savedProgramId).order('academic_level').order('code')
+      .then(({data,error})=>{
+        if(cancelled)return;
+        if(error){setStatus(error.message);return;}
+        setCatalogCourses((data??[]) as ProgramCourse[]);
+      });
+    return ()=>{cancelled=true;};
+  },[savedProgramId]);
+  async function addFromCatalog(){
+    const client=getSupabase();
+    const item=catalogCourses.find(x=>x.id===selectedCatalogId);
+    if(!client||!item||busy)return;
+    if(profile.program_id!==savedProgramId){setStatus(text('احفظ البرنامج في ملفك الأول.', 'Save the selected program to your profile first.'));return;}
+    if(courses.some(x=>x.catalog_course_id===item.id)){setStatus(text('المادة مضافة بالفعل.', 'This course has already been added.'));return;}
+    setBusy(true);setStatus('');
+    const {data,error}=await client.from('student_courses')
+      .insert({user_id:userId,name:item.name_en,code:item.code,catalog_course_id:item.id})
+      .select('id,name,code,catalog_course_id').single();
+    if(error)setStatus(error.message);
+    else if(data){setCourses(x=>[data as Course,...x]);setSelectedCatalogId('');}
+    setBusy(false);
+  }
   const p = (change: Partial<Profile>)=>setProfile(x=>({...x,...change}));
   const label = (x:{name_ar:string|null;name_en:string})=>lang==='ar'&&x.name_ar?x.name_ar:x.name_en;
   async function saveProfile() {
@@ -117,13 +151,13 @@ function ConnectedDashboard({ userId, email }: { userId: string; email: string }
     },{onConflict:'user_id'});
     setBusy(false);
     setStatus(error?error.message:text('تم حفظ ملفك على حسابك ✓','Profile saved to your account ✓'));
-    if(!error)setHadProfile(true);
+    if(!error){setHadProfile(true);setSavedProgramId(profile.program_id);}
   }
   async function addCourse() {
     const name=courseName.trim();if(!name)return;
     const client=getSupabase();if(!client)return;
     setBusy(true);setStatus('');
-    const {data,error}=await client.from('student_courses').insert({user_id:userId,name:name.slice(0,160),code:courseCode.trim().slice(0,32)||null}).select('id,name,code').single();
+    const {data,error}=await client.from('student_courses').insert({user_id:userId,name:name.slice(0,160),code:courseCode.trim().slice(0,32)||null}).select('id,name,code,catalog_course_id').single();
     if(data)setCourses(x=>[data as Course,...x]);
     if(!error){setCourseName('');setCourseCode('');}
     setStatus(error?error.message:'');setBusy(false);
@@ -140,7 +174,7 @@ function ConnectedDashboard({ userId, email }: { userId: string; email: string }
     if(!unique.length){setStatus(text('مفيش مواد محلية جديدة للاستيراد.', 'No new local courses to import.'));return;}
     setBusy(true);
     const payload=unique.slice(0,50).map(x=>({user_id:userId,name:x.name.slice(0,160),code:(x.code||'').slice(0,32)||null}));
-    const {data,error}=await client.from('student_courses').insert(payload).select('id,name,code');
+    const {data,error}=await client.from('student_courses').insert(payload).select('id,name,code,catalog_course_id');
     if(data)setCourses(x=>[...(data as Course[]),...x]);
     setStatus(error?error.message:text('تم استيراد المواد من المتصفح ✓','Browser courses imported ✓'));
     setBusy(false);
@@ -162,6 +196,17 @@ function ConnectedDashboard({ userId, email }: { userId: string; email: string }
             </div><div className="actions"><button disabled={busy} className="btn btn-primary" onClick={saveProfile}>{busy?text('جاري الحفظ...','Saving...'):text('حفظ الملف','Save profile')}</button></div>
           </section>
           <section className="panel"><h2 className="panel-title">{text('موادي الدراسية','My courses')}</h2><p className="panel-description">{text('أضف موادك، واحفظها على حسابك بدل المتصفح فقط.', 'Add your courses and sync them to your account.')}</p>
+            {savedProgramId&&profile.program_id===savedProgramId&&<div className="stack" style={{marginBottom:16}}>
+              <div className="field"><label>{text('اختار مادة من برنامجك','Choose a course from your program')}</label>
+                <select className="input" value={selectedCatalogId} onChange={e=>setSelectedCatalogId(e.target.value)}>
+                  <option value="">{catalogCourses.length?text('اختار مادة معتمدة','Select a published course'):text('لا توجد مواد منشورة حتى الآن','No published courses yet')}</option>
+                  {catalogCourses.filter(c=>!courses.some(x=>x.catalog_course_id===c.id)).map(c=><option key={c.id} value={c.id}>{c.code} — {label(c)}{c.credit_hours?` (${c.credit_hours} CH)`:''}</option>)}
+                </select>
+              </div>
+              <div className="actions"><button className="btn btn-outline" disabled={busy||!selectedCatalogId} onClick={()=>void addFromCatalog()}>{text('إضافة المادة من الدليل','Add course from catalog')}</button></div>
+            </div>}
+            {profile.program_id&&profile.program_id!==savedProgramId&&<div className="note" style={{marginBottom:16}}>{text('احفظ الملف الأكاديمي الأول عشان تظهر مواد البرنامج الجديد.', 'Save your profile to load courses for the selected program.')}</div>}
+            <p className="panel-description">{text('مش لاقي المادة؟ أضفها يدويًا:', 'Course not listed? Add it manually:')}</p>
             <div className="form-grid"><div className="field"><label>{text('المادة','Course')}</label><input className="input" maxLength={160} value={courseName} onChange={e=>setCourseName(e.target.value)} placeholder="Data Structures" onKeyDown={e=>{if(e.key==='Enter')void addCourse();}}/></div><div className="field"><label>{text('الكود (اختياري)','Code (optional)')}</label><input className="input" maxLength={32} value={courseCode} onChange={e=>setCourseCode(e.target.value)} placeholder="CS301" onKeyDown={e=>{if(e.key==='Enter')void addCourse();}}/></div></div>
             <div className="actions"><button disabled={busy||!courseName.trim()} className="btn btn-primary" onClick={()=>void addCourse()}>{text('إضافة مادة','Add course')}</button><button disabled={busy} className="btn btn-outline" onClick={()=>void importBrowserCourses()}>{text('استيراد مواد V1 من الجهاز','Import V1 browser courses')}</button></div>
             {courses.length===0?<div className="placeholder">{text('لسه مفيش مواد محفوظة.','No courses saved yet.')}</div>:courses.map(c=><div className="course-item" key={c.id}><span>📚</span><div><b>{c.name}</b><small>{c.code||'—'}</small></div><button className="small-btn danger-btn" onClick={()=>void removeCourse(c.id)}>{text('حذف','Remove')}</button></div>)}
