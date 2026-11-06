@@ -1,9 +1,14 @@
 import type { ActionFunctionArgs } from 'react-router';
-import { cleanHistory, isStudyMode, MAX_NOTES_CHARS, MAX_PROMPT_CHARS, DAILY_QUESTIONS } from '@/lib/ai-study';
+import { cleanHistory, isStudyMode, MAX_NOTES_CHARS, MAX_PROMPT_CHARS, DAILY_QUESTIONS, extractAiAnswer } from '@/lib/ai-study';
 
 type AiMessage = {role:'system'|'user'|'assistant';content:string};
 type AiBinding = {
-  run: (model:string, input:{messages:AiMessage[];max_tokens:number;temperature:number})=>Promise<{response?:string}>;
+  run: (model:string, input:{
+    messages:AiMessage[];
+    max_tokens:number;
+    temperature:number;
+    chat_template_kwargs:{enable_thinking:boolean};
+  })=>Promise<unknown>;
 };
 const MODEL = '@cf/google/gemma-4-26b-a4b-it';
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -96,10 +101,21 @@ export async function action({request,context}:ActionFunctionArgs){
   const lastUserMessage=`Student question:\n${prompt}${notes?`\n\nStudent-provided notes/excerpt (unverified):\n${notes}`:''}`;
   const messages:AiMessage[]=[{role:'system',content:systemText},...history,{role:'user',content:lastUserMessage}];
   try{
-    const output=await AI.run(MODEL,{messages,max_tokens:650,temperature:0.45});
-    const answer=typeof output?.response==='string'?output.response.trim():'';
-    if(!answer)return reply({error:'AI_EMPTY_RESPONSE',remaining},502);
-    return reply({answer:answer.slice(0,5000),remaining,limit:DAILY_QUESTIONS,model:MODEL});
+    const output=await AI.run(MODEL,{
+      messages,
+      max_tokens:800,
+      temperature:0.45,
+      // Current model defaults to thinking enabled; use the output budget for the student answer.
+      chat_template_kwargs:{enable_thinking:false},
+    });
+    const answer=extractAiAnswer(output);
+    if(!answer){
+      // Metadata only: never log student prompts, notes, responses, or access tokens.
+      const shape=output && typeof output==='object' ? Object.keys(output).slice(0,8).join(',') : typeof output;
+      console.warn('goacadio.ai.empty_output', {shape});
+      return reply({error:'AI_EMPTY_RESPONSE',remaining},502);
+    }
+    return reply({answer:answer.slice(0,5000),remaining,limit:DAILY_QUESTIONS});
   }catch{
     // The request was reserved before invoking inference; failed attempts may consume allowance.
     return reply({error:'AI_UNAVAILABLE',remaining},502);

@@ -20,7 +20,7 @@ const MESSAGES:Record<string,{ar:string;en:string}>={
   QUOTA_NOT_READY:{ar:'نظام الحصص مش متجهّز. شغّل Migration 005 في Supabase.',en:'Quota database is not ready. Apply Migration 005.'},
   QUOTA_UNAVAILABLE:{ar:'تعذّر الاتصال بنظام الحصص، حاول لاحقًا.',en:'Quota service unavailable. Please try again.'},
   AI_UNAVAILABLE:{ar:'تعذّر توليد الإجابة حاليًا. قد تُحتسب المحاولة من الحد اليومي.',en:'AI service unavailable. This attempt may count against the daily limit.'},
-  AI_EMPTY_RESPONSE:{ar:'ما وصلش رد صالح من النموذج. قد تُحتسب المحاولة.',en:'The model returned an empty response. This attempt may count.'},
+  AI_EMPTY_RESPONSE:{ar:'المساعد ما قدرش يكمل الإجابة. جرب تاني بسؤال أقصر. المحاولة اتخصمت من الحد اليومي.',en:'The assistant could not finish this reply. Try a shorter question. This attempt counted toward the daily limit.'},
   COURSE_NOT_FOUND:{ar:'المادة مش موجودة في حسابك، اختر مادة تانية.',en:'Course not found in your account.'},
 };
 
@@ -89,7 +89,7 @@ export default function AiStudy(){
         <div className="planner-head"><h2 className="panel-title">{text('المحادثة','Study conversation')}</h2><button type="button" className="small-btn" disabled={busy||messages.length===0} onClick={()=>{setMessages([]);setError('');}}>{text('محادثة جديدة','New conversation')}</button></div>
         <div className="ai-study-thread" role="log" aria-live="polite">
           {messages.length===0&&<div className="ai-study-empty"><span aria-hidden="true">🧠</span><h3>{text('تبدأ بإيه النهارده؟','What would you like to learn today?')}</h3><p>{text('اختار المادة لو حابب، وبعدها اكتب سؤالك.','Choose a course if you like, then ask your question.')}</p><div className="ai-study-examples">{examples.map((x,i)=><button type="button" key={i} className="small-btn" onClick={()=>setPrompt(text(x.ar,x.en))}>{text(x.ar,x.en)}</button>)}</div></div>}
-          {messages.map((message,i)=><div key={i} className={'ai-study-message '+(message.role==='user'?'is-user':'is-assistant')}><b>{message.role==='user'?text('أنت','You'):'GoAcadio AI'}</b><div className="ai-study-message-text" dir="auto">{message.content}</div></div>)}
+          {messages.map((message,i)=><div key={i} className={'ai-study-message '+(message.role==='user'?'is-user':'is-assistant')}><b>{message.role==='user'?text('أنت','You'):text('المساعد','Assistant')}</b><div className="ai-study-message-text" dir="auto">{message.content}</div></div>)}
           {busy&&<p className="inline-help" role="status">{text('بنجهز الإجابة...','Generating your answer...')}</p>}
           <div ref={bottom}/>
         </div>
@@ -104,7 +104,7 @@ export default function AiStudy(){
         <div className="field"><label htmlFor="ai-mode">{text('نوع المساعدة','Type of help')}</label><select id="ai-mode" className="input" value={mode} onChange={e=>setMode(e.target.value as StudyMode)}><option value="explain">{text('شرح وتبسيط','Explain concepts')}</option><option value="practice">{text('أسئلة تدريبية','Practice questions')}</option><option value="summarize">{text('تلخيص ملاحظات','Summarize notes')}</option></select></div>
         <div className="field"><label htmlFor="ai-notes">{text('ملاحظات أو نص محاضرة (اختياري)','Notes or lecture excerpt (optional)')}</label><textarea id="ai-notes" className="input" rows={6} maxLength={MAX_NOTES_CHARS} value={notes} onChange={e=>setNotes(e.target.value)} placeholder={text('الصق جزء من ملاحظاتك علشان أشرحها أو ألخصها...', 'Paste a portion of your notes to explain or summarize...')}/><small className="inline-help">{notes.length}/{MAX_NOTES_CHARS}</small></div>
         <div className="note">{text('لسه مش بنقرأ ملفات PDF تلقائيًا في النسخة دي. المحادثة مش محفوظة على حسابك بعد قفل الصفحة.','PDF upload is not supported yet. This chat is not saved to your account after you close the page.')}</div>
-        <div className="note warn">{text('سؤالك والملاحظات بتتبعت إلى Cloudflare Workers AI لإنتاج الإجابة. بلاش تكتب بيانات حساسة، وراجع صحة الإجابات المهمة.','Questions and excerpts are sent to Cloudflare Workers AI for processing. Avoid sensitive data and verify important answers.')}</div>
+        <div className="note warn">{text('راجع صحة الإجابات المهمة، ومتشاركش معلومات شخصية أو سرية.','Verify important answers, and avoid sharing personal or confidential information.')}</div>
         <Link to="/privacy" className="inline-help">{text('سياسة الخصوصية','Privacy information')}</Link>
       </div></aside>
     </div></div></>;
