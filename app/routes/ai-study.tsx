@@ -14,7 +14,7 @@ export const meta:MetaFunction=()=>[
 type Course = {id:string;name:string;code:string|null};
 const MESSAGES:Record<string,{ar:string;en:string}>={
   SIGN_IN_REQUIRED:{ar:'الجلسة انتهت، سجّل دخول مرة تانية.',en:'Session expired. Please sign in again.'},
-  DAILY_LIMIT_REACHED:{ar:'خلصت أسئلتك الخمسة لليوم. جرّب بكرة (بتوقيت UTC).',en:'Your five daily questions are used. Try tomorrow (UTC).'},
+  DAILY_LIMIT_REACHED:{ar:'استخدمت 5 طلبات AI النهارده (مشتركة مع مولّد الاختبارات). جرّب بكرة بتوقيت UTC.',en:'Your five shared AI requests are used today. Try tomorrow (UTC).'},
   AI_NOT_CONFIGURED:{ar:'المساعد لسه محتاج تفعيل AI Binding في Cloudflare.',en:'AI binding has not been configured in Cloudflare.'},
   SUPABASE_NOT_CONFIGURED:{ar:'إعدادات الاتصال غير مكتملة.',en:'Server connection is not configured.'},
   QUOTA_NOT_READY:{ar:'نظام الحصص مش متجهّز. شغّل Migration 005 في Supabase.',en:'Quota database is not ready. Apply Migration 005.'},
@@ -82,7 +82,7 @@ export default function AiStudy(){
     {ar:'اعمل لي اختبار قصير عن قواعد البيانات',en:'Create a short quiz on databases'},
     {ar:'إزاي أحل مسائل الـBig O خطوة بخطوة؟',en:'Walk me through Big O problems'},
   ];
-  if(authLoading||!configured||!user)return <><div className="page-hero"><div className="container"><span className="section-kicker">AI STUDY ASSISTANT</span><h1>{text('مساعد مذاكرتك الذكي ✨','Your AI Study Assistant ✨')}</h1></div></div><div className="page-content"><div className="container"><section className="panel auth-panel center"><p>{authLoading?text('جاري التحقق من الحساب...','Checking your account...'):text('المساعد متاح بحساب مجاني، 5 أسئلة يوميًا أثناء التجربة.','Sign in to try five AI questions per day.')}</p><Link to="/auth" className="btn btn-primary">{text('تسجيل الدخول أو إنشاء حساب','Sign in or create account')}</Link></section></div></div></>;
+  if(authLoading||!configured||!user)return <><div className="page-hero"><div className="container"><span className="section-kicker">AI STUDY ASSISTANT</span><h1>{text('مساعد مذاكرتك الذكي ✨','Your AI Study Assistant ✨')}</h1></div></div><div className="page-content"><div className="container"><section className="panel auth-panel center"><p>{authLoading?text('جاري التحقق من الحساب...','Checking your account...'):text('المساعد متاح بحساب مجاني، 5 طلبات AI يوميًا مشتركة بين الأدوات أثناء التجربة.','Sign in to try five shared AI requests per day.')}</p><Link to="/auth" className="btn btn-primary">{text('تسجيل الدخول أو إنشاء حساب','Sign in or create account')}</Link></section></div></div></>;
   return <><div className="page-hero"><div className="container"><span className="section-kicker">AI STUDY ASSISTANT</span><h1>{text('مساعد مذاكرتك الذكي ✨','Your AI Study Assistant ✨')}</h1><p>{text('اسأل عن أي موضوع، افهم خطوة بخطوة، أو ولّد أسئلة تدريبية.','Ask about a topic, get clear explanations and generate practice questions.')}</p></div></div>
     <div className="page-content"><div className="container ai-study-layout">
       <section className="panel ai-study-main">
@@ -96,7 +96,7 @@ export default function AiStudy(){
         {error&&<div className="note warn" role="alert">{error}</div>}
         <form className="stack" onSubmit={e=>void send(e)}>
           <div className="field"><label htmlFor="ai-question">{text('سؤالك','Your question')}</label><textarea id="ai-question" className="input" rows={3} required minLength={3} maxLength={MAX_PROMPT_CHARS} value={prompt} onChange={e=>setPrompt(e.target.value)} placeholder={text('مثلاً: اشرح الفرق بين Stack وQueue...', 'For example: Explain the difference between stack and queue...')}/><small className="inline-help">{prompt.length}/{MAX_PROMPT_CHARS}</small></div>
-          <div className="actions"><button disabled={busy||prompt.trim().length<3} className="btn btn-primary" type="submit">{busy?text('جاري الإرسال...','Sending...'):text('اسأل المساعد ✨','Ask AI ✨')}</button><span className="inline-help">{remaining===null?text(`${DAILY_QUESTIONS} أسئلة يوميًا`,` ${DAILY_QUESTIONS} questions/day`):text(`متبقي ${remaining} سؤال اليوم`,`${remaining} questions remaining today`)}</span></div>
+          <div className="actions"><button disabled={busy||prompt.trim().length<3} className="btn btn-primary" type="submit">{busy?text('جاري الإرسال...','Sending...'):text('اسأل المساعد ✨','Ask AI ✨')}</button><span className="inline-help">{remaining===null?text(`${DAILY_QUESTIONS} طلبات AI يوميًا مشتركة`,`${DAILY_QUESTIONS} shared AI requests/day`):text(`متبقي ${remaining} طلب AI اليوم`,`${remaining} AI requests left today`)}</span></div>
         </form>
       </section>
       <aside className="panel ai-study-sidebar"><h2 className="panel-title">{text('خصّص المساعدة','Personalize your help')}</h2><div className="stack">

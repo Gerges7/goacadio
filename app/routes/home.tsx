@@ -10,6 +10,7 @@ import { useLocale } from '@/components/locale-provider';
 const tools = [
   {icon:'🎓', className:'', ar:'GPA & CGPA Calculator', en:'GPA & CGPA Calculator', descAr:'احسب معدلك الفصلي والتراكمي واستكشف تأثير درجاتك.', descEn:'Calculate semester and cumulative GPA with a flexible 4.0 model.', href:'/tools/gpa-calculator', ready:true},
   {icon:'⏱️', className:'mint', ar:'Focus Mode', en:'Focus Mode', descAr:'نظّم وقتك بجلسات مذاكرة وراحة بتقنية بومودورو.', descEn:'Stay consistent with focus sessions and breaks.', href:'/tools/focus-timer', ready:true},
+  {icon:'📝', className:'blue', ar:'PDF Quiz Generator', en:'PDF Quiz Generator', descAr:'حوّل محاضراتك لاختبارات MCQ وTrue/False.', descEn:'Create practice questions from lecture PDFs.', href:'/quiz-generator', ready:true},
   {icon:'📄', className:'peach', ar:'CV Builder', en:'CV Builder', descAr:'كوّن سيرة ذاتية منظمة واطبعها بصيغة PDF بسهولة.', descEn:'Create and export a clean, print-ready CV.', href:'/tools/cv-builder', ready:true},
   {icon:'🧠', className:'blue', ar:'AI Study Assistant', en:'AI Study Assistant', descAr:'شرح وأسئلة تدريبية مرتبطة بموادك بعد تسجيل الدخول.', descEn:'Ask course-aware questions and get practice problems after signing in.', href:'/ai-study', ready:true},
   {icon:'✨', className:'mint', ar:'Student Dashboard', en:'Student Dashboard', descAr:'نظّم موادك وخططك الدراسية في مكان واحد.', descEn:'Your study profile, courses and progress in one place.', href:'/dashboard', ready:true}
