@@ -10,6 +10,7 @@ const list = [
   {url:'/tools/gpa-calculator',emoji:'🎓',name:'GPA & CGPA Calculator',ar:'حساب المعدل الفصلي والتراكمي من الدرجات والساعات',en:'Weighted semester and cumulative GPA calculator',status:true},
   {url:'/tools/focus-timer',emoji:'⏱️',name:'Focus Mode',ar:'جلسات بومودورو وإحصائيات مذاكرة محلية',en:'Pomodoro sessions with local progress tracking',status:true},
   {url:'/tools/cv-builder',emoji:'📄',name:'CV Builder',ar:'بناء CV بسيط وقابل للطباعة PDF',en:'Build a simple CV and print to PDF',status:true},
+  {url:'/ai-study',emoji:'🧠',name:'AI Study Assistant',ar:'اشرح المفاهيم وأسأل عن موادك بعد تسجيل الدخول (5 أسئلة يوميًا)',en:'Study explanations and practice questions for signed-in students (5/day)',status:true},
   {url:'/dashboard',emoji:'🎯',name:'Student Dashboard',ar:'سجل جامعتك وموادك داخل المتصفح',en:'Create a local study profile and track courses',status:true},
 ];
 export default function Tools() {
