@@ -8,3 +8,20 @@
 
 /* V2 account and admin screens */
 .auth-panel{max-width:520px;margin-inline:auto}.auth-panel .btn{width:100%}.auth-google{margin-top:15px}.auth-switch{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:16px}.text-button{border:0;background:none;color:var(--violet);font-size:12px;font-weight:800;padding:6px}.text-button:hover{text-decoration:underline}.auth-panel .inline-help{margin:22px 0 0}.admin-check{display:flex;flex-direction:row;align-items:center;gap:12px;padding:10px 0;font-size:13px}.admin-check input{width:18px;height:18px;accent-color:var(--violet)}.active-tab{background:var(--violet);color:white}.admin-table{overflow-x:auto;margin-top:20px}.admin-table table{border-collapse:collapse;width:100%;min-width:460px;text-align:start}.admin-table th,.admin-table td{border-bottom:1px solid var(--line);padding:12px;text-align:start;font-size:12px}.admin-table small{display:block;color:var(--muted)}.admin-request{border:1px solid var(--line);border-radius:14px;padding:16px}.admin-request p{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;color:var(--muted)}.admin-request small{display:block;margin-bottom:10px;color:var(--muted)}@media(max-width:550px){.auth-panel{padding:20px}.admin-table table{min-width:380px}.auth-switch{flex-direction:column;gap:2px}}
+
+/* V2.4 personal study planner */
+.planner-layout{display:grid;grid-template-columns:minmax(310px,.83fr) minmax(0,1.17fr);gap:20px;align-items:start}
+.planner-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.planner-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:17px}
+.planner-filters{display:flex;flex-wrap:wrap;gap:6px}.planner-filters .small-btn{padding:6px 10px}
+.planner-items{display:grid;gap:12px;max-height:850px;overflow:auto;padding-inline-end:4px}
+.planner-item{border:1px solid var(--line);border-radius:14px;padding:17px;background:#fff}
+.planner-item.is-done{background:#f8fafb;opacity:.78}.planner-item.is-done h3{text-decoration:line-through}
+.planner-item-top,.planner-item-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.planner-item h3{margin:11px 0 3px;font-size:16px;overflow-wrap:anywhere}
+.planner-item-date{font-size:12px;font-weight:800;color:#665dd5;margin:0}
+.planner-course{font-size:12px;color:var(--muted);margin:6px 0 0}
+.planner-notes{font-size:13px;color:#626d80;white-space:pre-wrap;overflow-wrap:anywhere;margin:10px 0}
+.planner-item-actions{margin-top:15px}
+@media(max-width:930px){.planner-layout{grid-template-columns:1fr}}
+@media(max-width:550px){.planner-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.planner-item{padding:13px}.planner-item-actions .small-btn{flex:1}}

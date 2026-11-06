@@ -1,0 +1,56 @@
+GoAcadio V2.4 — Study Planner & Exam Tracker
+==========================================
+
+Purpose
+-------
+Add private, account-synced study tasks and exam dates. No public roadmap or development-plan link is added.
+
+Before updating
+---------------
+1. Make a backup of the current GitHub repository and Supabase database.
+2. Do NOT rerun the V2/V2.1 initial schema scripts, and do NOT delete existing tables.
+
+Deployment (in this order)
+--------------------------
+1. Supabase dashboard > SQL Editor > New query:
+   Run the ENTIRE contents of supabase/003_study_planner.sql.
+   The expected final check is table_name=study_items and rls_enabled=true.
+   If the script fails, stop and inspect the error before deploying code.
+2. Unzip this update and upload the app/ files to the existing GitHub repository,
+   KEEPING THE EXACT DIRECTORY PATHS. Do not replace unrelated project files.
+   Existing files should be overwritten with the new ones. New ones should be added.
+3. Commit on main. Wait for the linked Cloudflare Workers deployment to succeed.
+4. Sign in to https://goacadio.com and open https://goacadio.com/planner.
+
+Quick acceptance test
+---------------------
+* Add a study task with a title and optional deadline.
+* Add an exam with a required date and optional time.
+* Select a course from your saved courses, if any.
+* Check filters, overdue/next-week counts, editing, marking complete, and deleting.
+* Refresh and sign in again: saved items should remain.
+* Open a DIFFERENT student account and verify it cannot see the first student's data.
+* Confirm the dashboard shows the "Study plan & exams" summary and quick link.
+* Confirm no link to a development roadmap appears on public pages.
+
+Technical notes
+---------------
+* Dates are stored as PostgreSQL DATE, times as local TIME; no time-zone conversion is performed.
+* This release does NOT send email/push reminders, manage calendar invitations, or sync GPA.
+* Supabase service_role/secret keys must NEVER be put in browser or VITE_ variables.
+* The route /pricing is not currently registered; its old roadmap link is cleaned anyway.
+* Cloudflare build was NOT executed in this environment; TypeScript syntax parsing and
+  pure date/count tests passed. Verify the actual build and Supabase RLS before general release.
+* The planner fetches up to 500 most recent entries per student (an initial limit).
+
+Files
+-----
+app/components/chrome.tsx
+app/components/planner-summary.tsx
+app/lib/planner.ts
+app/routes/dashboard.tsx
+app/routes/planner.tsx
+app/routes/pricing.tsx
+app/routes.ts
+app/styles.css
+supabase/003_study_planner.sql

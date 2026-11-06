@@ -7,6 +7,7 @@ export default [
   route('tools/focus-timer', './routes/focus-timer.tsx'),
   route('tools/cv-builder', './routes/cv-builder.tsx'),
   route('dashboard', './routes/dashboard.tsx'),
+  route('planner', './routes/planner.tsx'),
   route('universities', './routes/universities.tsx'),
   route('services', './routes/services.tsx'),
   route('privacy', './routes/privacy.tsx'),
