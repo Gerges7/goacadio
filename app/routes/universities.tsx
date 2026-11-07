@@ -1,14 +1,15 @@
+import { publicSeoMeta } from '@/lib/seo';
 import { useEffect, useState } from 'react';
 import { Link, type MetaFunction } from 'react-router';
 import { useLocale } from '@/components/locale-provider';
 import { getSupabase, isSupabaseConfigured } from '@/lib/supabase';
 
 type University = {id:string;name_en:string;name_ar:string|null;country_code:string};
-export const meta: MetaFunction = () => [
-  { title: 'Universities | GoAcadio' },
-  { name: 'description', content: 'Select your university and personalize your academic workspace with GoAcadio.' },
-  { name: 'robots', content: 'noindex, follow' },
-];
+export const meta: MetaFunction = () => publicSeoMeta(
+  'Universities | GoAcadio',
+  'Select your university and personalize your academic workspace with GoAcadio.',
+  '/universities',
+);
 export default function Universities(){
   const {text,lang}=useLocale();
   const [unis,setUnis]=useState<University[]>([]);

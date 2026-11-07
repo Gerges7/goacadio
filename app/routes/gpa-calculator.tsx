@@ -1,3 +1,4 @@
+import { publicSeoMeta } from '@/lib/seo';
 import { useEffect, useMemo, useState } from 'react';
 import type { MetaFunction } from 'react-router';
 import { Link } from 'react-router';
@@ -8,11 +9,11 @@ import {
   type GradeSystem, type GradeEntry,
 } from '@/lib/grading';
 
-export const meta: MetaFunction = () => [
-  { title: 'GPA & CGPA Calculator — Multiple Grading Scales | GoAcadio' },
-  { name: 'description', content: 'Calculate GPA and CGPA with selectable grading scales and configurable grade points.' },
-  { name: 'robots', content: 'noindex, follow' },
-];
+export const meta: MetaFunction = () => publicSeoMeta(
+  'GPA & CGPA Calculator — Multiple Grading Scales | GoAcadio',
+  'Calculate GPA and CGPA with selectable grading scales and configurable grade points.',
+  '/tools/gpa-calculator',
+);
 
 type Row = { id:number; name:string; credits:string; grade:string; percent?:string };
 type EntryMode = 'letter' | 'percent';

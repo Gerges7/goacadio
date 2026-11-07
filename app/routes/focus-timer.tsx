@@ -1,3 +1,4 @@
+import { publicSeoMeta } from '@/lib/seo';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MetaFunction } from 'react-router';
 import { Link } from 'react-router';
@@ -7,11 +8,11 @@ import { getSupabase } from '@/lib/supabase';
 import { loadLocal, saveLocal, storageKeys, todayKey } from '@/lib/storage';
 import type { PendingFocusSession } from '@/lib/focus';
 
-export const meta:MetaFunction = () => [
-  {title:'Focus Timer & Study Sessions | GoAcadio'},
-  {name:'description',content:'Free Pomodoro focus timer with optional private study-session syncing.'},
-  {name:'robots',content:'noindex, follow'},
-];
+export const meta: MetaFunction = () => publicSeoMeta(
+  'Focus Timer & Study Sessions | GoAcadio',
+  'Free Pomodoro focus timer with optional private study-session syncing.',
+  '/tools/focus-timer',
+);
 
 type Stats = {day:string; sessions:number; minutes:number};
 type Course = {id:string; name:string; code:string|null};

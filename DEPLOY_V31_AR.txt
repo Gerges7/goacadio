@@ -1,0 +1,28 @@
+GoAcadio V3.1 — Student Guides + SEO Foundations
+================================================
+
+النسخة المبنية عليها: V3.0 الموجودة بالفعل على GitHub.
+هذا التحديث يحوي الملفات الجديدة أو المتغيرة فقط. لا تحذف باقي ملفات المستودع.
+
+1) خذ نسخة احتياطية واحتفظ بآخر Commit يعمل بنجاح.
+2) فك ضغط ZIP، ثم ارفع مجلد app والملفات إلى GitHub على main مع الحفاظ على نفس المسارات. استبدل الملفات المطابقة فقط.
+3) لا توجد SQL migrations أو API keys أو تغييرات على إعدادات Cloudflare.
+4) انتظر نجاح Cloudflare Deploy، ثم اعمل Ctrl+F5.
+5) اختبر:
+   - https://goacadio.com/guides
+   - https://goacadio.com/guides/how-to-calculate-gpa
+   - https://goacadio.com/guides/pomodoro-study-timer
+   - https://goacadio.com/guides/student-cv-guide
+   - الرابط في تذييل الموقع، والرابط الجديد بصفحة الأدوات والرئيسية.
+   - بدّل بين العربية والإنجليزية على الكمبيوتر والموبايل.
+   - افتح مسار /guides/not-a-guide: يجب أن يعيد 404 وليس صفحة عادية.
+   - افتح View Page Source وتحقق من title, description, canonical, og tags على الصفحات العامة.
+
+مهم قبل فهرسة Google:
+- لا تزال كل صفحات الموقع مُعدة لمرحلة ما قبل الإطلاق: robots.txt يحتوي Disallow: /، والصفحات العامة الجديدة عليها noindex.
+- لا تغيّر إعدادات الفهرسة الآن. ملف docs/sitemap-public-template.xml قالب داخلي فقط، وليس public/sitemap.xml.
+- راجع docs/SEO_V31_RELEASE_CHECKLIST_AR.md لاستكمال الخصوصية، قناة دعم عامة، الإجراءات الفعلية للحذف/التصدير، الأمان، والأداء قبل فهرسة الموقع أو تقديم AdSense.
+- لا توجد خارطة تطوير ظاهرة لزوار الموقع.
+
+الاختبار المتاح محليًا: صياغة TypeScript/TSX، بنية الدليل والتوجيه والروابط/البيانات الوصفية.
+لم تُنفذ عملية Build كاملة من دون node_modules، ولم يُختبر Cloudflare الفعلي ضمن هذا الملف.

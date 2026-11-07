@@ -1,12 +1,13 @@
+import { publicSeoMeta } from '@/lib/seo';
 import { Link, type MetaFunction } from 'react-router';
 import { useLocale } from '@/components/locale-provider';
 import { useAuth } from '@/components/auth-provider';
 
-export const meta: MetaFunction = () => [
-  {title:'Help & Support | GoAcadio'},
-  {name:'description',content:'GoAcadio help, student account support, data requests, and troubleshooting.'},
-  {name:'robots',content:'noindex, follow'},
-];
+export const meta: MetaFunction = () => publicSeoMeta(
+  'Help & Support | GoAcadio',
+  'GoAcadio help, student account support, data requests, and troubleshooting.',
+  '/help',
+);
 
 export default function Help(){
   const {text} = useLocale();

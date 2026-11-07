@@ -1,9 +1,10 @@
+import { publicSeoMeta } from '@/lib/seo';
 import type { MetaFunction } from 'react-router';
-export const meta: MetaFunction = () => [
-  { title: 'Free Student CV Builder | GoAcadio' },
-  { name: 'description', content: 'Create a simple university student CV and print it to PDF. No account required.' },
-  { name: 'robots', content: 'noindex, follow' },
-];
+export const meta: MetaFunction = () => publicSeoMeta(
+  'Free Student CV Builder | GoAcadio',
+  'Create a simple university student CV and print it to PDF. No account required.',
+  '/tools/cv-builder',
+);
 import { useEffect, useState } from 'react';
 import { useLocale } from '@/components/locale-provider';
 import { loadLocal, saveLocal, storageKeys } from '@/lib/storage';

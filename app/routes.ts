@@ -6,6 +6,8 @@ export default [
   route('tools/gpa-calculator', './routes/gpa-calculator.tsx'),
   route('tools/focus-timer', './routes/focus-timer.tsx'),
   route('tools/cv-builder', './routes/cv-builder.tsx'),
+  route('guides', './routes/guides.tsx'),
+  route('guides/:slug', './routes/guide.tsx'),
   route('dashboard', './routes/dashboard.tsx'),
   route('planner', './routes/planner.tsx'),
   route('study-stats', './routes/study-stats.tsx'),

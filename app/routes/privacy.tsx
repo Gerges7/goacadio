@@ -1,6 +1,11 @@
+import { publicSeoMeta } from '@/lib/seo';
 import { useLocale } from '@/components/locale-provider';
 import type { MetaFunction } from 'react-router';
-export const meta: MetaFunction = () => [{title:'Privacy | GoAcadio'},{name:'robots',content:'noindex, follow'}];
+export const meta: MetaFunction = () => publicSeoMeta(
+  'Privacy | GoAcadio',
+  'Learn what GoAcadio stores locally and in your account, how AI tools process content, and how to request help with your data.',
+  '/privacy',
+);
 export default function Privacy(){const {text}=useLocale();return <><div className="page-hero"><div className="container"><h1>{text('الخصوصية والبيانات','Privacy and your data')}</h1></div></div><div className="page-content"><div className="container"><div className="panel stack">
   <p>{text('الأدوات العامة (GPA وFocus وCV) تعمل بدون حساب. بعض البيانات التي تدخلها في هذه الأدوات تُحفظ في ذاكرة المتصفح (localStorage) على جهازك ويمكنك حذفها من إعدادات المتصفح.', 'Public GPA, Focus and CV tools work without an account. Some inputs are saved to browser localStorage on your device and can be cleared in your browser settings.')}</p>
   <p>{text('إذا أنشأت حسابًا بعد تفعيل الربط، ستتم معالجة البريد الإلكتروني وبيانات تسجيل الدخول بواسطة Supabase Auth. يُحفظ ملفك الأكاديمي ومواده وطلبات المساعدة وجلسات التركيز المكتملة التي تسجلها أثناء تسجيل الدخول في Supabase، مع قواعد صلاحيات تعزل بيانات كل طالب.', 'If account registration is enabled, Supabase Auth processes your email and sign-in information. Your academic profile, courses, support inquiries, and signed-in completed focus sessions are stored in Supabase using row-level access controls to isolate student records.')}</p>

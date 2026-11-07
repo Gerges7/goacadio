@@ -1,0 +1,27 @@
+/* V3.1 — original bilingual learning resources. Private pages remain outside SEO. */
+.guide-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.guide-tile{display:flex;flex-direction:column;gap:8px;min-width:0}
+.guide-icon{font-size:32px;display:block}
+.guide-tile .section-kicker{margin:0}
+.guide-tile h2{font-size:20px;line-height:1.6;margin:2px 0}
+.guide-tile h2 a:hover,.guide-tile h2 a:focus-visible{color:var(--violet)}
+.guide-tile p{font-size:14px;color:var(--muted);margin:0;flex:1}
+.guide-layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(245px,.7fr);gap:22px;align-items:start}
+.guide-layout>*{min-width:0}
+.guide-back{display:inline-block;color:var(--violet);font-size:13px;font-weight:800;margin-bottom:12px}
+.guide-article{font-size:15px;line-height:2}
+.guide-intro{font-size:17px;line-height:2;color:#414c67;border-inline-start:4px solid var(--violet);padding-inline-start:16px;margin:0 0 25px}
+.guide-section{border-top:1px solid var(--line);padding-top:24px;margin-top:24px}
+.guide-section h2{font-size:22px;line-height:1.6;margin:0 0 12px}
+.guide-section p{margin:0 0 14px;color:#4e5b74}
+.guide-section ul{padding-inline-start:24px;color:#4e5b74;margin-top:8px}
+.guide-section li{margin-bottom:9px}
+.guide-cta{background:#f4f3ff;padding:22px;border-radius:14px;margin-top:30px}
+.guide-cta h2{font-size:20px;margin:0 0 7px}
+.guide-cta p{color:#5b6480;margin:0 0 15px;font-size:13px}
+.guide-aside .btn{white-space:normal;text-align:center;width:100%}
+.guide-related{display:grid;gap:12px}
+.guide-related a{color:var(--violet);font-size:14px;font-weight:700;line-height:1.7}
+.guide-related a:hover,.guide-related a:focus-visible{text-decoration:underline}
+@media(max-width:950px){.guide-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.guide-layout{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:650px){.guide-cards{grid-template-columns:1fr}.guide-article{font-size:14px}.guide-intro{font-size:15px}.guide-section h2{font-size:19px}.guide-cta{padding:16px}}
