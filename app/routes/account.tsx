@@ -171,7 +171,7 @@ export default function Account(){
         <Link className="btn btn-ghost" to="/planner">🗓️ {text('المهام والامتحانات','Study tasks & exams')}</Link>
         <Link className="btn btn-ghost" to="/help">❔ {text('مركز المساعدة','Help center')}</Link>
         <Link className="btn btn-outline" to="/privacy">{text('معلومات الخصوصية','Privacy information')}</Link>
-        <p className="inline-help">{text('طلبات البيانات والحذف بتتم مراجعتها يدويًا. لازم نوفر وسيلة تواصل عامة وسياسة خصوصية نهائية قبل الإطلاق الواسع.','Data access and deletion requests are handled manually. A verified public contact channel and finalized privacy policy are still required before broad launch.')}</p>
+        <p className="inline-help">{text('طلبات البيانات والحذف بتتم مراجعتها يدويًا. للتواصل من غير حساب استخدم صفحة التواصل العامة بعد تفعيل بريد الدعم. سياسة الخصوصية ما زالت محتاجة مراجعة نهائية.','Data access and deletion requests are handled manually. Guest contact is available through the public Contact page after the mailbox is configured. The privacy policy still needs final review.')}</p>
       </aside>
     </div></div>
   </>;

@@ -1,0 +1,13 @@
+GoAcadio V3.5 — Public Contact and Deletion Operations
+========================================================
+
+1) ارفع الملفات الموجودة في ZIP على GitHub main بنفس المسارات، مع استبدال المطابق فقط.
+2) لا يوجد SQL جديد، ولا يلزم تعديل مفاتيح Supabase أو Workers AI.
+3) فعّل بريد دعم حقيقي تملكه من Cloudflare Workers Variables باسم PUBLIC_SUPPORT_EMAIL (Plain Text).
+4) اعمل Deploy، وافتح /contact من غير تسجيل دخول. لازم يظهر البريد الرسمي بعد ضبط المتغير فقط.
+5) النموذج يفتح تطبيق البريد عبر mailto؛ لا يرسل رسالة بنفسه، والمرسل لازم يضغط Send من بريده.
+6) جرّب البريد فعليًا، وراجع /help و /privacy وروابط الـFooter على الموبايل.
+7) راجع docs/V35_PUBLIC_CONTACT_AND_DELETION_OPERATIONS_AR.md لخطوات تنفيذ طلبات حذف الحساب يدويًا والتحقق منها.
+8) اترك robots.txt و noindex مقفولين لحد مراجعة الإطلاق، ولا تفتح فهرسة Google الآن.
+
+مهم: بدون عنوان PUBLIC_SUPPORT_EMAIL حقيقي ومراقَب، التواصل البريدي للزائر غير مُفعّل.

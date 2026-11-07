@@ -30,6 +30,10 @@ export default function AccountRequestsAdmin(){
   useEffect(()=>{void load();},[]);
   async function setStatus(id:string,status:RequestRow['status']){
     const client=getSupabase();if(!client||busy)return;
+    const request=items.find(r=>r.id===id);
+    if(status==='resolved'&&request?.category==='account_deletion'
+      &&!window.confirm(text('تأكيد: لا تختار «تمت المعالجة» إلا بعد التحقق من الهوية وحذف الحساب فعليًا من Supabase. تغيير الحالة وحده لا يحذف الحساب. هل تم التنفيذ؟',
+        'Confirm: Only mark as resolved after verifying ownership and actually deleting the account in Supabase. Changing status alone does not delete the account. Has the deletion been completed?')))return;
     setBusy(id);setMessage('');
     const {data,error}=await client.from('account_requests').update({status}).eq('id',id)
       .select('id,status').single();

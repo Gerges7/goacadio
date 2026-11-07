@@ -50,7 +50,7 @@ export default function Chrome({ children }: { children: React.ReactNode }) {
     <footer className="footer">
       <div className="container footer-inner">
         <div><Link to="/" className="brand brand-footer"><span className="brand-mark">G<span>✦</span></span><span>Go<span className="brand-accent">Acadio</span></span></Link><p>{text('أدوات تساعدك تذاكر بذكاء وتحقق أهدافك.', 'Tools to help you study smarter and move forward.')}</p></div>
-        <div className="footer-links"><Link to="/guides">{text('أدلة الطلاب', 'Study guides')}</Link><Link to="/tools">{text('الأدوات', 'Tools')}</Link><Link to="/help">{text('المساعدة', 'Help')}</Link><Link to="/account">{text('الحساب والخصوصية', 'Account & privacy')}</Link><Link to="/privacy">{text('الخصوصية', 'Privacy')}</Link></div>
+        <div className="footer-links"><Link to="/guides">{text('أدلة الطلاب', 'Study guides')}</Link><Link to="/tools">{text('الأدوات', 'Tools')}</Link><Link to="/help">{text('المساعدة', 'Help')}</Link><Link to="/contact">{text('تواصل معنا', 'Contact')}</Link><Link to="/account">{text('الحساب والخصوصية', 'Account & privacy')}</Link><Link to="/privacy">{text('الخصوصية', 'Privacy')}</Link></div>
         <span className="footer-note">© {new Date().getFullYear()} GoAcadio · {text('منصة طلابية', 'Student platform')}</span>
       </div>
     </footer>

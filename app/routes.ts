@@ -21,6 +21,7 @@ export default [
   route('services', './routes/services.tsx'),
   route('privacy', './routes/privacy.tsx'),
   route('help', './routes/help.tsx'),
+  route('contact', './routes/contact.tsx'),
   route('account', './routes/account.tsx'),
   route('auth', './routes/auth.tsx'),
   route('admin', './routes/admin.tsx'),

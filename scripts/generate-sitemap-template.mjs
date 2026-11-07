@@ -13,7 +13,7 @@ const guideSource = read('app/lib/study-guides.ts');
 const site = 'https://goacadio.com';
 const staticPublic = [
   '/', '/tools', '/tools/gpa-calculator', '/tools/focus-timer', '/tools/cv-builder',
-  '/guides', '/help', '/privacy', '/services', '/universities',
+  '/guides', '/help', '/contact', '/privacy', '/services', '/universities',
 ];
 const guideSlugs = [...guideSource.matchAll(/\bslug:\s*'([a-z0-9-]+)'/g)].map(m => m[1]);
 if (guideSlugs.length < 3 || new Set(guideSlugs).size !== guideSlugs.length) {
