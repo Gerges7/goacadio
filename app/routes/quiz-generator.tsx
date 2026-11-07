@@ -32,6 +32,9 @@ const ERRORS:Record<string,{ar:string;en:string}>={
   PDF_READ:{ar:'تعذر فتح هذا الـPDF في المتصفح. افتح تفاصيل الخطأ بالأسفل وأرسلها للدعم.',en:'Could not open this PDF in your browser. Expand the technical details below for support.'},
   PDF_READER_LOAD:{ar:'تعذر تحميل قارئ PDF. جرب تحديث الصفحة، أو افتح تفاصيل الخطأ.',en:'PDF reader could not load. Refresh the page or check the technical details.'},
   PDF_PASSWORD:{ar:'ملف PDF محمي بكلمة مرور؛ افتحه بدون تشفير وأعد المحاولة.',en:'This PDF is password-protected. Try an unlocked copy.'},
+  REQUEST_TIMEOUT:{ar:'استغرق إنشاء الاختبار وقتًا أطول من المعتاد. توقّف الانتظار؛ راجع رصيدك قبل إعادة المحاولة لأن الطلب قد يُحتسب.',en:'Quiz generation took too long. The wait was stopped. Check your quota before retrying because the request may have counted.'},
+  INVALID_SOURCE_LENGTH:{ar:'نص المحاضرة لازم يكون بين 200 و12000 حرف. راجع عدد الحروف تحت مربع النص.',en:'Lecture text must contain between 200 and 12,000 characters. Check the character count below.'},
+  QUIZ_SERVER_ERROR:{ar:'الخادم لم يرجع نتيجة صالحة. راجع تفاصيل الخطأ بالأسفل.',en:'The server did not return a valid result. See the error details below.'},
 };
 
 export default function QuizGenerator(){
@@ -53,6 +56,15 @@ export default function QuizGenerator(){
   const [busy,setBusy]=useState(false);
   const [extracting,setExtracting]=useState(false);
   const [error,setError]=useState('');
+  const [requestDiagnostic,setRequestDiagnostic]=useState('');
+  const [phase,setPhase]=useState<'auth'|'generate'>('auth');
+  const [elapsedSeconds,setElapsedSeconds]=useState(0);
+
+  useEffect(()=>{
+    if(!busy)return;
+    const timer=window.setInterval(()=>setElapsedSeconds(x=>x+1),1000);
+    return ()=>window.clearInterval(timer);
+  },[busy]);
 
   useEffect(()=>{
     const client=getSupabase();if(!user||!client){setCourses([]);setRemaining(null);return;}
@@ -97,26 +109,67 @@ export default function QuizGenerator(){
 
   async function generate(event:FormEvent<HTMLFormElement>){
     event.preventDefault();
-    if(busy||extracting||!user||source.trim().length<MIN_QUIZ_SOURCE_CHARS||source.length>MAX_QUIZ_SOURCE_CHARS)return;
-    const client=getSupabase();if(!client)return;
-    setBusy(true);setError('');
+    if(busy||extracting)return;
+    setError('');setRequestDiagnostic('');
+    const lecture=source.trim();
+    if(lecture.length<MIN_QUIZ_SOURCE_CHARS||lecture.length>MAX_QUIZ_SOURCE_CHARS){
+      const item=ERRORS.INVALID_SOURCE_LENGTH;
+      setError(lang==='ar'?item.ar:item.en);
+      return;
+    }
+    if(remaining===0){
+      const item=ERRORS.DAILY_LIMIT_REACHED;
+      setError(lang==='ar'?item.ar:item.en);
+      return;
+    }
+    if(!user){
+      const item=ERRORS.SIGN_IN_REQUIRED;
+      setError(lang==='ar'?item.ar:item.en);
+      return;
+    }
+    const client=getSupabase();
+    if(!client){
+      setError(text('تعذّر الاتصال بحسابك. حدّث الصفحة وسجّل الدخول.', 'Could not access your account. Refresh and sign in.'));
+      return;
+    }
+
+    setBusy(true);setPhase('auth');setElapsedSeconds(0);
+    // A bounded client wait prevents an indefinite spinner. Aborting the browser
+    // request does not guarantee an already-started server inference is cancelled.
+    const controller=new AbortController();
+    const timeoutId=window.setTimeout(()=>controller.abort(),90000);
     try{
       const {data:{session},error:sessionError}=await client.auth.getSession();
       if(sessionError||!session?.access_token)throw new Error('SIGN_IN_REQUIRED');
+      if(controller.signal.aborted)throw new Error('REQUEST_TIMEOUT');
+      setPhase('generate');
       const response=await fetch('/api/generate-quiz',{
-        method:'POST',cache:'no-store',
+        method:'POST',cache:'no-store',signal:controller.signal,
         headers:{'Content-Type':'application/json','Authorization':`Bearer ${session.access_token}`},
-        body:JSON.stringify({source:source.trim(),courseId,count,format,language}),
+        body:JSON.stringify({source:lecture,courseId,count,format,language}),
       });
-      const result=await response.json() as {quiz?:QuizData;error?:string;remaining?:number};
+      let result:{quiz?:QuizData;error?:string;remaining?:number};
+      try { result=await response.json() as typeof result; }
+      catch { throw new Error(`HTTP_${response.status}`); }
       if(typeof result.remaining==='number')setRemaining(result.remaining);
-      if(!response.ok||!result.quiz?.questions?.length)throw new Error(result.error||'AI_UNAVAILABLE');
+      if(!response.ok||!result.quiz?.questions?.length){
+        setRequestDiagnostic(`HTTP ${response.status} · ${typeof result.error==='string'?result.error:'EMPTY_RESULT'}`);
+        throw new Error(result.error||`HTTP_${response.status}`);
+      }
       setQuiz(result.quiz);setSelected({});setSubmitted(false);
     }catch(err){
-      const code=err instanceof Error?err.message:'AI_UNAVAILABLE';
+      const code=controller.signal.aborted?'REQUEST_TIMEOUT':err instanceof Error?err.message:'AI_UNAVAILABLE';
       const item=ERRORS[code];
-      setError(item?(lang==='ar'?item.ar:item.en):text('حصل خطأ. جرّب تاني.', 'Something went wrong. Please retry.'));
-    }finally{setBusy(false);}
+      setError(item?(lang==='ar'?item.ar:item.en):code.startsWith('HTTP_')
+        ?text('فشل الاتصال بخادم إنشاء الاختبار. راجع تفاصيل الخطأ.', 'The quiz server returned an error. See details below.')
+        :text('تعذر إكمال الطلب. تحقق من اتصال الإنترنت وحاول مرة أخرى.', 'Could not complete the request. Check your connection and retry.'));
+      if(code.startsWith('HTTP_'))setRequestDiagnostic(code.replace('HTTP_','HTTP '));
+      if(code==='REQUEST_TIMEOUT')setRequestDiagnostic('Browser request timeout after 90 seconds');
+      if(code==='SIGN_IN_REQUIRED')setRequestDiagnostic('Session validation failed');
+    }finally{
+      window.clearTimeout(timeoutId);
+      setBusy(false);
+    }
   }
 
   const result=useMemo(()=>quiz?gradeQuiz(quiz.questions,selected):null,[quiz,selected]);
@@ -129,7 +182,7 @@ export default function QuizGenerator(){
 
   return <><div className="page-hero"><div className="container"><span className="section-kicker">QUIZ GENERATOR</span><h1>{text('حوّل محاضرتك لاختبار 📝','Turn your lecture into a quiz 📝')}</h1><p>{text('ارفع PDF نصي أو الصق نص محاضرة، وجاوب أسئلة تدريبية مع تصحيح وتفسير.', 'Choose a text-based PDF or paste lecture notes, then practice MCQs and true/false questions with explanations.')}</p></div></div>
     <div className="page-content"><div className="container quiz-page-layout">
-      <form className="panel stack quiz-editor" onSubmit={e=>void generate(e)}>
+      <form className="panel stack quiz-editor" noValidate onSubmit={e=>void generate(e)}>
         <h2 className="panel-title">{text('مصدر الاختبار','Quiz source')}</h2>
         <div className="field"><label htmlFor="quiz-file">{text('ملف PDF (اختياري)','PDF file (optional)')}</label><input id="quiz-file" className="input" type="file" accept="application/pdf,.pdf" disabled={busy||extracting} onChange={e=>void onPdfChange(e)}/><small className="inline-help">{text(`حد أقصى ${MAX_PDF_BYTES/1024/1024} MB و${MAX_PDF_PAGES} صفحة. PDF المصوّر بدون نص مش مدعوم.`,`Up to ${MAX_PDF_BYTES/1024/1024} MB and ${MAX_PDF_PAGES} pages. Scanned PDFs without selectable text are not supported.`)}</small></div>
         {extracting&&<p className="inline-help" role="status">{text('جاري قراءة نص PDF داخل المتصفح...','Extracting PDF text in your browser...')}</p>}
@@ -142,8 +195,16 @@ export default function QuizGenerator(){
           <div className="field"><label htmlFor="quiz-lang">{text('لغة الأسئلة','Question language')}</label><select id="quiz-lang" className="input" value={language} onChange={e=>setLanguage(e.target.value as QuizLanguage)}><option value="auto">{text('لغة النص','Same as source')}</option><option value="ar">{text('العربية','Arabic')}</option><option value="en">English</option></select></div>
         </div>
         {error&&<div className="note warn" role="alert">{error}</div>}
+        {requestDiagnostic&&<details className="note"><summary>{text('تفاصيل طلب الاختبار (للدعم)','Quiz request details (for support)')}</summary><code dir="ltr" style={{overflowWrap:'anywhere'}}>{requestDiagnostic}</code></details>}
         {pdfDiagnostic&&<details className="note"><summary>{text('تفاصيل الخطأ (للدعم الفني)','Technical details (for support)')}</summary><code style={{overflowWrap:'anywhere'}}>{pdfDiagnostic}</code></details>}
-        <div className="actions"><button className="btn btn-primary" disabled={busy||extracting||source.trim().length<MIN_QUIZ_SOURCE_CHARS||remaining===0} type="submit">{busy?text('جاري توليد الاختبار...','Generating quiz...'):text('ولّد الاختبار ✨','Generate quiz ✨')}</button></div>
+        <div className="actions"><button className="btn btn-primary" disabled={busy||extracting} type="submit">{busy?text('جاري توليد الاختبار...','Generating quiz...'):text('ولّد الاختبار ✨','Generate quiz ✨')}</button></div>
+        {busy&&<div className="note" role="status" aria-live="polite">
+          <strong>{phase==='auth'?text('بنتحقق من الحساب...', 'Checking your account...'):text('بنجهز أسئلة الاختبار...', 'Generating practice questions...')}</strong>
+          <div>{text(`الوقت المنقضي: ${elapsedSeconds} ثانية`,`Elapsed: ${elapsedSeconds} seconds`)}</div>
+          <div>{text('ممكن يستغرق الطلب بعض الوقت حسب طول النص والضغط على الخدمة. لو فشل هنوضح السبب؛ بلاش تضغط الزر تاني أثناء التحميل.', 'Longer texts can take time. If it fails, you’ll see the reason. Please avoid sending duplicates.')}</div>
+        </div>}
+        {remaining===0&&!busy&&<div className="note warn" role="status">{text('رصيدك اليومي انتهى؛ مش هيتبعت طلب جديد قبل تجديد الحصة عند منتصف الليل UTC.', 'Your daily quota is exhausted. No request will be sent until midnight UTC.')}</div>}
+        {!busy&&!extracting&&source.trim().length<MIN_QUIZ_SOURCE_CHARS&&<p className="inline-help">{text('أدخل نص محاضرة لا يقل عن 200 حرف، ثم اضغط زر التوليد.', 'Enter at least 200 characters of lecture text, then generate.')}</p>}
         <p className="inline-help">{usageLabel}. {text('الحصة مشتركة مع مساعد المذاكرة. المحاولات الفاشلة قد تُحتسب.', 'Shared with Study Assistant. Failed generation may count.')}</p>
         <div className="note">{text('بيتم استخراج نص PDF داخل متصفحك، وبيتبعت النص فقط لخدمة الذكاء الاصطناعي لتوليد الاختبار. مش بنحفظ ملف PDF أو الاختبار في حسابك. تجنّب البيانات الحساسة.', 'PDF text is extracted in your browser. Only the extracted text is sent for quiz generation. PDFs and quizzes are not stored in your account. Avoid sensitive information.')}</div>
       </form>
