@@ -14,6 +14,7 @@ const site = 'https://goacadio.com';
 const staticPublic = [
   '/', '/tools', '/tools/gpa-calculator', '/tools/focus-timer', '/tools/cv-builder',
   '/guides', '/help', '/contact', '/privacy', '/services', '/universities',
+  '/about', '/terms',
 ];
 const guideSlugs = [...guideSource.matchAll(/\bslug:\s*'([a-z0-9-]+)'/g)].map(m => m[1]);
 if (guideSlugs.length < 3 || new Set(guideSlugs).size !== guideSlugs.length) {

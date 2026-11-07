@@ -20,6 +20,8 @@ export default [
   route('universities', './routes/universities.tsx'),
   route('services', './routes/services.tsx'),
   route('privacy', './routes/privacy.tsx'),
+  route('about', './routes/about.tsx'),
+  route('terms', './routes/terms.tsx'),
   route('help', './routes/help.tsx'),
   route('contact', './routes/contact.tsx'),
   route('account', './routes/account.tsx'),

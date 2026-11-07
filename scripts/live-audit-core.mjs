@@ -4,6 +4,7 @@ export const PUBLIC_PATHS = Object.freeze([
   '/', '/tools', '/tools/gpa-calculator', '/tools/focus-timer', '/tools/cv-builder',
   '/guides', '/guides/how-to-calculate-gpa', '/guides/pomodoro-study-timer',
   '/guides/student-cv-guide', '/help', '/contact', '/privacy', '/services', '/universities',
+  '/about', '/terms',
 ]);
 export const TEST_CASES = Object.freeze([
   ...PUBLIC_PATHS.map(path => ({path, category:'public', expectedStatus:200})),

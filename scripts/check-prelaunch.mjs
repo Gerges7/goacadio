@@ -31,6 +31,9 @@ check('Localized error page without server error details', rootUi.includes('func
 check('No private routes in public sitemap', !/(?:\/admin|\/dashboard|\/auth|\/account|\/api\/|\/quiz-history|\/revision|\/planner|\/ai-study)/.test(sitemap));
 check('Sitemap has useful public URLs', (sitemap.match(/<url><loc>/g)||[]).length>=12);
 check('Site still has no public roadmap route', !/route\(['"]roadmap/.test(routes));
+check('About and terms routes present before launch', routes.includes("route('about'") && routes.includes("route('terms'"));
+check('Prelaunch sitemap lists about and terms', sitemap.includes('<loc>https://goacadio.com/about</loc>') && sitemap.includes('<loc>https://goacadio.com/terms</loc>'));
+check('Draft terms clearly marked for review', read('app/routes/terms.tsx').includes('Pre-launch informational draft'));
 for(const r of results) console.log(`${r.ok?'PASS':'FAIL'}  ${r.label}`);
 const failures=results.filter(r=>!r.ok);
 console.log(`\n${results.length-failures.length}/${results.length} prelaunch checks passed.`);
