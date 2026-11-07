@@ -29,7 +29,9 @@ const ERRORS:Record<string,{ar:string;en:string}>={
   NOT_PDF:{ar:'اختار ملف PDF صالح.',en:'Choose a valid PDF file.'},
   PDF_SIZE:{ar:'حجم ملف PDF لازم يكون أقل من 8 ميجابايت.',en:'PDF must be no larger than 8 MB.'},
   PDF_NO_TEXT:{ar:'الملف مفيهوش نص كفاية. لو PDF عبارة عن صور، استخدم نسخة نصية أو الصق النص يدويًا؛ النسخة دي لا تدعم OCR.',en:'Not enough selectable text. For scanned PDFs, paste the text or use a searchable version; OCR is not supported yet.'},
-  PDF_READ:{ar:'تعذر استخراج نص الملف. جرّب PDF غير محمي أو الصق النص يدويًا.',en:'Could not read this PDF. Try an unprotected text-based PDF or paste the text.'},
+  PDF_READ:{ar:'تعذر فتح هذا الـPDF في المتصفح. افتح تفاصيل الخطأ بالأسفل وأرسلها للدعم.',en:'Could not open this PDF in your browser. Expand the technical details below for support.'},
+  PDF_READER_LOAD:{ar:'تعذر تحميل قارئ PDF. جرب تحديث الصفحة، أو افتح تفاصيل الخطأ.',en:'PDF reader could not load. Refresh the page or check the technical details.'},
+  PDF_PASSWORD:{ar:'ملف PDF محمي بكلمة مرور؛ افتحه بدون تشفير وأعد المحاولة.',en:'This PDF is password-protected. Try an unlocked copy.'},
 };
 
 export default function QuizGenerator(){
@@ -40,6 +42,7 @@ export default function QuizGenerator(){
   const [source,setSource]=useState('');
   const [fileName,setFileName]=useState('');
   const [fileNotice,setFileNotice]=useState('');
+  const [pdfDiagnostic,setPdfDiagnostic]=useState('');
   const [format,setFormat]=useState<QuizFormat>('mixed');
   const [count,setCount]=useState<QuizSize>(6);
   const [language,setLanguage]=useState<QuizLanguage>('auto');
@@ -68,7 +71,8 @@ export default function QuizGenerator(){
     const file=event.currentTarget.files?.[0];
     event.currentTarget.value='';
     if(!file)return;
-    setError('');setFileNotice('');setExtracting(true);
+    setError('');setFileNotice('');setPdfDiagnostic('');setFileName('');setSource('');
+    setQuiz(null);setSelected({});setSubmitted(false);setExtracting(true);
     try{
       if(file.size>MAX_PDF_BYTES)throw new Error('PDF_SIZE');
       const {extractPdfText}=await import('@/lib/pdf-text.client');
@@ -80,10 +84,14 @@ export default function QuizGenerator(){
       setFileNotice(result.truncated
         ?text(`تم استخراج ${result.pagesRead} من ${result.totalPages} صفحة. استخدمنا أول ${MAX_QUIZ_SOURCE_CHARS} حرف بحد أقصى.`, `Read ${result.pagesRead} of ${result.totalPages} pages; limited to ${MAX_QUIZ_SOURCE_CHARS} characters.`)
         :text(`تم استخراج نص ${result.pagesRead} صفحة بنجاح.`, `Extracted text from ${result.pagesRead} pages.`));
+      if(result.skippedPages>0) setFileNotice(old=>old+' '+text(`تعذر قراءة ${result.skippedPages} صفحة.`,`Could not read ${result.skippedPages} page(s).`));
     }catch(err){
       const code=err instanceof Error?err.message:'PDF_READ';
       const message=ERRORS[code]??ERRORS.PDF_READ;
       setError(lang==='ar'?message.ar:message.en);
+      if(err instanceof Error && 'diagnostic' in err && typeof err.diagnostic==='string') {
+        setPdfDiagnostic(`${code}: ${err.diagnostic}`.slice(0,600));
+      }
     }finally{setExtracting(false);}
   }
 
@@ -134,6 +142,7 @@ export default function QuizGenerator(){
           <div className="field"><label htmlFor="quiz-lang">{text('لغة الأسئلة','Question language')}</label><select id="quiz-lang" className="input" value={language} onChange={e=>setLanguage(e.target.value as QuizLanguage)}><option value="auto">{text('لغة النص','Same as source')}</option><option value="ar">{text('العربية','Arabic')}</option><option value="en">English</option></select></div>
         </div>
         {error&&<div className="note warn" role="alert">{error}</div>}
+        {pdfDiagnostic&&<details className="note"><summary>{text('تفاصيل الخطأ (للدعم الفني)','Technical details (for support)')}</summary><code style={{overflowWrap:'anywhere'}}>{pdfDiagnostic}</code></details>}
         <div className="actions"><button className="btn btn-primary" disabled={busy||extracting||source.trim().length<MIN_QUIZ_SOURCE_CHARS||remaining===0} type="submit">{busy?text('جاري توليد الاختبار...','Generating quiz...'):text('ولّد الاختبار ✨','Generate quiz ✨')}</button></div>
         <p className="inline-help">{usageLabel}. {text('الحصة مشتركة مع مساعد المذاكرة. المحاولات الفاشلة قد تُحتسب.', 'Shared with Study Assistant. Failed generation may count.')}</p>
         <div className="note">{text('بيتم استخراج نص PDF داخل متصفحك، وبيتبعت النص فقط لخدمة الذكاء الاصطناعي لتوليد الاختبار. مش بنحفظ ملف PDF أو الاختبار في حسابك. تجنّب البيانات الحساسة.', 'PDF text is extracted in your browser. Only the extracted text is sent for quiz generation. PDFs and quizzes are not stored in your account. Avoid sensitive information.')}</div>
