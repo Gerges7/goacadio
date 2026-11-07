@@ -4,8 +4,6 @@ import { LocaleProvider } from '@/components/locale-provider';
 import Chrome from '@/components/chrome';
 import { AuthProvider } from '@/components/auth-provider';
 import stylesHref from './styles.css?url';
-import stylesV30Href from './styles-v30.css?url';
-import stylesV31Href from './styles-v31.css?url';
 
 // Keep the prototype out of search indexes until legal/privacy/SEO release review.
 export const meta: MetaFunction = () => [
@@ -16,9 +14,12 @@ export const meta: MetaFunction = () => [
   { property: 'og:type', content: 'website' },
 ];
 export const links: LinksFunction = () => [
+  // Start external font connections in the HTML head rather than behind a CSS @import.
+  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+  { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
+  { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap' },
+  // One bundled site stylesheet instead of three independent render-blocking requests.
   { rel: 'stylesheet', href: stylesHref },
-  { rel: 'stylesheet', href: stylesV30Href },
-  { rel: 'stylesheet', href: stylesV31Href },
   { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
 ];
 export function Layout({ children }: { children: React.ReactNode }) {

@@ -1,0 +1,20 @@
+GoAcadio V3.2 — Mobile Accessibility & Performance Foundations
+=============================================================
+
+هذه الحزمة تغيّر ملفات محدودة بناءً على آخر إصدار V3.1 الموجود على GitHub.
+الملفات المرفوعة على GitHub main ليست معدّلة تلقائيًا. احتفظ بنسخة احتياطية.
+
+1) فك ضغط ZIP.
+2) افتح مستودع Gerges7/goacadio على GitHub وارفع الملفات بنفس المسارات الموجودة بالحزمة.
+3) استبدل الملفات الثلاثة في app، واستبدل package.json، وأضف scripts/check-release.mjs وdocs/V32_RELEASE_QA_AR.md وملف التعليمات هذا.
+4) لا تحذف app/styles-v30.css أو app/styles-v31.css حتى لو أصبحت غير مستخدمة؛ لا حاجة لحذفها في هذا التحديث.
+5) انتظر اكتمال Cloudflare Build ثم افتح https://goacadio.com واضغط Ctrl+F5.
+6) جرّب القائمة على الموبايل، زر Escape، التنقل بلوحة المفاتيح، الـGPA والـCV والـQuiz والـDashboard.
+7) يمكن تشغيل npm run check:release اختياريًا (15 فحصًا ثابتًا، بدون npm install).
+8) التعليمات التفصيلية للاختبار في docs/V32_RELEASE_QA_AR.md.
+
+لا يوجد SQL جديد، ولا تغيير في AI Binding ولا Supabase.
+فهرسة Google ما زالت مغلقة قبل الإطلاق: robots.txt = Disallow: / ، وصفحات الموقع بها noindex.
+
+تنبيه: فحص صياغة TS/CSS والفحوص الثابتة لا يعادل Build فعليًا أو Lighthouse/اختبار نشر Cloudflare.
+راجع أداء الموقع بعد النشر قبل الادعاء بتحسن أرقام LCP/INP/CLS.
