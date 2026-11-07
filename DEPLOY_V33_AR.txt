@@ -1,0 +1,27 @@
+GoAcadio V3.3 — Prelaunch Security & SEO Smoke Audits
+===================================================
+
+التحديث جزئي ومبني على V3.2 الموجودة في GitHub main. لا تحذف المشروع أو الملفات القديمة.
+
+1) احتفظ بنسخة احتياطية من GitHub وSupabase.
+2) فك ضغط ملف V3.3 وارفع الملفات بنفس المسارات داخل المستودع Gerges7/goacadio على main:
+   - app/root.tsx                        (استبدال)
+   - workers/app.ts                      (استبدال)
+   - workers/security.ts                 (جديد)
+   - package.json                        (استبدال)
+   - scripts/check-prelaunch.mjs        (جديد)
+   - scripts/check-live.mjs             (جديد)
+   - scripts/generate-sitemap-template.mjs (جديد)
+   - docs/sitemap-public-template.xml   (استبدال داخلي فقط)
+   - docs/V33_PRELAUNCH_SECURITY_SEO_AR.md (جديد)
+   - DEPLOY_V33_AR.txt                   (جديد)
+3) انتظر نتيجة Cloudflare Build وDeploy. إذا فشل، راجع Logs قبل أي إعادة رفع.
+4) افتح https://goacadio.com وسجل دخول بحساب تجريبي ثم افتح /dashboard و /account و /quiz-generator.
+5) لتشغيل اختبارات محلية اختياريًا: npm run check:prelaunch ؛ بعد النشر: npm run check:live .
+6) لا تشغّل فهرسة Google الآن؛ ما زال public/robots.txt يمنع الزحف والصفحات عليها noindex.
+7) لا يوجد SQL جديد ولا تغيير في AI Binding، ولا حذف بيانات.
+
+اختبارات محلية أجريت قبل التسليم: 31 فحصًا ثابتًا ناجحًا، 32 فحصًا لسلوك الترويسات نجح، وفحص صياغة 51 ملف TS/TSX بدون أخطاء parse.
+لم يتم تشغيل npm run build كاملًا ولا قياس Lighthouse ولا الاختبار الحي للنطاق لأن البيئة لم تتيح وصولًا موثوقًا للموقع.
+
+الملف docs/V33_PRELAUNCH_SECURITY_SEO_AR.md يحتوي على قائمة التحقق من الأداء والأمان وSearch Console.

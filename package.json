@@ -10,7 +10,10 @@
     "preview": "npm run build && vite preview",
     "typecheck": "tsc --noEmit",
     "cf-typegen": "wrangler types && react-router typegen",
-    "check:release": "node scripts/check-release.mjs"
+    "check:release": "node scripts/check-release.mjs",
+    "check:prelaunch": "npm run check:release && node scripts/check-prelaunch.mjs",
+    "check:live": "node scripts/check-live.mjs",
+    "prepare:sitemap": "node scripts/generate-sitemap-template.mjs"
   },
   "dependencies": {
     "isbot": "5.1.32",

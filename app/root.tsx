@@ -1,8 +1,9 @@
-import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import type { LinksFunction, MetaFunction } from 'react-router';
 import { LocaleProvider } from '@/components/locale-provider';
 import Chrome from '@/components/chrome';
 import { AuthProvider } from '@/components/auth-provider';
+import { useLocale } from '@/components/locale-provider';
 import stylesHref from './styles.css?url';
 
 // Keep the prototype out of search indexes until legal/privacy/SEO release review.
@@ -28,6 +29,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 export default function App() { return <Outlet />; }
 export function ErrorBoundary({ error }: { error: unknown }) {
+  const {text} = useLocale();
   const missing = isRouteErrorResponse(error) && error.status === 404;
-  return <div className="page-content"><div className="container"><h1>{missing ? '404 — Page not found' : 'An error occurred'}</h1><p>GoAcadio · Try the homepage.</p><a className="btn btn-primary" href="/">Home</a></div></div>;
+  // Never expose error messages, internal paths or server stack traces to visitors.
+  return <div className="page-content"><div className="container"><section className="panel center" style={{maxWidth:650,margin:'40px auto'}} role="alert">
+    <span className="section-kicker">{missing?'404':'GOACADIO'}</span>
+    <h1>{missing?text('الصفحة مش موجودة','Page not found'):text('حصل خطأ غير متوقع','Something went wrong')}</h1>
+    <p>{missing?text('راجع رابط الصفحة أو ارجع للأدوات المتاحة.','Check the address or browse our available tools.'):
+      text('جرّب تحديث الصفحة. لو المشكلة مستمرة، افتح مركز المساعدة.','Try reloading the page. If it continues, visit Help & Support.')}</p>
+    <div className="actions" style={{justifyContent:'center'}}><Link className="btn btn-primary" to="/">{text('الرئيسية','Homepage')}</Link>
+      <Link className="btn btn-outline" to="/help">{text('مركز المساعدة','Help center')}</Link></div>
+  </section></div></div>;
 }
