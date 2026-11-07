@@ -13,6 +13,7 @@ export default [
   route('api/ai-study', './routes/api.ai-study.ts'),
   route('quiz-generator', './routes/quiz-generator.tsx'),
   route('quiz-history', './routes/quiz-history.tsx'),
+  route('revision', './routes/revision.tsx'),
   route('api/generate-quiz', './routes/api.generate-quiz.ts'),
   route('universities', './routes/universities.tsx'),
   route('services', './routes/services.tsx'),

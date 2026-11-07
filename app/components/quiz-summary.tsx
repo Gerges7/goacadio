@@ -35,6 +35,6 @@ export default function QuizSummary({userId}:{userId:string}) {
         </div>
         {!s.totalAttempts&&<p className="inline-help">{text('بعد ما تصحّح أي اختبار، اضغط «احفظ النتيجة» عشان تظهر هنا.','After grading a quiz, choose Save result to track it here.')}</p>}
       </>}
-    <div className="actions"><Link className="btn btn-soft" to="/quiz-history">{text('عرض سجل الاختبارات','View quiz history')}</Link></div>
+    <div className="actions"><Link className="btn btn-soft" to="/quiz-history">{text('عرض سجل الاختبارات','View quiz history')}</Link><Link className="btn btn-outline" to="/revision">{text('خطة المراجعة','Revision plan')}</Link></div>
   </section>;
 }

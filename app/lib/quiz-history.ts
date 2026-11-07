@@ -44,7 +44,7 @@ export function summarizeQuizAttempts(attempts: readonly QuizAttempt[], now: Dat
     courseId, ...g, accuracy:accuracy(g.correct, g.questions),
   })).sort((a,b) => b.attempts - a.attempts || a.accuracy - b.accuracy);
   // Avoid classifying an entire course from one small practice quiz.
-  const needsReview = courses.filter(c => c.courseId && c.attempts >= 2 && c.questions >= 8)
+  const needsReview = courses.filter(c => c.courseId && c.attempts >= 2 && c.questions >= 8 && c.accuracy < 70)
     .sort((a,b) => a.accuracy - b.accuracy).slice(0,3);
   return {totalAttempts: attempts.length, totalQuestions, correct, accuracy: accuracy(correct, totalQuestions), lastSevenDays, courses, needsReview};
 }
