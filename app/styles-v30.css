@@ -1,0 +1,30 @@
+/* V3.0 account center, help center and responsive student shortcuts. */
+.help-layout,.account-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(270px,.75fr);gap:20px;align-items:start}
+.help-layout>*,.account-layout>*{min-width:0}
+.help-question{padding:13px 0;border-top:1px solid var(--line)}
+.help-question summary{cursor:pointer;font-weight:800;font-size:14px}
+.help-question p{font-size:13px;color:var(--muted);margin:9px 0 2px}
+.account-confirm{display:flex;align-items:flex-start;gap:10px;border:1px solid #e6e2f8;border-radius:12px;padding:13px;font-size:13px;line-height:1.8}
+.account-confirm input{accent-color:var(--violet);margin-top:6px;flex:none;width:18px;height:18px}
+.account-request-list{display:grid;gap:0}
+.account-request-row{border-top:1px solid var(--line);padding:13px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.account-request-row strong{font-size:13px}
+.account-request-row small{display:block;color:var(--muted);font-size:11px}
+.account-user-id{display:block;overflow-wrap:anywhere;font-size:12px;margin:6px 0 12px}
+.student-quick-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.student-quick-actions .quick-action{display:flex;flex-direction:column;gap:5px;justify-content:center;align-items:center;text-align:center;padding:14px 8px;border:1px solid var(--line);border-radius:13px;background:#fff;font-size:12px;font-weight:800;min-width:0}
+.student-quick-actions .quick-action:hover,.student-quick-actions .quick-action:focus-visible{border-color:var(--violet);background:#f7f6ff}
+.student-quick-actions .quick-action span{font-size:24px}
+@media(max-width:900px){.help-layout,.account-layout{grid-template-columns:1fr}.student-quick-actions{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:550px){
+ .student-quick-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .student-quick-actions .quick-action{min-height:85px;font-size:12px}
+ .dashboard-grid .form-grid{grid-template-columns:minmax(0,1fr)}
+ .account-request-row{flex-wrap:wrap}
+ .nav-actions .btn-small{white-space:normal;line-height:1.3}
+ .course-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 35px;gap:8px}
+ .course-grid>*:first-child{grid-column:1 / -1}
+ .course-grid>*:last-child{grid-column:3}
+ .course-grid .input{font-size:13px;padding:9px 8px}
+}
+@media(max-width:390px){.nav-actions .btn-small{padding:7px 8px;font-size:10px}.brand{font-size:18px}.nav-actions{gap:4px}}

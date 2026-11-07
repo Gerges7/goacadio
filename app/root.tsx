@@ -4,6 +4,7 @@ import { LocaleProvider } from '@/components/locale-provider';
 import Chrome from '@/components/chrome';
 import { AuthProvider } from '@/components/auth-provider';
 import stylesHref from './styles.css?url';
+import stylesV30Href from './styles-v30.css?url';
 
 // Keep the prototype out of search indexes until legal/privacy/SEO release review.
 export const meta: MetaFunction = () => [
@@ -15,6 +16,7 @@ export const meta: MetaFunction = () => [
 ];
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesHref },
+  { rel: 'stylesheet', href: stylesV30Href },
   { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
 ];
 export function Layout({ children }: { children: React.ReactNode }) {

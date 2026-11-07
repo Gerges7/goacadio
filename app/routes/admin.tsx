@@ -3,6 +3,7 @@ import { Link, type MetaFunction } from 'react-router';
 import { useAuth } from '@/components/auth-provider';
 import { useLocale } from '@/components/locale-provider';
 import { getSupabase } from '@/lib/supabase';
+import AccountRequestsAdmin from '@/components/account-requests-admin';
 
 export const meta: MetaFunction = () => [
   { title: 'Administration | GoAcadio' },
@@ -128,6 +129,7 @@ function AdminContent(){
       </div><div className="actions"><button className="btn btn-primary" disabled={busy||!parentId||!nameEn.trim()||(tab==='program_courses'&&!code.trim())} type="submit">{editingId?text('حفظ التعديلات','Save changes'):text('إضافة','Add record')}</button>{editingId&&<button type="button" className="btn btn-outline" onClick={()=>changeTab(tab)}>{text('إلغاء التعديل','Cancel editing')}</button>}</div></form>
         <div className="admin-table"><table><thead><tr><th>{text('الاسم','Name')}</th><th>{text('الحالة','Visibility')}</th><th>{text('إجراء','Action')}</th></tr></thead><tbody>{rows.map(x=><tr key={x.id}><td><b>{x.name_en}</b>{'code' in x&&<small>{x.code} · {x.credit_hours??'—'} CH · {x.academic_level?`L${x.academic_level}`:'—'} · {x.semester||'—'}</small>}{x.name_ar&&<small>{x.name_ar}</small>}</td><td>{x.is_published?text('منشور','Published'):text('مسودة','Draft')}</td><td><div className="actions"><button type="button" className="small-btn" onClick={()=>editRow(x)}>{text('تعديل','Edit')}</button><button type="button" className="small-btn" onClick={()=>void togglePublished(x.id,x.is_published)}>{x.is_published?text('إلغاء النشر','Unpublish'):text('نشر','Publish')}</button></div></td></tr>)}</tbody></table></div>
       </section>
+      <AccountRequestsAdmin/>
       <section className="panel"><h2 className="panel-title">{text('طلبات المساعدة الأكاديمية','Academic support requests')}</h2><div className="stack">{requests.length===0?<div className="placeholder">{text('مفيش طلبات حاليًا','No requests yet')}</div>:requests.map(r=><article className="admin-request" key={r.id}><div className="toolbar"><strong>{r.subject}</strong><span className="tag">{r.service_type}</span></div><p>{r.description}</p><small>{new Date(r.created_at).toLocaleString()}</small><div className="field"><label>{text('حالة الطلب','Request status')}</label><select className="input" value={r.status} onChange={e=>void updateRequest(r.id,e.target.value)}>{statuses.map(s=><option value={s} key={s}>{s}</option>)}</select></div></article>)}</div></section>
     </div></div></>;
 }

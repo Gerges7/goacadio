@@ -18,6 +18,8 @@ export default [
   route('universities', './routes/universities.tsx'),
   route('services', './routes/services.tsx'),
   route('privacy', './routes/privacy.tsx'),
+  route('help', './routes/help.tsx'),
+  route('account', './routes/account.tsx'),
   route('auth', './routes/auth.tsx'),
   route('admin', './routes/admin.tsx'),
 ] satisfies RouteConfig;
