@@ -1,0 +1,19 @@
+GoAcadio V3.6 — SEO Structured Data & Live Launch Audit
+======================================================
+
+مهم: الملف ZIP يحتوي فقط على الملفات المتغيرة — لا تمسح بقية المشروع.
+
+1) خُد نسخة احتياطية من مستودع Gerges7/goacadio على GitHub.
+2) فك ZIP وارفع ملفات app/ وscripts/ وpackage.json وdocs/ وDEPLOY_V36_AR.txt على main بنفس المسارات، مع استبدال المطابق فقط.
+3) انتظر Cloudflare Deploy. لا يوجد SQL جديد ولا إعدادات AI/Supabase مطلوبة.
+4) افتح /guides/how-to-calculate-gpa، جرّب تبديل العربية/الإنجليزية، وتأكد من شريط Breadcrumbs والروابط.
+5) من جهازك أو GitHub Codespace بعد npm install شغّل:
+   npm run test:v36
+   npm run check:prelaunch
+   npm run check:live
+   أو npm run check:live:json > v36-live-audit.json لتقرير JSON.
+6) اقرأ docs/V36_SEARCH_CONSOLE_LAUNCH_AUDIT_AR.md لتسجيل Domain property في Google Search Console عبر DNS والتحقق من الإطلاق.
+
+لم يتم فتح فهرسة Google. ملف public/robots.txt ما زال Disallow: /، وصفحات الموقع ما زالت noindex.
+لا تنشر sitemap.xml إلى public/ حاليًا، ولا تعرض بيانات الطلاب أو تفعّل AdSense بدون مراجعة.
+إن فشل check:live، راجع السبب قبل الإطلاق؛ الاختبارات المحلية لا تثبت جودة النشر الفعلي.

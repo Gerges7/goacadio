@@ -192,3 +192,8 @@
 .contact-send{width:fit-content;max-width:100%;white-space:normal;text-align:center}
 @media(max-width:850px){.contact-layout{grid-template-columns:1fr}}
 @media(max-width:490px){.contact-send{width:100%}}
+
+/* V3.6 — navigable, bilingual guide breadcrumbs. */
+.guide-breadcrumbs{display:flex;flex-wrap:wrap;align-items:center;gap:9px;font-size:12px;font-weight:700;margin-bottom:13px;max-width:100%}
+.guide-breadcrumbs a{text-decoration:underline;text-underline-offset:3px}
+.guide-breadcrumbs [aria-current="page"]{color:var(--muted);overflow-wrap:anywhere}

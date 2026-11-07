@@ -2,6 +2,7 @@ import { Link, useParams, type LoaderFunctionArgs, type MetaFunction } from 'rea
 import { useLocale } from '@/components/locale-provider';
 import { getStudyGuide, studyGuides, type Localized } from '@/lib/study-guides';
 import { publicSeoMeta } from '@/lib/seo';
+import { guideStructuredData, safeJsonLd } from '@/lib/structured-data';
 
 export function loader({ params }: LoaderFunctionArgs) {
   if (!getStudyGuide(params.slug)) throw new Response('Guide not found', { status: 404 });
@@ -18,13 +19,19 @@ export const meta: MetaFunction = ({ params }) => {
 export default function GuidePage() {
   const { slug } = useParams();
   const guide = getStudyGuide(slug);
-  const { text } = useLocale();
+  const { text, lang } = useLocale();
   if (!guide) return null;
   const t = (value: Localized) => text(value.ar, value.en);
   const others = studyGuides.filter(item => item.slug !== guide.slug);
+  const structuredJson = safeJsonLd(guideStructuredData(guide, lang));
   return <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredJson }} />
     <div className="page-hero"><div className="container">
-      <Link className="guide-back" to="/guides">← {text('كل الأدلة', 'All study guides')}</Link>
+      <nav className="guide-breadcrumbs" aria-label={text('مسار الصفحة', 'Breadcrumb')}>
+        <Link to="/">{text('الرئيسية', 'Home')}</Link><span aria-hidden="true">/</span>
+        <Link to="/guides">{text('أدلة الطلاب', 'Study guides')}</Link><span aria-hidden="true">/</span>
+        <span aria-current="page">{t(guide.title)}</span>
+      </nav>
       <span className="section-kicker">{t(guide.category)}</span>
       <h1>{t(guide.title)}</h1>
       <p>{t(guide.description)}</p>
