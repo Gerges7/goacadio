@@ -13,7 +13,8 @@
     "check:release": "node scripts/check-release.mjs",
     "check:prelaunch": "npm run check:release && node scripts/check-prelaunch.mjs",
     "check:live": "node scripts/check-live.mjs",
-    "prepare:sitemap": "node scripts/generate-sitemap-template.mjs"
+    "prepare:sitemap": "node scripts/generate-sitemap-template.mjs",
+    "test:data-export": "node scripts/test-account-export.mjs"
   },
   "dependencies": {
     "isbot": "5.1.32",
