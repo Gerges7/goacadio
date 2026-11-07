@@ -52,6 +52,11 @@ export default function QuizGenerator(){
   const [quiz,setQuiz]=useState<QuizData|null>(null);
   const [selected,setSelected]=useState<Record<number,number>>({});
   const [submitted,setSubmitted]=useState(false);
+  const [attemptId,setAttemptId]=useState('');
+  const [quizContext,setQuizContext]=useState<{courseId:string;quizFormat:QuizFormat;sourceType:'pdf'|'text'}|null>(null);
+  const [savedAttempt,setSavedAttempt]=useState(false);
+  const [savingAttempt,setSavingAttempt]=useState(false);
+  const [saveMessage,setSaveMessage]=useState('');
   const [remaining,setRemaining]=useState<number|null>(null);
   const [busy,setBusy]=useState(false);
   const [extracting,setExtracting]=useState(false);
@@ -84,7 +89,7 @@ export default function QuizGenerator(){
     event.currentTarget.value='';
     if(!file)return;
     setError('');setFileNotice('');setPdfDiagnostic('');setFileName('');setSource('');
-    setQuiz(null);setSelected({});setSubmitted(false);setExtracting(true);
+    setQuiz(null);setSelected({});setSubmitted(false);setSavedAttempt(false);setAttemptId('');setQuizContext(null);setSaveMessage('');setExtracting(true);
     try{
       if(file.size>MAX_PDF_BYTES)throw new Error('PDF_SIZE');
       const {extractPdfText}=await import('@/lib/pdf-text.client');
@@ -157,6 +162,8 @@ export default function QuizGenerator(){
         throw new Error(result.error||`HTTP_${response.status}`);
       }
       setQuiz(result.quiz);setSelected({});setSubmitted(false);
+      setSavedAttempt(false);setSaveMessage('');setAttemptId(window.crypto.randomUUID());
+      setQuizContext({courseId,quizFormat:format,sourceType:fileName?'pdf':'text'});
     }catch(err){
       const code=controller.signal.aborted?'REQUEST_TIMEOUT':err instanceof Error?err.message:'AI_UNAVAILABLE';
       const item=ERRORS[code];
@@ -170,6 +177,29 @@ export default function QuizGenerator(){
       window.clearTimeout(timeoutId);
       setBusy(false);
     }
+  }
+
+  async function saveQuizAttempt(){
+    if(!quiz||!quizContext||!submitted||!result||!user||!attemptId||savingAttempt||savedAttempt)return;
+    const client=getSupabase();if(!client)return;
+    setSavingAttempt(true);setSaveMessage('');
+    try{
+      const {error:insertError}=await client.from('quiz_attempts').insert({
+        user_id:user.id, client_attempt_id:attemptId, course_id:quizContext.courseId||null,
+        title:quiz.title.trim().slice(0,140)||'Practice Quiz',
+        question_count:result.total, correct_count:result.correct,
+        quiz_format:quizContext.quizFormat, source_type:quizContext.sourceType,
+      });
+      if(insertError){
+        // Idempotency key protects against duplicate saves after network retries.
+        if(insertError.code==='23505') setSavedAttempt(true);
+        else if(insertError.code==='42P01'||insertError.code==='PGRST205')
+          setSaveMessage(text('شغّل SQL 006 في Supabase لتفعيل حفظ النتائج.','Apply SQL migration 006 to enable result saving.'));
+        else setSaveMessage(insertError.message);
+      }else setSavedAttempt(true);
+    }catch{
+      setSaveMessage(text('تعذر حفظ النتيجة. اتأكد من اتصالك وجرب تاني.','Could not save your result. Check your connection and retry.'));
+    }finally{setSavingAttempt(false);}
   }
 
   const result=useMemo(()=>quiz?gradeQuiz(quiz.questions,selected):null,[quiz,selected]);
@@ -206,7 +236,7 @@ export default function QuizGenerator(){
         {remaining===0&&!busy&&<div className="note warn" role="status">{text('رصيدك اليومي انتهى؛ مش هيتبعت طلب جديد قبل تجديد الحصة عند منتصف الليل UTC.', 'Your daily quota is exhausted. No request will be sent until midnight UTC.')}</div>}
         {!busy&&!extracting&&source.trim().length<MIN_QUIZ_SOURCE_CHARS&&<p className="inline-help">{text('أدخل نص محاضرة لا يقل عن 200 حرف، ثم اضغط زر التوليد.', 'Enter at least 200 characters of lecture text, then generate.')}</p>}
         <p className="inline-help">{usageLabel}. {text('الحصة مشتركة مع مساعد المذاكرة. المحاولات الفاشلة قد تُحتسب.', 'Shared with Study Assistant. Failed generation may count.')}</p>
-        <div className="note">{text('بيتم استخراج نص PDF داخل متصفحك، وبيتبعت النص فقط لخدمة الذكاء الاصطناعي لتوليد الاختبار. مش بنحفظ ملف PDF أو الاختبار في حسابك. تجنّب البيانات الحساسة.', 'PDF text is extracted in your browser. Only the extracted text is sent for quiz generation. PDFs and quizzes are not stored in your account. Avoid sensitive information.')}</div>
+        <div className="note">{text('بيتم استخراج نص PDF داخل متصفحك، وبيتبعت النص فقط لخدمة الذكاء الاصطناعي لتوليد الاختبار. مش بنحفظ ملف PDF أو الأسئلة. تقدر تختار تحفظ ملخص النتيجة بعد التصحيح. تجنّب البيانات الحساسة.', 'PDF text is extracted in your browser. Only the extracted text is sent for quiz generation. The PDF and quiz questions are not stored. You can optionally save a score summary after grading. Avoid sensitive information.')}</div>
       </form>
 
       <section className="panel quiz-results">
@@ -226,7 +256,13 @@ export default function QuizGenerator(){
             })}</div>
             {submitted&&<p className="quiz-explanation" dir="auto"><b>{text('التفسير:','Explanation:')}</b> {q.explanation}</p>}
           </section>)}</div>
-          <div className="actions no-print">{!submitted?<button type="button" className="btn btn-primary" disabled={!allAnswered} onClick={()=>setSubmitted(true)}>{text('صحّح الاختبار','Grade quiz')}</button>:<button className="btn btn-outline" type="button" onClick={()=>{setSelected({});setSubmitted(false);}}>{text('إعادة المحاولة','Retake quiz')}</button>}</div>
+          <div className="actions no-print">{!submitted?<button type="button" className="btn btn-primary" disabled={!allAnswered} onClick={()=>setSubmitted(true)}>{text('صحّح الاختبار','Grade quiz')}</button>:<>
+            <button type="button" className="btn btn-primary" disabled={savedAttempt||savingAttempt} onClick={()=>void saveQuizAttempt()}>{savedAttempt?text('النتيجة محفوظة ✓','Result saved ✓'):savingAttempt?text('جاري الحفظ...','Saving...'):text('احفظ نتيجتك','Save result')}</button>
+            <button className="btn btn-outline" type="button" onClick={()=>{setSelected({});setSubmitted(false);setSavedAttempt(false);setAttemptId(window.crypto.randomUUID());setSaveMessage('');}}>{text('إعادة المحاولة','Retake quiz')}</button>
+            <Link className="btn btn-soft" to="/quiz-history">{text('سجل اختباراتي','My quiz history')}</Link>
+          </>}</div>
+          {saveMessage&&<div className="note warn no-print" role="status">{saveMessage}</div>}
+          {submitted&&<p className="inline-help no-print">{text('حفظ النتيجة اختياري؛ بيتم حفظ عنوان الاختبار والدرجة والمادة فقط، من غير نص المحاضرة أو إجاباتك.','Saving is optional: only the quiz title, score and course are stored, not the lecture or your answers.')}</p>}
           {!submitted&&!allAnswered&&<p className="inline-help no-print">{text('جاوب كل الأسئلة الأول عشان تشوف الدرجة والتفسيرات.', 'Answer all questions to see your score and explanations.')}</p>}
           <p className="inline-help">{text('دي أسئلة مولّدة للمراجعة، مش امتحان رسمي. راجع الإجابات المهمة مع محاضرتك.', 'AI-generated practice, not an official exam. Verify answers against the lecture.')}</p>
         </>}

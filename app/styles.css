@@ -79,3 +79,18 @@
 .quiz-score span{font-size:13px}
 @media(max-width:900px){.quiz-page-layout{grid-template-columns:1fr}}
 @media print{.quiz-editor,.quiz-empty,.quiz-page-layout>.quiz-editor,.no-print{display:none!important}.quiz-page-layout{display:block!important}.quiz-results{border:0!important;box-shadow:none!important;padding:5mm!important}.quiz-question{break-inside:avoid}.quiz-options{gap:4px}}
+
+/* V2.8 — private quiz history and course progress */
+.quiz-history-course{padding:13px 0;border-top:1px solid var(--line)}
+.quiz-history-course-head{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:13px}
+.quiz-history-course-head strong{overflow-wrap:anywhere}
+.quiz-history-course-head span{white-space:nowrap;color:var(--muted)}
+.quiz-history-track{height:9px;background:#efedf9;border-radius:12px;overflow:hidden;margin-top:8px}
+.quiz-history-track span{display:block;height:100%;border-radius:12px;background:#6960dc}
+.quiz-attempt-row{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:13px 0}
+.quiz-attempt-detail{flex:1;min-width:0;overflow-wrap:anywhere}
+.quiz-attempt-detail strong{display:block;font-size:13px}
+.quiz-attempt-detail small{display:block;font-size:11px;color:var(--muted)}
+.quiz-attempt-score{font-weight:800;color:var(--violet);white-space:nowrap}
+.quiz-attempt-score small{display:block;font-weight:500;font-size:11px;text-align:center}
+@media(max-width:550px){.quiz-attempt-row{gap:7px;flex-wrap:wrap}.quiz-attempt-detail{flex-basis:100%}.quiz-history-course-head{font-size:12px}}
