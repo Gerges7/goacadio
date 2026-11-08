@@ -23,7 +23,10 @@
     "test:v38": "node scripts/test-v38.mjs",
     "test:contact": "node scripts/test-public-contact.mjs",
     "test:v39": "node scripts/test-v39.mjs",
-    "check:ci": "npm run check:prelaunch && npm run audit:links && npm run test:v36 && npm run test:v37 && npm run test:v38 && npm run test:data-export && npm run test:contact && npm run test:v39 && npm run typecheck && npm run build"
+    "check:ci": "npm run check:prelaunch && npm run audit:links && npm run test:v36 && npm run test:v37 && npm run test:v38 && npm run test:data-export && npm run test:contact && npm run test:v39 && npm run test:functional && npm run typecheck && npm run build",
+    "test:functional": "node scripts/test-v40.mjs",
+    "check:api-guest": "node scripts/check-api-guest.mjs",
+    "check:api-guest:json": "node scripts/check-api-guest.mjs --json"
   },
   "dependencies": {
     "isbot": "5.1.32",

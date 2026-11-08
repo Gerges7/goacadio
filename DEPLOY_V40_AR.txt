@@ -1,0 +1,11 @@
+GoAcadio V4.0 — Functional QA & Production Smoke (incremental update)
+
+1) ارفع جميع ملفات ZIP بنفس المسارات على GitHub main.
+2) بعد الـCommit، افتح GitHub Actions > GoAcadio build & quality check.
+   اختبار functional 28 حالة + TypeScript + Production Build سيعمل تلقائيًا.
+3) بعد نجاح Cloudflare Deploy، افتح Actions > GoAcadio production smoke check > Run workflow > main.
+4) راجع نتائج فحص الصفحات العامة وفحص رفض API للضيوف.
+5) اتبع قائمة الاختبارات اليدوية في docs/V40_FUNCTIONAL_LAUNCH_QA_AR.md بحساب اختبار فقط.
+
+لا SQL، لا تغييرات في Supabase، لا Cloudflare Secrets، لا تفعيل SEO indexing أو AdSense.
+تنبيه: فحص الإنتاج الجديد لا يسجل الدخول، ولا يستهلك حصص AI، ولا يرسل PDF أو معلومات شخصية.
