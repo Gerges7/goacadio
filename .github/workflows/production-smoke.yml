@@ -1,0 +1,26 @@
+# Manually triggered ONLY after the Cloudflare production deployment has completed.
+# Uses no credentials, no secrets, no real student accounts and no AI requests.
+name: GoAcadio production smoke check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Public pages and guest API security
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify public pages, SEO, and security headers
+        run: node scripts/check-live.mjs
+      - name: Verify guest API access is denied safely
+        run: node scripts/check-api-guest.mjs
