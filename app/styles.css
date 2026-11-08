@@ -216,3 +216,7 @@
 .trust-home .actions{flex:0 0 auto}
 @media(max-width:900px){.trust-layout{grid-template-columns:minmax(0,1fr)}.trust-home{flex-direction:column;align-items:stretch}}
 @media(max-width:550px){.trust-feature-grid{grid-template-columns:1fr}.trust-home .actions{flex-direction:column}.trust-home .actions .btn{width:100%;text-align:center}}
+
+/* V3.8 — accessibility: make sign-up policy links clearly identifiable */
+.auth-policy-link{color:var(--violet);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.auth-policy-link:hover{text-decoration-thickness:2px}

@@ -1,0 +1,5 @@
+# REVIEW CANDIDATE ONLY — this file must never be copied until release approval.
+# Public crawlers need to access noindex pages to read their noindex rule.
+User-agent: *
+Allow: /
+Sitemap: https://goacadio.com/sitemap.xml

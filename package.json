@@ -17,7 +17,10 @@
     "test:data-export": "node scripts/test-account-export.mjs",
     "test:v36": "node scripts/test-v36.mjs",
     "test:v37": "node scripts/test-v37.mjs",
-    "check:live:json": "node scripts/check-live.mjs --json"
+    "check:live:json": "node scripts/check-live.mjs --json",
+    "audit:links": "node scripts/audit-site-links.mjs",
+    "prepare:seo-candidate": "node scripts/prepare-launch-candidate.mjs",
+    "test:v38": "node scripts/test-v38.mjs"
   },
   "dependencies": {
     "isbot": "5.1.32",

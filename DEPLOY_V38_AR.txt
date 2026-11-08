@@ -1,0 +1,33 @@
+GoAcadio V3.8 — SEO Safe Launch Gate + Signup Transparency
+
+1) هذا ZIP تحديث جزئي. ارفع الملفات إلى GitHub Gerges7/goacadio على main بنفس المسارات (استبدال الملفات المطابقة). لا تحذف أي ملفات قديمة.
+2) لا يوجد SQL جديد ولا Cloudflare Secret ولا تغيير في AI Bindings.
+3) تأكد أن Cloudflare Deploy نجح. جرّب /auth في وضع Create account (تظهر روابط Privacy / Terms / Contact) وكذلك Sign in.
+4) لتشغيل الاختبارات من المشروع محليًا:
+   npm run test:v38
+   npm run audit:links
+   npm run check:prelaunch
+   npm run test:v37
+   npm run test:v36
+   npm run check:live
+5) لتحضير ملفات SEO المستقبلية داخليًا فقط:
+   npm run prepare:seo-candidate
+   > docs/seo-release-candidate/robots.txt
+   > docs/seo-release-candidate/sitemap.xml
+   لا تنقلها إلى public ولا تفتح فهرسة Google قبل مراجعة الخصوصية والقانون والأمان وموافقة إطلاق صريحة.
+6) الملف التفصيلي: docs/V38_SAFE_SEO_LAUNCH_GATE_AR.md
+
+ملفات التحديث:
+- app/routes/auth.tsx
+- app/styles.css
+- package.json
+- scripts/launch-inventory.mjs
+- scripts/audit-site-links.mjs
+- scripts/prepare-launch-candidate.mjs
+- scripts/test-v38.mjs
+- docs/seo-release-candidate/robots.txt
+- docs/seo-release-candidate/sitemap.xml
+- docs/V38_SAFE_SEO_LAUNCH_GATE_AR.md
+- DEPLOY_V38_AR.txt
+
+فهرسة Google الحالية لا تزال مقفولة.
