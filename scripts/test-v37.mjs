@@ -23,7 +23,7 @@ test('About route registered',()=>assert.ok(routes.includes("route('about', './r
 test('Terms route registered',()=>assert.ok(routes.includes("route('terms', './routes/terms.tsx')")));
 test('Both public routes use canonical helper',()=>{assert.ok(about.includes("'/about'"));assert.ok(terms.includes("'/terms'"));assert.ok(about.includes('publicSeoMeta('));assert.ok(terms.includes('publicSeoMeta('));});
 test('Both pages bilingual via locale',()=>{assert.ok(about.includes('useLocale()')&&about.includes('text('));assert.ok(terms.includes('useLocale()')&&terms.includes('text('));});
-test('Terms explicitly marked as non-final',()=>{assert.match(terms,/Pre-launch informational draft/);assert.match(terms,/legal review/);});
+test('Current terms transparently describe published service',()=>{assert.match(terms,/Current terms of use/);assert.doesNotMatch(terms,/Pre-launch informational draft/);assert.match(terms,/rights granted by applicable law/);});
 test('No invented official university affiliation',()=>assert.match(about,/not a university/));
 test('Core capabilities and limitations truthfully disclosed',()=>{for(const s of ['Supabase','PDF','AI-generated','GPA'])assert.ok(about.includes(s)||terms.includes(s),s);});
 test('Contact and privacy links on trust pages',()=>{for(const file of [about,terms]){assert.ok(file.includes('to="/contact"'));assert.ok(file.includes('to="/privacy"'));}});

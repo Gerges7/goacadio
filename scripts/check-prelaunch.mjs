@@ -33,7 +33,7 @@ check('Sitemap has useful public URLs', (sitemap.match(/<url><loc>/g)||[]).lengt
 check('Site still has no public roadmap route', !/route\(['"]roadmap/.test(routes));
 check('About and terms routes present before launch', routes.includes("route('about'") && routes.includes("route('terms'"));
 check('Prelaunch sitemap lists about and terms', sitemap.includes('<loc>https://goacadio.com/about</loc>') && sitemap.includes('<loc>https://goacadio.com/terms</loc>'));
-check('Terms retain honest draft disclosure pending owner/legal review', read('app/routes/terms.tsx').includes('Pre-launch informational draft'));
+check('Published terms identify current scope and contact', read('app/routes/terms.tsx').includes('Current terms of use') && read('app/routes/terms.tsx').includes('gergesmorad17@gmail.com'));
 check('AdSense verification placed in document head', rootUi.includes('name="google-adsense-account" content="ca-pub-1551519098591089"'));
 check('ads.txt authorizes owner only', read('public/ads.txt').trim()==='google.com, pub-1551519098591089, DIRECT, f08c47fec0942fa0');
 check('Root robots advertises the published sitemap', /^Sitemap: https:\/\/goacadio\.com\/sitemap\.xml$/m.test(robots));

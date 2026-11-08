@@ -44,8 +44,9 @@ export default function About() {
           <p>{text('المحتوى عام للتعلّم والمراجعة. الحسابات تعتمد على البيانات وسلم الدرجات اللي تختاره، ونتائج الذكاء الاصطناعي ممكن تحتوي أخطاء. ما تعتمدش على GoAcadio بدل اللوائح الجامعية أو المدرّس أو المرجع الرسمي.',
             'Guides are general educational resources. Calculations depend on the data and grade scale you select, and AI-generated answers can contain mistakes. GoAcadio does not replace institutional rules, instructors or official references.')}</p></section>
         <section><h2>{text('المساعدة والملاحظات', 'Support and feedback')}</h2>
-          <p>{text('لو عندك مشكلة في أداة أو محتاج تصحيح معلومة، استخدم صفحة التواصل. التواصل عبر البريد الخارجي محتاج عنوان دعم رسمي مفعّل من إدارة الموقع؛ المستخدم المسجل يقدر كمان يقدّم طلبًا من حسابه.',
-            'If a tool is broken or you spot an inaccurate explanation, use our contact page. Guest email contact requires a support mailbox configured by the site operator; signed-in students can also send account requests.')}</p>
+          <p>{text('لو عندك مشكلة أو تصحيح، تواصل معانا من صفحة التواصل أو عبر بريد الدعم المنشور. المستخدم المسجل يقدر كمان يقدّم طلب دعم من حسابه.',
+            'If a tool is broken or you notice an inaccurate explanation, use the contact page or the published support email. Signed-in students can also send in-app support requests.')}</p>
+          <p>{text('بريد الدعم:', 'Support email:')} <a href="mailto:gergesmorad17@gmail.com" dir="ltr">gergesmorad17@gmail.com</a></p>
           <div className="actions"><Link className="btn btn-primary" to="/contact">{text('تواصل معنا', 'Contact us')}</Link>
             <Link className="btn btn-soft" to="/help">{text('مركز المساعدة', 'Help center')}</Link></div></section>
       </article>

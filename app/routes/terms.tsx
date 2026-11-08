@@ -19,9 +19,9 @@ export default function Terms(){
     </div></div>
     <div className="page-content"><div className="container trust-layout">
       <article className="panel stack trust-content">
-        <div className="note warn" role="note"><strong>{text('نسخة توضيحية قبل الإطلاق', 'Pre-launch informational draft')}</strong>
-          <p>{text('النص ده وصف تشغيلـي لاستخدام GoAcadio، ومحتاج مراجعة قانونية واعتمادًا من مالك الموقع قبل اعتباره شروطًا قانونية نهائية. لا تفترض إنه بديل عن اتفاق مُعتمد أو عن حقوقك القانونية.',
-            'This describes how GoAcadio currently operates. It requires legal review and approval by the site owner before it can be treated as final legal terms. It does not replace an approved agreement or your statutory rights.')}</p></div>
+        <div className="note" role="note"><strong>{text('شروط الاستخدام الحالية', 'Current terms of use')}</strong>
+          <p>{text('توضح هذه الشروط قواعد استخدام GoAcadio وحدود الخدمات المتاحة حاليًا. لا تُلغي أي حقوق يضمنها القانون المعمول به، ولا نزعم أن الخدمات الأكاديمية أو نتائج الذكاء الاصطناعي رسمية.',
+            'These terms explain how GoAcadio currently operates and the limits of its services. They do not override rights granted by applicable law, and we do not present academic or AI results as official.')}</p></div>
         <section><h2>{text('1. طبيعة الخدمة', '1. What the service provides')}</h2>
           <p>{text('GoAcadio بتوفر أدوات تعليمية وإنتاجية تشمل حاسبة GPA وCGPA، مؤقت التركيز، إنشاء سيرة ذاتية، خطة للمذاكرة، وأدوات للمراجعة بمساعدة الذكاء الاصطناعي. ليست جهة أكاديمية معتمدة، ولا تعطي شهادات أو درجات رسمية.',
             'GoAcadio offers study and productivity tools: GPA and CGPA calculations, a focus timer, CV drafts, study planning and AI-assisted revision. It is not an accredited academic institution and does not issue official grades or credentials.')}</p></section>
@@ -43,11 +43,12 @@ export default function Terms(){
           <p>{text('في الإصدار الحالي، الموقع لا يعالج مدفوعات داخلية. إعداد الإعلانات ليس مفعّلًا في هذه المرحلة. أي تغيير مستقبلي في الدفع أو الإعلانات يحتاج توضيحًا وتحديثًا للمعلومات المناسبة قبل تفعيله.',
             'The current site does not process payments. Advertising is not enabled at this stage. Any future payments or advertising would require appropriate updated information before activation.')}</p></section>
         <section><h2>{text('7. الاستفسارات والتحديثات', '7. Questions and updates')}</h2>
-          <p>{text('لو عندك سؤال أو مشكلة أو ملاحظة حول النص أو أدوات الموقع، تواصل مع الإدارة. سيتم توضيح التعديلات المهمة على الوثائق المنشورة عند اعتمادها.',
-            'For questions, problems or comments about these materials and tools, contact the operator. Material changes to published documents should be clearly communicated when formally adopted.')}</p>
+          <p>{text('لو عندك سؤال أو مشكلة أو اعتراض على محتوى الموقع، تواصل عبر البريد المنشور. لو غيّرنا الشروط بشكل جوهري، هنحدّث الصفحة بتاريخ التعديل قبل تطبيقها.',
+            'For questions, corrections or concerns, contact the published support address. Material changes to these terms will be dated on this page before they take effect.')}</p>
+          <p>{text('البريد العام للتواصل:', 'Public support contact:')} <a href="mailto:gergesmorad17@gmail.com" dir="ltr">gergesmorad17@gmail.com</a></p>
           <div className="actions"><Link className="btn btn-primary" to="/contact">{text('تواصل معنا', 'Contact us')}</Link>
             <Link className="btn btn-outline" to="/privacy">{text('معلومات الخصوصية', 'Privacy information')}</Link></div></section>
-        <p className="inline-help">{text('آخر تحديث للمسودة: 8 نوفمبر 2026.', 'Draft last updated: 8 November 2026.')}</p>
+        <p className="inline-help">{text('سارية من: 8 نوفمبر 2026. آخر تحديث: 8 نوفمبر 2026.', 'Effective: 8 November 2026. Last updated: 8 November 2026.')}</p>
       </article>
       <aside className="panel stack trust-aside"><h2 className="panel-title">{text('معلومات مهمة', 'Useful information')}</h2>
         <Link className="btn btn-ghost" to="/about">{text('عن GoAcadio', 'About GoAcadio')}</Link>

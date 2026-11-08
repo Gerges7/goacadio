@@ -82,8 +82,8 @@ export default function AuthPage() {
             <Link to="/privacy" className="auth-policy-link">{text('الخصوصية','Privacy information')}</Link>
             {text(' و', ' and ')}
             <Link to="/terms" className="auth-policy-link">{text('شروط الاستخدام','Terms of use')}</Link>.
-            <p className="inline-help">{text('الشروط الحالية مسودة توضيحية قيد المراجعة القانونية. لا يتم طلب موافقة قانونية نهائية على مسودة.',
-              'The current terms are an informational draft pending legal review. This notice is not a final legal consent agreement.')}</p>
+            <p className="inline-help">{text('إنشاء الحساب اختياري. الأداة الأساسية مجانية من غير حساب، ويمكنك مراجعة شروط الخدمة والخصوصية قبل التسجيل.',
+              'Creating an account is optional. Basic tools remain available without an account; review the current terms and privacy information before signing up.')}</p>
           </div>}
           {feedback && <div className="note" role="status">{feedback}</div>}
           <button disabled={busy} className="btn btn-primary" type="submit">{busy ? text('جاري التنفيذ...', 'Working...') : effectiveMode === 'signup' ? text('أنشئ الحساب','Create account') : effectiveMode === 'reset' ? text('أرسل رابط الاستعادة','Send reset link') : effectiveMode === 'new-password' ? text('حدّث كلمة المرور','Update password') : text('دخول','Sign in')}</button>
