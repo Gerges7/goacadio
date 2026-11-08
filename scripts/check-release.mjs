@@ -16,9 +16,9 @@ const routes = read('app/routes.ts');
 const robots = read('public/robots.txt');
 const seo = read('app/lib/seo.ts');
 
-check('Prelaunch crawler block retained', /^Disallow:\s*\/\s*$/m.test(robots));
-check('Prelaunch page noindex retained', /name:\s*'robots',\s*content:\s*'noindex, follow'/.test(root));
-check('Public SEO metadata retains noindex', /noindex, follow/.test(seo));
+check('Public crawler access is allowed', /^Allow:\s*\/\s*$/m.test(robots) && !/^Disallow:\s*\/\s*$/m.test(robots));
+check('Root public page indexable', /name:\s*'robots',\s*content:\s*'index, follow'/.test(root));
+check('Public SEO metadata indexable', /name:\s*'robots',\s*content:\s*'index, follow'/.test(seo));
 check('Only one local CSS bundle referenced', /import stylesHref/.test(root) && !/stylesV30Href|stylesV31Href/.test(root));
 check('Legacy mobile and guide styles merged', css.includes('V3.0 account center') && css.includes('V3.1 — original bilingual'));
 check('No blocking font CSS @import', !/^\s*@import\s+url\(['"]https:\/\/fonts\.googleapis\.com/m.test(css));

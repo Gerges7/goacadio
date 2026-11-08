@@ -48,21 +48,21 @@ test('JSON-LD script breaking text is safely escaped without data loss',()=>{
   assert.deepEqual(JSON.parse(serialized),attack);
   assert.match(serialized,/\\u003c/);
 });
-function html(url){return `<html><head><meta name="robots" content="noindex, follow"/><link rel="canonical" href="${url}"/><meta property="og:url" content="${url}" /></head><body></body></html>`;}
+function html(url){return `<html><head><meta name="google-adsense-account" content="ca-pub-1551519098591089"/><meta name="robots" content="index, follow"/><link rel="canonical" href="${url}"/><meta property="og:url" content="${url}" /></head><body></body></html>`;}
 const headers=()=>new Headers({'content-type':'text/html; charset=utf-8','x-content-type-options':'nosniff','x-frame-options':'DENY'});
 const pub=TEST_CASES.find(x=>x.path==='/guides/how-to-calculate-gpa');
 
-test('Valid public prelaunch page passes canonical and noindex checks',()=>{
+test('Valid public launch page passes canonical and index checks',()=>{
   assert.deepEqual(inspectResponse(pub,200,headers(),html(SITE+pub.path)),[]);
 });
 test('Canonical pointing to another page fails',()=>{
   assert.match(inspectResponse(pub,200,headers(),html(SITE+'/wrong')).join(' '),/Canonical/);
 });
 test('Missing canonical fails',()=>{
-  assert.match(inspectResponse(pub,200,headers(),'<meta name="robots" content="noindex"/>').join(' '),/canonical/);
+  assert.match(inspectResponse(pub,200,headers(),'<meta name="robots" content="index"/>').join(' '),/canonical/);
 });
-test('Missing meta noindex fails',()=>{
-  assert.match(inspectResponse(pub,200,headers(),html(SITE+pub.path).replace('noindex','index')).join(' '),/noindex/);
+test('Public noindex fails',()=>{
+  assert.match(inspectResponse(pub,200,headers(),html(SITE+pub.path).replace('index, follow','noindex, follow')).join(' '),/noindex/);
 });
 test('Missing security headers fails',()=>{
   assert.match(inspectResponse(pub,200,new Headers({'content-type':'text/html'}),html(SITE+pub.path)).join(' '),/nosniff/);
@@ -73,17 +73,17 @@ test('Private pages require both no-store and X-Robots-Tag',()=>{
   assert.match(inspectResponse(privateTest,200,h,html(SITE)).join(' '),/no-store/);
   h.set('Cache-Control','private, no-store, max-age=0');
   h.set('X-Robots-Tag','noindex, nofollow');
-  assert.deepEqual(inspectResponse(privateTest,200,h,html(SITE)),[]);
+  assert.deepEqual(inspectResponse(privateTest,200,h,html(SITE).replace('index, follow','noindex, nofollow')),[]);
 });
 test('Robots static assets are checked without demanding Worker headers',()=>{
   const r=TEST_CASES.find(x=>x.category==='robots');
-  assert.deepEqual(inspectResponse(r,200,new Headers(),'User-agent: *\nDisallow: /\n'),[]);
-  assert.match(inspectResponse(r,200,new Headers(),'User-agent: *\nAllow: /\n').join(' '),/disallow/i);
+  assert.deepEqual(inspectResponse(r,200,new Headers(),'User-agent: *\nAllow: /\nSitemap: https://goacadio.com/sitemap.xml\n'),[]);
+  assert.match(inspectResponse(r,200,new Headers(),'User-agent: *\nDisallow: /\n').join(' '),/Allow|block/i);
 });
-test('Missing sitemap is expected until release authorization',()=>{
-  const s=TEST_CASES.find(x=>x.category==='sitemap-unpublished');
-  assert.deepEqual(inspectResponse(s,404,new Headers(),''),[]);
-  assert.ok(inspectResponse(s,200,new Headers(),'<urlset/>').length>0);
+test('Published sitemap is required for review',()=>{
+  const s=TEST_CASES.find(x=>x.category==='sitemap');
+  assert.deepEqual(inspectResponse(s,200,new Headers(),read('public/sitemap.xml')),[]);
+  assert.ok(inspectResponse(s,404,new Headers(),'<urlset/>').length>0);
 });
 test('Origin is strictly HTTPS and pathless',()=>{
   assert.equal(validateOrigin('https://goacadio.com/'),SITE);
@@ -100,9 +100,9 @@ test('Live audit includes every published guide and basic public route',()=>{
 });
 test('Private paths never enter public audit list or sitemap',()=>{
   assert.equal(PUBLIC_PATHS.some(x=>/^\/(account|dashboard|admin|auth|api|planner|quiz)/.test(x)),false);
-  assert.match(read('public/robots.txt'),/Disallow: \/\s*$/m);
+  assert.match(read('public/robots.txt'),/Allow: \/\s*$/m);
   assert.equal(read('docs/sitemap-public-template.xml').includes('/account'),false);
-  assert.equal(read('app/lib/seo.ts').includes('noindex, follow'),true);
+  assert.equal(read('app/lib/seo.ts').includes('index, follow'),true);
 });
 test('Guide UI exposes visible breadcrumbs and safe JSON-LD',()=>{
   const route=read('app/routes/guide.tsx');

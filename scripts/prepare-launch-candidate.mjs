@@ -1,6 +1,6 @@
-/** Prepare reviewed SEO artifacts in docs/ only; NEVER alters public/, app/ or deployment.
+/** Prepare an internal copy of the already approved/public SEO artifacts in docs/ only.
  * Run: npm run prepare:seo-candidate
- * Existing prelaunch noindex and robots rules are intentionally left unchanged.
+ * Does not alter the live indexable launch. This is an archived audit copy.
  */
 import {mkdirSync, writeFileSync, readFileSync, existsSync} from 'node:fs';
 import {resolve,dirname} from 'node:path';
@@ -21,8 +21,8 @@ if(inventory.publicPaths.some(isPrivatePublicPath))throw new Error('Private path
 const out=resolve(root,'docs/seo-release-candidate');
 mkdirSync(out,{recursive:true});
 const robots=[
-  '# REVIEW CANDIDATE ONLY — this file must never be copied until release approval.',
-  '# Public crawlers need to access noindex pages to read their noindex rule.',
+  '# INTERNAL AUDIT COPY — live SEO artifacts are under public/.',
+  '# Public crawlers need to access private noindex pages to read their noindex rule.',
   'User-agent: *',
   'Allow: /',
   `Sitemap: ${SITE}/sitemap.xml`,
@@ -30,7 +30,7 @@ const robots=[
 ].join('\n');
 const xml=[
   '<?xml version="1.0" encoding="UTF-8"?>',
-  '<!-- REVIEW CANDIDATE ONLY — publish after legal/security/content QA and explicit approval. -->',
+  '<!-- INTERNAL AUDIT COPY: public/sitemap.xml is the deployed file. -->',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   ...inventory.publicPaths.map(path=>`  <url><loc>${SITE}${path}</loc></url>`),
   '</urlset>',
@@ -39,4 +39,4 @@ const xml=[
 writeFileSync(resolve(out,'robots.txt'),robots);
 writeFileSync(resolve(out,'sitemap.xml'),xml);
 console.log(`Prepared ${inventory.publicPaths.length} public URL candidates in docs/seo-release-candidate/`);
-console.log('NOT PUBLISHED. Current public/robots.txt, publicSeoMeta and root noindex are UNCHANGED.');
+console.log('INTERNAL COPY ONLY. Current public/robots.txt and sitemap.xml are not changed by this command.');

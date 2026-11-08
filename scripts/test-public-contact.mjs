@@ -28,8 +28,8 @@ check(()=>assert.equal(composeContactMailto('help@goacadio.com','general','test'
 check(()=>assert.ok(composeContactMailto('help@goacadio.com','privacy','test','Message body\r\nBcc:bad@evil.com').includes('%0D%0A')));
 check(()=>assert.ok(!composeContactMailto('help@goacadio.com','privacy','test','Message body\r\nBcc:bad@evil.com').includes('\r\n')));
 const route=readFileSync(join(root,'app/routes/contact.tsx'),'utf-8');
-check(()=>assert.ok(route.includes('PUBLIC_SUPPORT_EMAIL')));
-check(()=>assert.ok(route.includes("publicSupportEmail(config.cloudflare?.env?.PUBLIC_SUPPORT_EMAIL)")));
+check(()=>assert.ok(route.includes('OFFICIAL_SUPPORT_EMAIL')));
+check(()=>assert.ok(route.includes('return {supportEmail: OFFICIAL_SUPPORT_EMAIL}')));
 check(()=>assert.ok(route.includes("role=\"status\"")));
 check(()=>assert.ok(route.includes("mailto ? <a")));
 const routes=readFileSync(join(root,'app/routes.ts'),'utf-8');
@@ -43,6 +43,6 @@ check(()=>assert.ok(privacy.includes('href="/contact"')));
 const admin=readFileSync(join(root,'app/components/account-requests-admin.tsx'),'utf-8');
 check(()=>assert.ok(admin.includes("status==='resolved'&&request?.category==='account_deletion'")));
 const robots=readFileSync(join(root,'public/robots.txt'),'utf8');
-check(()=>assert.match(robots,/Disallow: \/\s*$/m));
+check(()=>assert.match(robots,/Allow: \/\s*$/m));
 check(()=>assert.ok(!routes.includes("route('roadmap'")));
 console.log(`${checks} public contact and pre-launch checks passed`);

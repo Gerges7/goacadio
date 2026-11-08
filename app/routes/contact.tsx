@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link, useLoaderData, type LoaderFunctionArgs, type MetaFunction } from 'react-router';
+import { Link, useLoaderData, type MetaFunction } from 'react-router';
 import { useLocale } from '@/components/locale-provider';
 import { useAuth } from '@/components/auth-provider';
 import { publicSeoMeta } from '@/lib/seo';
-import { composeContactMailto, publicSupportEmail, type ContactTopic } from '@/lib/contact';
+import { composeContactMailto, OFFICIAL_SUPPORT_EMAIL, type ContactTopic } from '@/lib/contact';
 
 export const meta: MetaFunction = () => publicSeoMeta(
   'Contact & Support | GoAcadio',
@@ -11,10 +11,9 @@ export const meta: MetaFunction = () => publicSeoMeta(
   '/contact',
 );
 
-/** Only expose the deliberately PUBLIC support address, never arbitrary Worker bindings. */
-export function loader({context}: LoaderFunctionArgs) {
-  const config = context as unknown as {cloudflare?:{env?:{PUBLIC_SUPPORT_EMAIL?:unknown}}};
-  return {supportEmail: publicSupportEmail(config.cloudflare?.env?.PUBLIC_SUPPORT_EMAIL)};
+/** Owner-approved public email address, rendered in SSR and available to guests. */
+export function loader() {
+  return {supportEmail: OFFICIAL_SUPPORT_EMAIL};
 }
 
 export default function Contact(){

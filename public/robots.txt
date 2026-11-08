@@ -1,3 +1,5 @@
-# Pre-launch: do not index until the legal/privacy and content review is complete.
+# GoAcadio public review launch. Private pages use per-page noindex and X-Robots-Tag.
+# Do not disallow noindex pages here: crawlers must read their noindex directives.
 User-agent: *
-Disallow: /
+Allow: /
+Sitemap: https://goacadio.com/sitemap.xml

@@ -1,4 +1,4 @@
-/** Read-only internal-link, route, public-sitemap and prelaunch-indexing audit.
+/** Read-only internal-link, route, public-sitemap and launch-indexing audit.
  * Run: npm run audit:links
  * Inspects literal internal URLs; dynamic links are checked against route patterns
  * only where explicitly represented in the shared guide registry.
@@ -61,7 +61,7 @@ for(const file of scan(resolve(root,'app'))){
 }
 const launch=validateLaunchInventory({
   routesText,
-  sitemapXml:read('docs/sitemap-public-template.xml'),
+  sitemapXml:read('public/sitemap.xml'),
   robotsText:read('public/robots.txt'),
   seoSource:read('app/lib/seo.ts'),
   rootSource:read('app/root.tsx'),
@@ -77,7 +77,7 @@ if(process.argv.includes('--json'))console.log(JSON.stringify(report,null,2));
 else{
   console.log(`Routes: ${report.routeCount} | Static links: ${report.staticLinksChecked} | Public sitemap URLs: ${report.publicSitemapPages}`);
   for(const e of errors)console.error('FAIL:',e);
-  if(report.ok)console.log('PASS: Static route links, public sitemap and prelaunch indexing lock are consistent.');
+  if(report.ok)console.log('PASS: Static route links, public sitemap and review indexing controls are consistent.');
   console.log('Note: variable/computed links and external domains require manual/browser QA.');
 }
 if(errors.length)process.exitCode=1;

@@ -1,6 +1,6 @@
 import type { MetaDescriptor } from 'react-router';
 
-/** Metadata for public routes. Pre-launch noindex is deliberately ON until legal/security review. */
+/** Indexable public routes only; authenticated routes MUST NOT call this function. */
 const SITE = 'https://goacadio.com';
 
 export function publicSeoMeta(title: string, description: string, path: string): MetaDescriptor[] {
@@ -9,7 +9,7 @@ export function publicSeoMeta(title: string, description: string, path: string):
   return [
     { title },
     { name: 'description', content: description },
-    { name: 'robots', content: 'noindex, follow' },
+    { name: 'robots', content: 'index, follow' },
     { tagName: 'link' as const, rel: 'canonical', href: url },
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },

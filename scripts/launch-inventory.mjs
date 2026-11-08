@@ -25,11 +25,13 @@ export function validateLaunchInventory({routesText,sitemapXml,robotsText,seoSou
   const pathExists=exists??(()=>false);
   const declared=new Set([...routesText.matchAll(/route\('([^']+)'/g)].map(m=>'/'+m[1]));
   declared.add('/');
-  require(robotsText.includes('Disallow: /')&&/^\s*Disallow:\s*\/\s*$/m.test(robotsText), 'Production robots.txt must remain blocked before release');
-  require(/noindex,\s*follow/.test(seoSource), 'Public SEO helper must still contain noindex');
-  require(/name:\s*'robots',\s*content:\s*'noindex, follow'/.test(rootSource), 'Root prelaunch noindex is missing');
+  require(/^\s*Allow:\s*\/\s*$/m.test(robotsText)&&!/^\s*Disallow:\s*\/\s*$/m.test(robotsText), 'Public launch robots.txt must allow crawlers');
+  require(robotsText.includes('Sitemap: '+SITE+'/sitemap.xml'),'Public launch robots.txt lacks sitemap reference');
+  require(/index,\s*follow/.test(seoSource) && !/noindex,\s*follow/.test(seoSource), 'Public SEO helper must be indexable');
+  require(/name:\s*'robots',\s*content:\s*'index, follow'/.test(rootSource), 'Root public index is missing');
   require(!declared.has('/roadmap'), 'Do not expose a public roadmap');
-  if(publicFolder)require(!pathExists(publicFolder+'/sitemap.xml'), 'Production sitemap.xml must not be published before approval');
+  if(publicFolder)require(pathExists(publicFolder+'/sitemap.xml'), 'Public sitemap.xml must be published for review');
+  // The validator also checks the content of the published sitemap passed as sitemapXml.
   let urls=[];try{urls=sitemapLocations(sitemapXml);}catch(e){failures.push(String(e.message));}
   const publicPaths=[];
   for(const raw of urls){

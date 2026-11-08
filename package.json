@@ -11,7 +11,7 @@
     "typecheck": "react-router typegen && tsc --noEmit",
     "cf-typegen": "wrangler types && react-router typegen",
     "check:release": "node scripts/check-release.mjs",
-    "check:prelaunch": "npm run check:release && node scripts/check-prelaunch.mjs",
+    "check:prelaunch": "npm run check:launch",
     "check:live": "node scripts/check-live.mjs",
     "prepare:sitemap": "node scripts/generate-sitemap-template.mjs",
     "test:data-export": "node scripts/test-account-export.mjs",
@@ -23,10 +23,12 @@
     "test:v38": "node scripts/test-v38.mjs",
     "test:contact": "node scripts/test-public-contact.mjs",
     "test:v39": "node scripts/test-v39.mjs",
-    "check:ci": "npm run check:prelaunch && npm run audit:links && npm run test:v36 && npm run test:v37 && npm run test:v38 && npm run test:data-export && npm run test:contact && npm run test:v39 && npm run test:functional && npm run typecheck && npm run build",
+    "check:ci": "npm run check:launch && npm run audit:links && npm run test:v36 && npm run test:v37 && npm run test:v38 && npm run test:data-export && npm run test:contact && npm run test:v39 && npm run test:functional && npm run typecheck && npm run build",
     "test:functional": "node scripts/test-v40.mjs",
     "check:api-guest": "node scripts/check-api-guest.mjs",
-    "check:api-guest:json": "node scripts/check-api-guest.mjs --json"
+    "check:api-guest:json": "node scripts/check-api-guest.mjs --json",
+    "check:launch": "npm run check:release && node scripts/check-prelaunch.mjs && node scripts/test-v41.mjs",
+    "test:v41": "node scripts/test-v41.mjs"
   },
   "dependencies": {
     "isbot": "5.1.32",

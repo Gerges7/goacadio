@@ -1,5 +1,5 @@
 /**
- * GoAcadio V3.6 prelaunch smoke test, public routes only + logged-out private pages.
+ * GoAcadio V4.1 launch-ready smoke test, public routes only + logged-out private pages.
  * Usage: npm run check:live [-- https://goacadio.com]  or  npm run check:live -- --json
  * Produces no authenticated requests; HTTP duration is NOT a Core Web Vital.
  */
@@ -28,7 +28,7 @@ for(const test of TEST_CASES){
   }
 }
 const passed=results.filter(x=>x.ok).length;
-const report={origin,checkedAt:new Date().toISOString(),mode:'prelaunch',total:results.length,
+const report={origin,checkedAt:new Date().toISOString(),mode:'adsense-site-review',total:results.length,
   passed,failed:results.length-passed,note:'Unauthenticated HTTP smoke checks only; not a full build, privacy, load or security audit.',results};
 if(json)console.log(JSON.stringify(report,null,2));
 else{
@@ -36,6 +36,6 @@ else{
     console.log(`${item.ok?'PASS':'FAIL'} ${String(item.status??'---').padStart(3)} ${String(item.durationMs).padStart(5)}ms ${item.path}`);
     for(const failure of item.failures)console.log('  - '+failure);
   }
-  console.log(`\n${passed}/${results.length} prelaunch live checks passed. Timings are network durations, not LCP/INP/CLS.`);
+  console.log(`\n${passed}/${results.length} public launch live checks passed. Timings are network durations, not LCP/INP/CLS.`);
 }
 if(passed!==results.length)process.exitCode=1;
