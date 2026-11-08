@@ -1,9 +1,21 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import ts from 'typescript';
+import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
-const { publicSupportEmail, composeContactMailto } = await import(pathToFileURL(join(root,'app/lib/contact.ts')).href);
+// Node 20/22 does not consistently support importing .ts directly.
+// Transpile our actual module in memory, so tests work on every supported Node version.
+const source = readFileSync(join(root, 'app/lib/contact.ts'), 'utf8');
+const compiled = ts.transpileModule(source, {
+  fileName:'contact.ts',
+  reportDiagnostics:true,
+  compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022},
+});
+assert.equal(compiled.diagnostics?.filter(d => d.category === ts.DiagnosticCategory.Error).length ?? 0, 0);
+const { publicSupportEmail, composeContactMailto } = await import(
+  'data:text/javascript;base64,' + Buffer.from(compiled.outputText).toString('base64')
+);
 let checks=0;const check=(fn)=>{fn();checks++;};
 check(()=>assert.equal(publicSupportEmail(' help@goacadio.com '),'help@goacadio.com'));
 check(()=>assert.equal(publicSupportEmail('team@sub.example.co.uk'),'team@sub.example.co.uk'));

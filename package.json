@@ -8,7 +8,7 @@
     "build": "react-router build",
     "deploy": "wrangler deploy",
     "preview": "npm run build && vite preview",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "react-router typegen && tsc --noEmit",
     "cf-typegen": "wrangler types && react-router typegen",
     "check:release": "node scripts/check-release.mjs",
     "check:prelaunch": "npm run check:release && node scripts/check-prelaunch.mjs",
@@ -20,7 +20,10 @@
     "check:live:json": "node scripts/check-live.mjs --json",
     "audit:links": "node scripts/audit-site-links.mjs",
     "prepare:seo-candidate": "node scripts/prepare-launch-candidate.mjs",
-    "test:v38": "node scripts/test-v38.mjs"
+    "test:v38": "node scripts/test-v38.mjs",
+    "test:contact": "node scripts/test-public-contact.mjs",
+    "test:v39": "node scripts/test-v39.mjs",
+    "check:ci": "npm run check:prelaunch && npm run audit:links && npm run test:v36 && npm run test:v37 && npm run test:v38 && npm run test:data-export && npm run test:contact && npm run test:v39 && npm run typecheck && npm run build"
   },
   "dependencies": {
     "isbot": "5.1.32",

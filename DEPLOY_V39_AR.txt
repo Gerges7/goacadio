@@ -1,0 +1,6 @@
+GoAcadio V3.9 — Build Quality Gate
+1. Upload all files from this ZIP to main, preserving paths (including .github/workflows).
+2. Visit GitHub > Actions > GoAcadio build & quality check.
+3. Wait for the check to finish. If red, open logs and fix the first failure before treating deployment as verified.
+4. No SQL, no new Cloudflare bindings, no index opening, no changes to student data.
+NOTE: GitHub Actions checks do NOT automatically block your separate Cloudflare auto-deploy.
