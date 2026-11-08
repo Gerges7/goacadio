@@ -64,11 +64,14 @@ export async function extractPdfText(file: File): Promise<PdfExtractResult> {
 
       // PDF.js transfers the array buffer to its worker, so every attempt must
       // receive a fresh copy. Otherwise retrying may read a detached buffer.
-      task = pdfjs.getDocument({
+      // Passing a named options variable retains the PDF.js runtime setting
+      // while remaining compatible with the installed package's typings.
+      const documentOptions = {
         data: new Uint8Array(original.slice(0)),
         isEvalSupported: false,
         useSystemFonts: true,
-      });
+      };
+      task = pdfjs.getDocument(documentOptions);
       document = await task.promise;
       const totalPages = document.numPages;
       const limit = Math.min(totalPages, MAX_PDF_PAGES);
@@ -105,8 +108,9 @@ export async function extractPdfText(file: File): Promise<PdfExtractResult> {
       return { text, pagesRead, totalPages, truncated, skippedPages };
     } finally {
       try {
-        if (document) await document.destroy();
-        else if (task) await task.destroy();
+        // PDFDocumentLoadingTask.destroy() is the supported typed cleanup path.
+        // It also cleans up a successfully loaded PDF document and worker.
+        if (task) await task.destroy();
       } catch {
         // A failed cleanup must not turn an already extracted document into an error.
       } finally {

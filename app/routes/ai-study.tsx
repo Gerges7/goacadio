@@ -69,7 +69,7 @@ export default function AiStudy(){
       const result=await response.json() as {answer?:string;error?:string;remaining?:number};
       if(typeof result.remaining==='number')setRemaining(result.remaining);
       if(!response.ok||!result.answer)throw new Error(result.error||'AI_UNAVAILABLE');
-      setMessages(old=>[...old,{role:'user',content:prompt.trim()},{role:'assistant',content:result.answer!}].slice(-20));
+      setMessages(old=>[...old,{role:'user' as const,content:prompt.trim()},{role:'assistant' as const,content:result.answer!}].slice(-20));
       setPrompt('');
     }catch(err){
       const code=err instanceof Error?err.message:'AI_UNAVAILABLE';

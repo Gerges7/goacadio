@@ -44,8 +44,8 @@ export default function Account(){
     const client=getSupabase();
     if(!client||!user){setLoading(false);setRequests([]);return;}
     let active=true;setLoading(true);setError('');
-    void client.from('account_requests').select('id,category,status,created_at')
-      .eq('user_id',user.id).order('created_at',{ascending:false}).limit(50)
+    void Promise.resolve(client.from('account_requests').select('id,category,status,created_at')
+      .eq('user_id',user.id).order('created_at',{ascending:false}).limit(50))
       .then(({data,error:queryError})=>{
         if(!active)return;
         if(queryError)setError(text('طلبات الحساب غير متاحة. تأكد من تشغيل SQL 007.','Account requests are unavailable. Please apply SQL migration 007.'));

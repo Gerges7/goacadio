@@ -12,9 +12,9 @@ export default function QuizSummary({userId}:{userId:string}) {
   useEffect(()=>{
     const client=getSupabase(); if(!client){setLoading(false);return;}
     let live=true;
-    void client.from('quiz_attempts')
+    void Promise.resolve(client.from('quiz_attempts')
       .select('id,course_id,title,question_count,correct_count,quiz_format,source_type,created_at')
-      .eq('user_id',userId).order('created_at',{ascending:false}).limit(50)
+      .eq('user_id',userId).order('created_at',{ascending:false}).limit(50))
       .then(({data,error:err})=>{
         if(!live)return;
         setLoading(false);setError(!!err);

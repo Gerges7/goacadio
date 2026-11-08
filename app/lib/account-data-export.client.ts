@@ -73,7 +73,7 @@ export async function prepareAccountExport(
       if(definition.uniqueBy)query=query.order(definition.uniqueBy,{ascending:true});
       const {data,error}=await query.range(from,from+PAGE_SIZE-1);
       if(error||!Array.isArray(data))throw new DataExportError('READ_FAILED',definition.name);
-      rows.push(...data as Record<string,unknown>[]);
+      rows.push(...(data as unknown as Record<string,unknown>[]));
       onProgress?.(definition.name,rows.length);
       if(rows.length>MAX_ROWS_PER_SECTION)throw new DataExportError('TOO_MANY_ROWS',definition.name);
       if(data.length<PAGE_SIZE)break;

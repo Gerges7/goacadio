@@ -29,6 +29,10 @@
       "@/*": [
         "./app/*"
       ]
-    }
+    },
+    "rootDirs": [
+      ".",
+      "./.react-router/types"
+    ]
   }
 }

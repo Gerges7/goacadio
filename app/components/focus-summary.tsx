@@ -15,10 +15,10 @@ export default function FocusSummary({userId}:{userId:string}) {
     const start = new Date();
     start.setHours(0,0,0,0);
     start.setDate(start.getDate()-6);
-    void client.from('focus_sessions')
+    void Promise.resolve(client.from('focus_sessions')
       .select('id,minutes,completed_at,course_id')
       .eq('user_id',userId).gte('completed_at',start.toISOString())
-      .order('completed_at',{ascending:false}).limit(1000)
+      .order('completed_at',{ascending:false}).limit(1000))
       .then(({data,error:err}) => {
         if(!active)return;
         setError(!!err);
