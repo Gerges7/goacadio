@@ -30,6 +30,9 @@ export function secureResponse(request: Request, response: Response): Response {
     headers.set('X-Frame-Options', 'DENY');
     headers.set('Content-Security-Policy', "frame-ancestors 'none'");
   }
+  if (html && (pathname === '/services' || pathname === '/universities')) {
+    headers.set('X-Robots-Tag', 'noindex, follow');
+  }
   if (isPrivate) {
     headers.set('Cache-Control', 'private, no-store, max-age=0');
     headers.set('X-Robots-Tag', 'noindex, nofollow');

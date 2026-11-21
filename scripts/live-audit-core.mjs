@@ -3,11 +3,14 @@ export const SITE = 'https://goacadio.com';
 export const PUBLIC_PATHS = Object.freeze([
   '/', '/tools', '/tools/gpa-calculator', '/tools/focus-timer', '/tools/cv-builder',
   '/guides', '/guides/how-to-calculate-gpa', '/guides/pomodoro-study-timer',
-  '/guides/student-cv-guide', '/help', '/contact', '/privacy', '/services', '/universities',
+  '/guides/student-cv-guide', '/guides/seven-day-exam-revision-plan',
+  '/guides/lecture-to-practice-questions', '/help', '/contact', '/privacy',
   '/about', '/terms',
 ]);
 export const TEST_CASES = Object.freeze([
   ...PUBLIC_PATHS.map(path => ({path, category:'public', expectedStatus:200})),
+  {path:'/services',category:'utility',expectedStatus:200},
+  {path:'/universities',category:'utility',expectedStatus:200},
   {path:'/account',category:'private',expectedStatus:200},
   {path:'/dashboard',category:'private',expectedStatus:200},
   {path:'/guides/goacadio-guide-not-found-1234',category:'missing',expectedStatus:404},
@@ -65,6 +68,8 @@ export function inspectResponse(test, status, headers, body, origin=SITE) {
   if(test.category==='public') {
     failIf(failures,!robots.some(v=>/(^|[\s,])noindex([\s,]|$)/i.test(v)),'Public page still carries noindex');
     failIf(failures,robots.some(v=>/(^|[\s,])index([\s,]|$)/i.test(v)),'Public page missing index directive');
+  } else if(test.category==='utility') {
+    failIf(failures,robots.some(v=>/(^|[\s,])noindex([\s,]|$)/i.test(v)),'Non-indexable utility page missing noindex');
   } else if(test.category==='private') {
     failIf(failures,robots.some(v=>/(^|[\s,])noindex([\s,]|$)/i.test(v)),'Private page missing noindex');
   }
@@ -76,6 +81,9 @@ export function inspectResponse(test, status, headers, body, origin=SITE) {
     failIf(failures,urls.length===1 && urls[0]===expected,`Canonical must equal ${expected}`);
     const og = metaValue(body,'og:url','property');
     failIf(failures,og.length===1 && og[0]===expected,'Open Graph URL missing or inconsistent');
+  }
+  if(test.category==='utility') {
+    failIf(failures,(headers.get('x-robots-tag')??'').toLowerCase().includes('noindex'),'Non-indexable utility page missing X-Robots-Tag noindex');
   }
   if(test.category==='private') {
     failIf(failures,(headers.get('cache-control')??'').toLowerCase().includes('no-store'),'Private page missing Cache-Control no-store');

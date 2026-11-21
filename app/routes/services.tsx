@@ -1,15 +1,14 @@
-import { publicSeoMeta } from '@/lib/seo';
 import { useEffect, useState, type FormEvent } from 'react';
 import { Link, type MetaFunction } from 'react-router';
 import { useLocale } from '@/components/locale-provider';
 import { useAuth } from '@/components/auth-provider';
 import { getSupabase } from '@/lib/supabase';
 
-export const meta: MetaFunction = () => publicSeoMeta(
-  'Academic Tutoring & Code Review | GoAcadio',
-  'Request academic tutoring, code review, and graduation project mentoring. Students stay responsible for their own work.',
-  '/services',
-);
+export const meta: MetaFunction = () => [
+  {title:'Academic Help Inquiries | GoAcadio'},
+  {name:'description',content:'Send an academic-help inquiry; account sign-in is required to submit.'},
+  {name:'robots',content:'noindex, follow'},
+];
 type StudentRequest = {id:string;service_type:string;subject:string;status:string;created_at:string};
 export default function Services(){
   const {text}=useLocale();

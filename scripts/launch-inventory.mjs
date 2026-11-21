@@ -2,7 +2,7 @@
 export const SITE='https://goacadio.com';
 export const PUBLIC_ROUTES=Object.freeze([
   '/', '/tools', '/tools/gpa-calculator','/tools/focus-timer','/tools/cv-builder',
-  '/guides','/help','/contact','/privacy','/services','/universities','/about','/terms',
+  '/guides','/help','/contact','/privacy','/about','/terms',
 ]);
 export const PROTECTED_PREFIXES=Object.freeze([
   '/account','/admin','/auth','/dashboard','/api','/quiz-generator',
@@ -38,6 +38,7 @@ export function validateLaunchInventory({routesText,sitemapXml,robotsText,seoSou
     let p;try{const u=new URL(raw);if(u.origin!==SITE||u.search||u.hash||u.username||u.password)throw new Error();p=u.pathname;}
     catch{failures.push(`Invalid sitemap URL: ${raw}`);continue;}
     if(isPrivatePublicPath(p))failures.push(`Private page appears in public sitemap: ${p}`);
+    if(p === '/services' || p === '/universities')failures.push(`Non-indexable utility page appears in sitemap: ${p}`);
     if(p.startsWith('/guides/')){
       require(declared.has('/guides/:slug'), 'Guide slug route missing');
     }else require(declared.has(p), `Sitemap path lacks registered route: ${p}`);

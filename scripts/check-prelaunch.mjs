@@ -18,7 +18,7 @@ const seo=read('app/lib/seo.ts');
 check('Review launch robots permits crawlers', /^Allow:\s*\/\s*$/m.test(robots) && !/^Disallow:\s*\/\s*$/m.test(robots));
 check('Root HTML has public indexable robots', /name:\s*'robots',\s*content:\s*'index, follow'/.test(rootUi));
 check('Public SEO helper permits indexing', /name:\s*'robots',\s*content:\s*'index, follow'/.test(seo));
-check('Published sitemap.xml matches reviewed 16 pages', existsSync(resolve(root,'public/sitemap.xml')) && read('public/sitemap.xml').includes('<loc>https://goacadio.com/</loc>') && (read('public/sitemap.xml').match(/<url><loc>/g)||[]).length===16);
+check('Published sitemap.xml contains 16 indexable pages excluding client-only utilities', existsSync(resolve(root,'public/sitemap.xml')) && read('public/sitemap.xml').includes('<loc>https://goacadio.com/</loc>') && (read('public/sitemap.xml').match(/<url><loc>/g)||[]).length===16 && !/(?:<loc>https:\/\/goacadio\.com\/(services|universities)<\/loc>)/.test(read('public/sitemap.xml')));
 check('Worker wraps SSR responses with security layer', worker.includes('secureResponse(request, response)'));
 check('Security middleware protects API paths', /pathname\.startsWith\('\/api\/'\)/.test(security));
 check('No-store private and API responses', security.includes("'Cache-Control', 'private, no-store, max-age=0'"));

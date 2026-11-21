@@ -1,0 +1,21 @@
+GoAcadio V4.3 — Original educational content and AdSense low-value remediation
+
+Why: Google AdSense reported 'Low value content'. This patch is a quality improvement, NOT a guarantee of approval.
+
+What changed:
+- Two fully written bilingual guides with worked exercises: seven-day revision plan and lecture-to-practice questions.
+- More educational how-to content on /tools and /guides.
+- /services and /universities stay available to users but are marked noindex and are removed from the sitemap, because they are inquiry/client-side directory pages rather than standalone editorial content.
+- Worker adds X-Robots-Tag: noindex to those two URLs; student private routes keep their stronger no-store/noindex controls.
+- Public sitemap keeps 16 URLs: 2 new substantive guides replace 2 less useful public URLs.
+- Static and live checks updated; npm run test:v43 added to CI.
+
+How to deploy:
+1. Upload all changed files from the ZIP into the same paths on GitHub main; preserve directories, including docs/ and scripts/.
+2. Wait for both GitHub Actions build & quality check and Cloudflare production build to pass.
+3. After production deployment, manually start GoAcadio production smoke check from Actions.
+4. In Search Console, submit/resubmit sitemap.xml and request indexing for the two new guide URLs.
+5. Read every new paragraph and verify it matches the actual service, especially AI processing and example accuracy. Add any real owner expertise/examples before requesting AdSense review.
+6. Do not press AdSense Request review before final audit and Google has had a reasonable chance to recrawl improvements.
+
+No new SQL, no Supabase or Workers AI configuration, no ads scripts or site ownership changes.

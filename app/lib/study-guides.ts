@@ -107,6 +107,97 @@ export const studyGuides: readonly StudyGuide[] = [
     seoTitle: 'How to Write a University Student CV | GoAcadio',
     seoDescription: 'A practical CV guide for university students covering education, projects, skills and preparing a clean PDF resume.',
   },
+  {
+    slug: 'seven-day-exam-revision-plan', icon: '🗓️',
+    category: { ar: 'التخطيط للامتحانات', en: 'Exam preparation' },
+    title: { ar: 'خطة مراجعة 7 أيام قبل الامتحان: مثال قابل للتعديل', en: 'A practical seven-day exam revision plan' },
+    description: { ar: 'خطوات توزيع المواد على 14 جلسة قصيرة، مع مثال يوم بيوم وطريقة تعديل الخطة لو اتأخرت.', en: 'See how to distribute 14 focused study blocks across seven days, with a worked example and a recovery plan.' },
+    intro: { ar: 'الخطة الجيدة مش جدول مليان ساعات؛ هي قرارات واقعية عن إيه هتراجع وإزاي هتختبر نفسك. المثال هنا لطالب عنده 90 دقيقة يوميًا وثلاث مواد، وتقدر تغيّر عدد الجلسات حسب ظروفك.', en: 'A useful revision plan is not a crowded calendar. It tells you what to practice and how you will test your understanding. This worked example assumes 90 minutes per day and three courses; adjust the block count to fit your situation.' },
+    sections: [
+      { title: { ar: '1. احسب قدرتك الفعلية قبل توزيع المواد', en: '1. Start with your real study capacity' },
+        paragraphs: [
+          { ar: 'لو تقدر تذاكر جلستين كل يوم، كل جلسة 45 دقيقة، يبقى عندك 14 جلسة خلال الأسبوع. اترك وقت الأكل والتنقل والنوم بعيدًا عن الخطة، ومتعتبرش أي وقت فاضي بالضرورة وقت مذاكرة قابل للاستمرار.', en: 'Two 45-minute blocks per day give you 14 blocks during the week. Do not count meals, travel, sleep or every spare minute as dependable study time.' },
+          { ar: 'اعمل قائمة صغيرة لكل مادة: امتحانها إمتى؟ ما أهم الموضوعات؟ وإيه اللي تقدر تحل فيه أسئلة من غير ملاحظات؟ إجابات الأسئلة دي أهم من مجرد عدد صفحات المحاضرة.', en: 'For each course, write its exam date, essential topics and the questions you can answer without notes. Those answers matter more than the lecture page count.' },
+        ], points: [
+          { ar: 'ابدأ بالأسئلة أو الامتحانات السابقة المسموح باستخدامها لتكتشف نقاط الضعف.', en: 'Use permitted past questions or self-tests to identify weak topics.' },
+          { ar: 'لو عندك جلسة واحدة فقط يوميًا، قلل الخطة إلى 7 جلسات بدل ما تنسخ الجدول كما هو.', en: 'With only one block per day, cut this to seven blocks rather than copying the schedule unchanged.' },
+        ] },
+      { title: { ar: '2. مثال على توزيع ثلاث مواد', en: '2. Worked example: three courses' },
+        paragraphs: [
+          { ar: 'افترض إن عندك Data Structures امتحانه قريب، وCalculus محتاج مسائل كتير، وDatabase Systems مذاكر أساسياتها لكن محتاج مراجعة. هنخصص أربع جلسات للـData Structures، وخمس للـCalculus، وثلاث للـDatabase، ونسيب جلستين أخيرتين لاختبار شامل وتصحيح أضعف نقطة.', en: 'Imagine Data Structures has the earliest exam, Calculus needs a lot of problem-solving, and Database Systems mainly needs consolidation. Allocate four blocks to Data Structures, five to Calculus, three to Database Systems, and reserve two for a mixed test and the weakest remaining topic.' },
+          { ar: 'التوزيع ده مش قاعدة لكل الطلاب؛ لو امتحان مادة أقرب أو تقييمك فيها أضعف، انقل لها جلسة من مادة مستقرة بدل ما تزود عدد ساعات مستحيل تلتزم به.', en: 'This split is an example, not a rule. If a deadline is earlier or one course is much weaker, move a block from a stronger course instead of inventing extra hours.' },
+        ] },
+      { title: { ar: '3. الجدول يوم بيوم', en: '3. A day-by-day schedule' },
+        paragraphs: [
+          { ar: 'اليوم 1: جلستان Data Structures لفهم موضوعين صعبين وحل أمثلة. اليوم 2: جلسة مسائل Data Structures وجلسة تأسيس Calculus. اليوم 3: اختبار قصير Data Structures وجلسة أسئلة Database Systems.', en: 'Day 1: two Data Structures blocks on difficult topics and worked problems. Day 2: one Data Structures problem block and one Calculus foundation block. Day 3: one Data Structures mini-test and one Database Systems recall block.' },
+          { ar: 'اليوم 4: جلستان مسائل Calculus. اليوم 5: جلسة Database Systems وجلسة Calculus. اليوم 6: جلسة Database Systems وجلسة Calculus. اليوم 7: اختبار مختلط بوقت محدد ثم جلسة لتصحيح الأخطاء فقط.', en: 'Day 4: two Calculus problem-solving blocks. Day 5: one Database Systems block and one Calculus block. Day 6: one Database Systems block and one Calculus block. Day 7: one timed mixed self-test and one block dedicated solely to corrections.' },
+          { ar: 'لو امتحان Data Structures هيكون صباح اليوم 3 مثلًا، لازم تقدّم اختباره النهائي إلى اليوم 2. مواعيد الامتحانات الحقيقية هي اللي تحكم الترتيب؛ مش المثال المكتوب هنا.', en: 'If the Data Structures exam actually takes place on the morning of Day 3, move its final practice to Day 2. Real deadlines always override this sample order.' },
+        ] },
+      { title: { ar: '4. داخل كل جلسة: تذكّر ثم حل ثم صحّح', en: '4. Inside each block: recall, practice, correct' },
+        paragraphs: [
+          { ar: 'قسّم الـ45 دقيقة إلى 10 دقائق تكتب فيها ما تتذكره من غير فتح المحاضرة، ثم 25 دقيقة لحل أسئلة أو مسائل، ثم 10 دقائق لمراجعة الأخطاء وتسجيل سؤال واحد تحتاج ترجع له. مش لازم تلتزم بالدقائق حرفيًا؛ الفكرة إن المذاكرة تشمل استرجاعًا وتطبيقًا مش قراءة بس.', en: 'A useful 45-minute block can be 10 minutes recalling without notes, 25 minutes answering questions or solving problems, and 10 minutes checking errors and recording one follow-up question. The exact minutes are flexible; the key is retrieval and application, not only rereading.' },
+          { ar: 'في نهاية اليوم اكتب «أقدر أشرح الموضوع في دقيقتين؟» و«أقدر أحل مسألة جديدة من غير ما أبص على الحل؟». لو الإجابة لا، الموضوع يحتاج مراجعة إضافية حتى لو خلصت قراءته.', en: 'At the end of the day ask: “Can I explain the idea in two minutes?” and “Can I solve a new problem without the solution?” A topic may need another block even if you finished reading it.' },
+        ] },
+      { title: { ar: '5. لو الخطة اتعطلت أو الوقت اتغير', en: '5. Recover when your plan slips' },
+        paragraphs: [
+          { ar: 'لو ضاعت جلسة، متحاولش تضاعف جلسات اليوم التالي بشكل تلقائي. حدد الجزء الأساسي اللي مش هينفع تدخل الامتحان من غيره، وانقل الأسئلة الأقل أهمية أو اختصر تلخيص الملاحظات.', en: 'If you miss a block, do not automatically double the next day. Keep the prerequisite topics and high-impact problems; shorten note rewriting or postpone lower-priority material.' },
+          { ar: 'في الليلة الأخيرة، اختبر نفسك في نقاط الخطأ المتكررة، وجهّز أدوات الامتحان، وحافظ على وقت نوم مناسب. خطة أسبوع حقيقية تسيب مساحة للاستراحة والتغييرات الطارئة.', en: 'On the final evening, revisit repeated mistakes, prepare exam essentials and leave time for appropriate sleep. A realistic week includes breaks and room for surprises.' },
+        ] },
+    ],
+    faqs: [
+      { question: { ar: 'أذاكر مادة واحدة في اليوم ولا أنوّع؟', en: 'Should I study one course a day or mix courses?' }, answer: { ar: 'الاختيار يعتمد على قرب الامتحان وطبيعة المادة. التنويع ممكن يساعدك تراجع مهارات مختلفة، لكن المادة الأقرب امتحانًا قد تحتاج جلستين متتاليتين.', en: 'It depends on exam order and the tasks involved. Mixing can help you revisit different skills, but an imminent exam may deserve both daily blocks.' } },
+      { question: { ar: 'لو متاح ليا 30 دقيقة فقط؟', en: 'What if I only have 30 minutes?' }, answer: { ar: 'اعمل 5 دقائق تذكّر، و20 دقيقة سؤال أو مسألة، و5 دقائق تصحيح. عدّل عدد المهام وفق الوقت بدل ما تلغي التمرين.', en: 'Try five minutes of recall, twenty minutes of a question or problem, and five minutes of checking. Reduce the number of tasks rather than removing practice.' } },
+      { question: { ar: 'إزاي أعرف إن المراجعة نجحت؟', en: 'How do I know the revision worked?' }, answer: { ar: 'قارن قدرتك على حل أسئلة جديدة بدون الرجوع للحل، وسجّل أخطاء متكررة اختفت وأخطاء ما زالت موجودة. عدد الساعات وحده مش مقياس كفاية.', en: 'Track whether you can solve new questions without looking at solutions and whether repeated errors disappear. Hours studied alone are not a sufficient measure.' } },
+    ],
+    toolUrl: '/tools/focus-timer', toolLabel: { ar: 'ابدأ جلسة تركيز مجانية', en: 'Start a free focus session' },
+    seoTitle: 'Seven-Day Exam Revision Plan with Worked Schedule | GoAcadio',
+    seoDescription: 'A realistic seven-day study schedule for three courses, with 14 focus blocks, daily practice and a plan for missed sessions.',
+  },
+  {
+    slug: 'lecture-to-practice-questions', icon: '🧩',
+    category: { ar: 'المراجعة النشطة', en: 'Active recall' },
+    title: { ar: 'إزاي تحوّل المحاضرة لأسئلة تدريبية مفيدة؟', en: 'Turn lecture notes into useful practice questions' },
+    description: { ar: 'من الفكرة الأساسية إلى أسئلة اختيار وصح وغلط، مع أمثلة للأخطاء الشائعة وطريقة تقييم الإجابات.', en: 'Turn concepts into useful MCQ and true/false questions, avoid weak distractors and use mistakes to plan a second review.' },
+    intro: { ar: 'قراءة المحاضرة خطوة مهمة، لكن الاختبار بيكشف لو أنت فاهم ولا بس متذكر شكل الكلام. تقدر تطبق الطريقة يدويًا بالقلم والورقة، أو تستعين بمولّد الاختبارات بعد تسجيل الدخول.', en: 'Reading lecture notes is useful, but a practice question tests whether you can retrieve and apply an idea without seeing the original wording. You can use this method with paper and pencil or with the quiz generator after signing in.' },
+    sections: [
+      { title: { ar: '1. اختر أهداف التعلم قبل كتابة الأسئلة', en: '1. Identify what the lesson actually teaches' },
+        paragraphs: [
+          { ar: 'بعد قراءة جزء صغير من المحاضرة، اكتب من ثلاثة إلى خمسة أهداف واضحة مثل «أميّز بين Stack وQueue» أو «أفسّر ليه البحث الثنائي يحتاج بيانات مرتبة». الهدف المحدد أسهل في التقييم من «أراجع الشابتر كله».', en: 'After reading a short section, write three to five specific objectives such as “distinguish a stack from a queue” or “explain why binary search needs ordered data.” A precise objective is easier to assess than “revise the whole chapter.”' },
+          { ar: 'اختار لكل هدف مستوى مناسب: سؤال تعريف أو مقارنة أو تطبيق على مثال جديد. الأسئلة اللي تعتمد على نفس الجملة المنسوخة مش هتثبت بالضرورة إنك فاهم الفكرة.', en: 'For each objective, choose a level: recall, comparison, or applying the concept to a new example. Questions that simply repeat one memorized sentence may not show understanding.' },
+        ] },
+      { title: { ar: '2. مثال صحيح على سؤال اختيار من متعدد', en: '2. A worked multiple-choice example' },
+        paragraphs: [
+          { ar: 'المعلومة: البحث الثنائي Binary Search يفترض ترتيب العناصر حسب مفتاح المقارنة. السؤال: «أي شرط أساسي لاستخدام Binary Search على قائمة؟» الاختيارات: أ) العناصر مرتبة، ب) كل العناصر متساوية، ج) القائمة خالية، د) لا يحتاج لأي ترتيب. الإجابة: أ.', en: 'Concept: binary search requires the sequence to be sorted under the comparison used. Question: “Which condition is needed for binary search on a list?” Options: A) The list is sorted; B) All elements are identical; C) The list is empty; D) No ordering is needed. Answer: A.' },
+          { ar: 'لما تراجع الإجابة، ما تكتفيش بالحرف الصحيح؛ اشرح لنفسك ليه باقي الاختيارات غير صحيحة. لو كل المشتتات سخيفة، السؤال بيبقى سهل بلا فائدة حتى لو شكله مرتب.', en: 'When checking the answer, explain why the other options are wrong. Distractors should be plausible misconceptions, not nonsense choices that make the question trivial.' },
+        ], points: [
+          { ar: 'خلّي سؤال الاختيار فيه إجابة واحدة واضحة في السياق المحدد.', en: 'Make sure the question has one defensible answer in its stated context.' },
+          { ar: 'تجنب «كل ما سبق» لو بيخلي السؤال يعتمد على التخمين.', en: 'Avoid “all of the above” when it turns the item into a guessing exercise.' },
+        ] },
+      { title: { ar: '3. مثال لسؤال صح أو غلط مفيد', en: '3. A useful true-or-false example' },
+        paragraphs: [
+          { ar: 'مثال: «البحث الثنائي يقدر يشتغل بشكل صحيح على أي قائمة عشوائية الترتيب من غير تعديل». العبارة غلط في صورته القياسية، لأن طريقة تقسيم نطاق البحث تعتمد على ترتيب العناصر. بعد ما تجاوب، اكتب السبب في سطر واحد بدل ما تعتمد على الحفظ.', en: 'Example: “Standard binary search works correctly on any unsorted list without modification.” False: its range-elimination logic depends on an ordered sequence. After choosing true or false, write the reason in one sentence.' },
+          { ar: 'ابتعد عن العبارات الملتبسة اللي تخلط بين أكثر من مفهوم أو تستعمل «دائمًا» و«مستحيل» من غير ضرورة. لو السؤال له أكثر من تفسير صحيح، عدّله قبل ما تحسب نتيجته.', en: 'Avoid ambiguous statements that combine several ideas or use absolutes without need. If a reasonable reader can interpret the statement in multiple ways, revise it before scoring yourself.' },
+        ] },
+      { title: { ar: '4. اختبر نفسك ثم ابنِ جولة ثانية من الأخطاء', en: '4. Test first, then turn mistakes into a second round' },
+        paragraphs: [
+          { ar: 'حل الأسئلة من غير فتح الملف، وبعدها صنّف كل إجابة: صحيح مع سبب، صحيح بالتخمين، أو خطأ. السؤال اللي جاوبته بالتخمين يحتاج مراجعة حتى لو اتحسب صح.', en: 'Answer without opening the notes. Then label each answer: correct with reasoning, correct by guessing, or incorrect. A lucky guess deserves review even if it counted as correct.' },
+          { ar: 'مثال: من 10 أسئلة، حلّيت 6 بثقة و2 بالتخمين و2 خطأ. بدل ما تقول «8 من 10 وخلاص»، اعمل 4 أسئلة جديدة على الموضوعات اللي ما كانتش ثابتة عندك، وجربها بعد فاصل مناسب.', en: 'For example, out of ten questions you answer six with solid reasoning, guess two correctly and miss two. Rather than stopping at “8/10,” create four new questions on the weak concepts and try them again after a suitable interval.' },
+        ] },
+      { title: { ar: '5. التعامل مع PDF ومولّد الأسئلة بالذكاء الاصطناعي', en: '5. Working with lecture PDFs and AI-generated quizzes' },
+        paragraphs: [
+          { ar: 'لو ملف PDF عبارة عن صور ممسوحة، استخراج النص ممكن ما يشتغلش؛ استخدم ملاحظاتك المكتوبة أو ملف نصي واضح بدل الاعتماد على تخمين المحتوى. الأداة في GoAcadio تحتاج حسابًا لتوليد الاختبارات.', en: 'If a PDF is made of scanned images, text extraction may fail. Use clear typed notes or a text-based file instead of assuming the reader can see the scans. GoAcadio’s quiz-generation feature requires an account.' },
+          { ar: 'ملف PDF الأصلي بيتقرأ داخل المتصفح، لكن النص المستخرج أو اللي بتلصقه بيتبعت لخدمة AI لتوليد الأسئلة. ما تدخلش معلومات سرية أو محتوى مش مسموح تشاركه. راجع كل إجابة وتفسير قبل ما تعتمد عليها للمذاكرة.', en: 'The PDF file is read in the browser, but extracted or pasted text is sent to the AI service for quiz generation. Do not submit confidential or unauthorized material. Check each answer and explanation before using it to study.' },
+        ] },
+    ],
+    faqs: [
+      { question: { ar: 'أبدأ بكام سؤال لكل موضوع؟', en: 'How many questions should I make per topic?' }, answer: { ar: 'ابدأ بثلاثة إلى خمسة أسئلة مختلفة: تعريف ومقارنة وتطبيق. زوّد العدد لو أخطاؤك بتكشف نقاط ضعف حقيقية، مش بهدف رقم ثابت.', en: 'Start with three to five varied questions: recall, comparison and application. Add more when mistakes show a real gap, not to reach an arbitrary total.' } },
+      { question: { ar: 'هل صح وغلط كفاية لوحده؟', en: 'Is true or false enough on its own?' }, answer: { ar: 'مفيد للتأكد من المفاهيم، لكنه ممكن يشجّع التخمين. أضف سؤال «ليه؟» ومسألة تطبيقية لو طبيعة المادة تسمح.', en: 'It can check concepts but can also reward guessing. Add a “why?” prompt and an application question when relevant.' } },
+      { question: { ar: 'هل لازم أستخدم AI؟', en: 'Do I need AI to use this method?' }, answer: { ar: 'لا. الطريقة كلها قابلة للتطبيق يدويًا. الأداة بتسرّع تجهيز مسودة الأسئلة لكن مش بديل عن مراجعة صحتها.', en: 'No. The full process works manually. An AI tool can speed up drafting, but it does not replace checking correctness.' } },
+    ],
+    toolUrl: '/quiz-generator', toolLabel: { ar: 'جرّب مولّد الاختبارات (بحساب)', en: 'Try the quiz generator (account required)' },
+    seoTitle: 'How to Make Practice Questions from Lectures | GoAcadio',
+    seoDescription: 'A student-friendly guide to writing meaningful MCQs and true-or-false questions from lectures, with worked examples and error review.',
+  },
 ];
 
 export function getStudyGuide(slug: string | undefined): StudyGuide | undefined {
