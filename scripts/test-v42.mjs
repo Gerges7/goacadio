@@ -20,7 +20,9 @@ check('Current terms are published, not labeled a prelaunch draft',()=>{
 });
 check('Terms state effective date',()=>assert.match(files.terms,/Effective: 8 November 2026/));
 check('Contact email is consistently disclosed',()=>{
-  for(const p of ['terms','privacy','about','contactLib'])assert.ok(files[p].includes(email),p);
+  for(const p of ['terms','privacy','contactLib'])assert.ok(files[p].includes(email),p);
+  assert.match(files.about,/OFFICIAL_SUPPORT_EMAIL/);
+  assert.match(files.about,/mailto:\$\{OFFICIAL_SUPPORT_EMAIL\}/);
   assert.match(files.contact,/OFFICIAL_SUPPORT_EMAIL/);
 });
 check('Guest support is no longer described as unconfigured',()=>{
