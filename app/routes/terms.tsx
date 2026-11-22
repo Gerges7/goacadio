@@ -45,7 +45,7 @@ export default function Terms(){
         <section><h2>{text('7. الاستفسارات والتحديثات', '7. Questions and updates')}</h2>
           <p>{text('لو عندك سؤال أو مشكلة أو اعتراض على محتوى الموقع، تواصل عبر البريد المنشور. لو غيّرنا الشروط بشكل جوهري، هنحدّث الصفحة بتاريخ التعديل قبل تطبيقها.',
             'For questions, corrections or concerns, contact the published support address. Material changes to these terms will be dated on this page before they take effect.')}</p>
-          <p>{text('البريد العام للتواصل:', 'Public support contact:')} <a href="mailto:gergesmorad17@gmail.com" dir="ltr">gergesmorad17@gmail.com</a></p>
+          <p>{text('البريد العام للتواصل:', 'Public support contact:')} <a href="mailto:support@goacadio.com" dir="ltr">support@goacadio.com</a></p>
           <div className="actions"><Link className="btn btn-primary" to="/contact">{text('تواصل معنا', 'Contact us')}</Link>
             <Link className="btn btn-outline" to="/privacy">{text('معلومات الخصوصية', 'Privacy information')}</Link></div></section>
         <p className="inline-help">{text('سارية من: 8 نوفمبر 2026. آخر تحديث: 8 نوفمبر 2026.', 'Effective: 8 November 2026. Last updated: 8 November 2026.')}</p>
