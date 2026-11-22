@@ -54,7 +54,7 @@
     "typescript": "5.9.3",
     "vite": "^7.0.0",
     "vite-tsconfig-paths": "5.1.4",
-    "wrangler": "4.88.0",
+    "wrangler": "4.165.0",
     "@playwright/test": "1.65.1"
   },
   "engines": {
