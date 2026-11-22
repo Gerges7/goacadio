@@ -40,7 +40,7 @@ assert.match(chrome, /theme-toggle/);
 assert.match(chrome, /OFFICIAL_SUPPORT_EMAIL/);
 assert.match(chrome, /OFFICIAL_WHATSAPP_USERNAME/);
 assert.match(theme, /localStorage\.setItem/);
-assert.match(theme, /data-theme/);
+assert.match(theme, /document\\.documentElement\\.dataset\\.theme/);
 assert.match(rootPage, /ThemeProvider/);
 assert.match(rootPage, /themeInitScript/);
 assert.match(styles, /:root\[data-theme="dark"\]/);
