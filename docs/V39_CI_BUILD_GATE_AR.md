@@ -1,3 +1,5 @@
+> **أرشيف تاريخي:** هذه وثيقة لنسخة سابقة وليست تعليمات الإطلاق الحالية. راجع `docs/PRODUCT_STATUS_V46_AR.md` و`README.md` للحالة الحالية.
+
 # GoAcadio V3.9 — Build verification (بالعربي)
 
 ## الجديد
