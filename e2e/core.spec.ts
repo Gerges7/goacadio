@@ -84,6 +84,7 @@ test('CV builder updates its preview and restores the local draft', async ({ pag
   await page.goto('/tools/cv-builder');
   await page.getByLabel('الاسم بالكامل').fill('GoAcadio Browser Test');
   await expect(page.locator('.cv-resume h2')).toHaveText('GoAcadio Browser Test');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('goacadio:v1:cv'))).not.toBeNull();
 
   await page.reload();
   await expect(page.locator('.cv-resume h2')).toHaveText('GoAcadio Browser Test');
@@ -129,5 +130,17 @@ test('guest AI endpoints reject requests before inference', async ({ request }) 
     expect(response.status(), path).toBe(401);
     expect(await response.json()).toMatchObject({ error: 'SIGN_IN_REQUIRED' });
     expect(response.headers()['cache-control']).toContain('no-store');
+  }
+});
+
+test('core public pages do not overflow a narrow mobile viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const path of ['/', '/tools', '/tools/gpa-calculator', '/tools/focus-timer', '/tools/cv-builder', '/guides', '/contact']) {
+    await page.goto(path);
+    const width = await page.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      content: document.documentElement.scrollWidth,
+    }));
+    expect(width.content, `horizontal overflow on ${path}`).toBeLessThanOrEqual(width.viewport + 1);
   }
 });
