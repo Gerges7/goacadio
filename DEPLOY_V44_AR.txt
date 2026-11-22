@@ -1,0 +1,26 @@
+GoAcadio V4.4 — Egyptian Universities and Faculties
+
+Included in this patch:
+- 127 Egyptian higher-education institutions across public, private, national, technological, international-branch and special-nature categories; Al-Azhar is listed separately.
+- 631 bilingual faculty records associated with universities.
+- Searchable /universities directory with category filtering and expandable faculty lists.
+- Existing student dashboard selectors continue reading the published Supabase universities and faculties tables.
+- V4.4 automated catalog checks added to npm run check:ci.
+
+IMPORTANT DEPLOYMENT ORDER
+1. Open Supabase Dashboard → SQL Editor.
+2. Run the complete file: supabase/008_egyptian_university_faculty_catalog.sql
+   The migration is additive and safe to run again. It does not delete existing universities, faculties, or student records.
+3. Extract this ZIP into the repository root, preserving folder paths, then upload/commit these files to GitHub main:
+   - supabase/008_egyptian_university_faculty_catalog.sql
+   - app/routes/universities.tsx
+   - package.json
+   - scripts/test-v44.mjs
+4. Wait for GitHub Actions “GoAcadio build & quality check” and Cloudflare production deployment to pass.
+5. Check https://goacadio.com/universities and the university/faculty selectors in the student dashboard.
+
+Catalog notes:
+- Institution names are seeded across the listed categories.
+- Faculty lists are populated where official university or SCU listings were available. The remaining institutions retain the existing manual faculty-entry option in the student profile.
+- Departments, academic programs, courses and grading scales are not seeded; they vary by institution and must be taken from each university's current regulations.
+- The directory remains noindex because it is a student profile lookup page, not an editorial landing page.
