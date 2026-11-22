@@ -41,16 +41,16 @@ export default function Universities() {
     const client = getSupabase();
     if (!client) { setLoading(false); return; }
     let active = true;
-    async function load() {
+    async function load(supabaseClient: NonNullable<typeof client>) {
       setLoading(true);
       setError('');
-      const modern = await client.from('universities')
+      const modern = await supabaseClient.from('universities')
         .select('id,name_en,name_ar,country_code,institution_type,source_url')
         .in('country_code', ['EG', 'SA']).eq('is_published', true).order('name_ar');
       let universityRows: University[];
       // Keep the page usable before the V4.4 SQL migration is applied.
       if (modern.error?.code === '42703') {
-        const legacy = await client.from('universities')
+        const legacy = await supabaseClient.from('universities')
           .select('id,name_en,name_ar,country_code')
           .in('country_code', ['EG', 'SA']).eq('is_published', true).order('name_en');
         if (legacy.error) throw legacy.error;
@@ -59,7 +59,7 @@ export default function Universities() {
         if (modern.error) throw modern.error;
         universityRows = (modern.data ?? []) as University[];
       }
-      const facultyResult = await client.from('faculties')
+      const facultyResult = await supabaseClient.from('faculties')
         .select('id,university_id,name_en,name_ar')
         .eq('is_published', true).order('name_ar');
       if (facultyResult.error) throw facultyResult.error;
@@ -69,7 +69,7 @@ export default function Universities() {
         setLoading(false);
       }
     }
-    void load().catch((e: unknown) => {
+    void load(client).catch((e: unknown) => {
       if (active) {
         setError(e instanceof Error ? e.message : 'تعذر تحميل الدليل حالياً.');
         setLoading(false);
