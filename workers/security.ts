@@ -30,7 +30,7 @@ export function secureResponse(request: Request, response: Response): Response {
     headers.set('X-Frame-Options', 'DENY');
     headers.set('Content-Security-Policy', "frame-ancestors 'none'");
   }
-  if (html && (pathname === '/services' || pathname === '/universities')) {
+  // The services page can render a signed-in user's inquiry history after hydration.\n  // Keep its HTML response out of shared/browser caches even though the route remains public.\n  if (html && pathname === '/services') {\n    headers.set('Cache-Control', 'private, no-store, max-age=0');\n  }\n  if (html && (pathname === '/services' || pathname === '/universities')) {
     headers.set('X-Robots-Tag', 'noindex, follow');
   }
   if (isPrivate) {
