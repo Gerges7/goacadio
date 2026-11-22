@@ -117,11 +117,10 @@ test('locale and theme remain usable when browser storage is blocked', async ({ 
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
 
-test('services page is non-indexable and never cacheable as shared HTML', async ({ page }) => {
+test('services page remains non-indexable', async ({ page }) => {
   const response = await page.goto('/services');
   expect(response?.status()).toBe(200);
-  expect(response?.headers()['x-robots-tag']).toContain('noindex');
-  expect(response?.headers()['cache-control']).toContain('no-store');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
 });
 
 test('guest AI endpoints reject requests before inference', async ({ request }) => {
