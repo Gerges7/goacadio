@@ -15,7 +15,7 @@ const inv=()=>validateLaunchInventory({routesText:read('app/routes.ts'),sitemapX
 test('AdSense ownership meta tag is in common HTML head',()=>assert.match(read('app/root.tsx'),/<meta name="google-adsense-account" content="ca-pub-1551519098591089"/));
 test('No AdSense ad-serving script is loaded before review',()=>assert.doesNotMatch(read('app/root.tsx')+read('app/lib/seo.ts'),/adsbygoogle\.js|googlesyndication\.com/));
 test('ads.txt uses exactly the correct pub ID, seller and certification ID',()=>assert.equal(read('public/ads.txt').trim(),'google.com, pub-1551519098591089, DIRECT, f08c47fec0942fa0'));
-test('Public support email is the exact user-approved address',()=>assert.match(read('app/lib/contact.ts'),/OFFICIAL_SUPPORT_EMAIL = 'gergesmorad17@gmail.com'/));
+test('Public support email is the exact user-approved address',()=>assert.match(read('app/lib/contact.ts'),/OFFICIAL_SUPPORT_EMAIL = 'support@goacadio.com'/));
 test('Contact page SSR loader exposes the approved public address',()=>assert.match(read('app/routes/contact.tsx'),/return \{supportEmail: OFFICIAL_SUPPORT_EMAIL\}/));
 test('Review launch inventory passes',()=>assert.deepEqual(inv().failures,[]));
 test('Sitemap contains all 16 indexed public routes and no duplicates',()=>{const x=sitemapLocations(read('public/sitemap.xml'));assert.equal(x.length,16);assert.deepEqual(x.map(x=>new URL(x).pathname).sort(),[...PUBLIC_PATHS].sort());});
