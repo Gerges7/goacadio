@@ -34,7 +34,8 @@ export function secureResponse(request: Request, response: Response): Response {
   // Keep its HTML response out of shared/browser caches even though the route remains public.
   if (html && pathname === '/services') {
     headers.set('Cache-Control', 'private, no-store, max-age=0');
-  }\n  if (html && (pathname === '/services' || pathname === '/universities')) {
+  }
+  if (html && (pathname === '/services' || pathname === '/universities')) {
     headers.set('X-Robots-Tag', 'noindex, follow');
   }
   if (isPrivate) {
