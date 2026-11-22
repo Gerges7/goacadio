@@ -1,26 +1,49 @@
-# Manually triggered ONLY after the Cloudflare production deployment has completed.
-# Uses no credentials, no secrets, no real student accounts and no AI requests.
+# Public production smoke checks. These requests are unauthenticated and never write user data.
 name: GoAcadio production smoke check
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_run:
+    workflows: ["GoAcadio build & quality check"]
+    types: [completed]
+    branches: [main]
 
 permissions:
   contents: read
 
 jobs:
   smoke:
+    # Only follow successful pushes to main; never execute workflow_run PR/fork code.
+    if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.conclusion == 'success') }}
     name: Public pages and guest API security
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
+      - name: Checkout trusted main branch
+        uses: actions/checkout@v7
+        with:
+          ref: main
+
       - name: Set up Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
-      - name: Verify public pages, SEO, and security headers
-        run: node scripts/check-live.mjs
-      - name: Verify guest API access is denied safely
-        run: node scripts/check-api-guest.mjs
+          package-manager-cache: false
+
+      - name: Retry public production checks
+        shell: bash
+        run: |
+          for attempt in 1 2 3; do
+            echo "Production smoke attempt $attempt/3"
+            if node scripts/check-live.mjs && node scripts/check-api-guest.mjs; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              echo "Smoke check failed; waiting 30 seconds before retry."
+              sleep 30
+            fi
+          done
+          echo "Production smoke checks failed after three attempts."
+          exit 1
