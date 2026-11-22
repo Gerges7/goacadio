@@ -63,6 +63,7 @@ export function inspectResponse(test, status, headers, body, origin=SITE) {
   const ct=headers.get('content-type')??'';
   failIf(failures,ct.toLowerCase().includes('text/html'),'Missing text/html Content-Type');
   failIf(failures,headers.get('x-content-type-options')?.toLowerCase()==='nosniff','Missing nosniff header');
+  failIf(failures,(headers.get('strict-transport-security')??'').includes('max-age=31536000'),'Missing HSTS on HTTPS response');
   failIf(failures,headers.get('x-frame-options')?.toUpperCase()==='DENY','Missing clickjacking header');
   const robots = metaValue(body,'robots');
   if(test.category==='public') {
