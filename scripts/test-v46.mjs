@@ -23,6 +23,7 @@ assert.match(security, /X-Robots-Tag/);
 const servicesResponse = secureResponse(new Request('https://goacadio.com/services'), new Response('<main>private request history</main>', { headers: { 'Content-Type': 'text/html' } }));
 assert.equal(servicesResponse.headers.get('Cache-Control'), 'private, no-store, max-age=0');
 assert.equal(servicesResponse.headers.get('X-Robots-Tag'), 'noindex, follow');
+assert.equal(servicesResponse.headers.get('Strict-Transport-Security'), 'max-age=31536000');
 const apiResponse = secureResponse(new Request('https://goacadio.com/api/ai-study'), new Response('{}', { headers: { 'Content-Type': 'application/json' } }));
 assert.equal(apiResponse.headers.get('Cache-Control'), 'private, no-store, max-age=0');
 assert.equal(apiResponse.headers.get('X-Robots-Tag'), 'noindex, nofollow');
