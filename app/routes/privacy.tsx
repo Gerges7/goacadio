@@ -24,7 +24,7 @@ export default function Privacy(){const {text}=useLocale();return <><div classNa
     <p>{text('بيانات الحساب قد تظل محفوظة إلى حين حذفها أو معالجة طلب حذف الحساب يدويًا. قد تكون لدى مزودي الاستضافة والمصادقة مدد احتفاظ منفصلة بالسجلات التقنية. لم نضع وعدًا بمدة حذف فورية، ويمكنك السؤال عن طلبك عبر بريد الدعم.',
       'Account records may remain until deleted or until an account-deletion request is manually processed. Hosting and authentication providers may retain technical logs under their own schedules. We do not promise immediate deletion; you can follow up using the support email.')}</p>
     <p>{text('لمعرفة طريقة استخدام Google للبيانات عند استخدام مواقع شركائها:', 'Learn how Google uses data when you use partner sites:')} <a href="https://policies.google.com/technologies/partner-sites" rel="noopener noreferrer" target="_blank">Google Privacy &amp; Terms</a>.</p>
-    <p>{text('بريد استفسارات الخصوصية:', 'Privacy contact:')} <a href="mailto:gergesmorad17@gmail.com" dir="ltr">gergesmorad17@gmail.com</a></p>
+    <p>{text('بريد استفسارات الخصوصية:', 'Privacy contact:')} <a href="mailto:support@goacadio.com" dir="ltr">support@goacadio.com</a></p>
   </section>
   <p><a href="/account" style={{textDecoration:'underline'}}>{text('إدارة طلبات حسابك وبياناتك','Manage account and data requests')}</a> · <a href="/help" style={{textDecoration:'underline'}}>{text('مركز المساعدة','Help center')}</a> · <a href="/contact" style={{textDecoration:'underline'}}>{text('التواصل','Contact')}</a></p>
   <div className="note">{text('تاريخ نشر معلومات الخصوصية: 8 نوفمبر 2026. لو تغير نوع البيانات أو تشغيل الإعلانات هنحدّث هذه الصفحة قبل التغيير.',
