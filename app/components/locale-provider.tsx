@@ -30,6 +30,9 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
 
   function setLang(next: Locale) {
     setLangState(next);
+    // Update document direction immediately; the effect below also handles stored locale on load.
+    document.documentElement.lang = next;
+    document.documentElement.dir = next === 'ar' ? 'rtl' : 'ltr';
     try {
       window.localStorage.setItem(storageKeys.locale, next);
     } catch {
