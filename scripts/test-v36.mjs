@@ -49,7 +49,7 @@ test('JSON-LD script breaking text is safely escaped without data loss',()=>{
   assert.match(serialized,/\\u003c/);
 });
 function html(url){return `<html><head><meta name="google-adsense-account" content="ca-pub-1551519098591089"/><meta name="robots" content="index, follow"/><link rel="canonical" href="${url}"/><meta property="og:url" content="${url}" /></head><body></body></html>`;}
-const headers=()=>new Headers({'content-type':'text/html; charset=utf-8','x-content-type-options':'nosniff','x-frame-options':'DENY'});
+const headers=()=>new Headers({'content-type':'text/html; charset=utf-8','x-content-type-options':'nosniff','x-frame-options':'DENY','strict-transport-security':'max-age=31536000'});
 const pub=TEST_CASES.find(x=>x.path==='/guides/how-to-calculate-gpa');
 
 test('Valid public launch page passes canonical and index checks',()=>{
@@ -64,6 +64,7 @@ test('Missing canonical fails',()=>{
 test('Public noindex fails',()=>{
   assert.match(inspectResponse(pub,200,headers(),html(SITE+pub.path).replace('index, follow','noindex, follow')).join(' '),/noindex/);
 });
+test('Missing HSTS is rejected by live audit',()=>{const h=headers();h.delete('strict-transport-security');assert.match(inspectResponse(pub,200,h,html(SITE+pub.path)).join(' '),/HSTS/);});
 test('Missing security headers fails',()=>{
   assert.match(inspectResponse(pub,200,new Headers({'content-type':'text/html'}),html(SITE+pub.path)).join(' '),/nosniff/);
 });
