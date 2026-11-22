@@ -29,6 +29,8 @@ assert.equal(servicesResponse.headers.get('Strict-Transport-Security'), 'max-age
 const apiResponse = secureResponse(new Request('https://goacadio.com/api/ai-study'), new Response('{}', { headers: { 'Content-Type': 'application/json' } }));
 assert.equal(apiResponse.headers.get('Cache-Control'), 'private, no-store, max-age=0');
 assert.equal(apiResponse.headers.get('X-Robots-Tag'), 'noindex, nofollow');
+assert.equal(pkg.dependencies['react-router'], '7.18.6');
+assert.equal(pkg.devDependencies['@react-router/dev'], '7.18.6');
 assert.equal(pkg.devDependencies['@playwright/test'], '1.65.1');
 assert.equal(pkg.scripts['test:e2e'], 'playwright test');
 assert.ok(pkg.scripts['check:ci'].includes('npm run test:e2e'));
