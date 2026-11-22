@@ -10,7 +10,7 @@ const read=x=>readFileSync(resolve(root,x),'utf8');
 let passed=0;
 function test(label,fn){fn();passed++;console.log('PASS '+label);}
 const html=(url,robots='index, follow')=>`<html><head><meta name="robots" content="${robots}"/><meta name="google-adsense-account" content="ca-pub-1551519098591089"/><link rel="canonical" href="${url}"/><meta property="og:url" content="${url}"/></head><body></body></html>`;
-const headers=()=>new Headers({'content-type':'text/html','x-content-type-options':'nosniff','x-frame-options':'DENY'});
+const headers=()=>new Headers({'content-type':'text/html','x-content-type-options':'nosniff','x-frame-options':'DENY','strict-transport-security':'max-age=31536000'});
 const inv=()=>validateLaunchInventory({routesText:read('app/routes.ts'),sitemapXml:read('public/sitemap.xml'),robotsText:read('public/robots.txt'),seoSource:read('app/lib/seo.ts'),rootSource:read('app/root.tsx'),publicFolder:resolve(root,'public'),exists:existsSync});
 test('AdSense ownership meta tag is in common HTML head',()=>assert.match(read('app/root.tsx'),/<meta name="google-adsense-account" content="ca-pub-1551519098591089"/));
 test('No AdSense ad-serving script is loaded before review',()=>assert.doesNotMatch(read('app/root.tsx')+read('app/lib/seo.ts'),/adsbygoogle\.js|googlesyndication\.com/));
