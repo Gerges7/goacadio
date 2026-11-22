@@ -16,6 +16,7 @@ export function isPrivatePath(pathname: string): boolean {
 
 export function secureResponse(request: Request, response: Response): Response {
   const headers = new Headers(response.headers);
+  if (new URL(request.url).protocol === 'https:') headers.set('Strict-Transport-Security', 'max-age=31536000');
   headers.set('X-Content-Type-Options', 'nosniff');
   headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
