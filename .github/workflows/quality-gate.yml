@@ -16,18 +16,22 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Checkout source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
+          package-manager-cache: false
 
       - name: Install project dependencies
         run: npm install --no-audit --no-fund
 
-      - name: Run checks and production build
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run checks, browser journeys and production build
         run: npm run check:ci
