@@ -11,7 +11,7 @@ const files={terms:read('app/routes/terms.tsx'),privacy:read('app/routes/privacy
   ads:read('public/ads.txt'),robots:read('public/robots.txt'),sitemap:read('public/sitemap.xml'),
   security:read('workers/security.ts')};
 const publisher='ca-pub-1551519098591089';
-const email='gergesmorad17@gmail.com';
+const email='support@goacadio.com';
 let passed=0;function check(name,fn){fn();passed++;console.log('PASS '+name);}
 check('Current terms are published, not labeled a prelaunch draft',()=>{
   assert.match(files.terms,/Current terms of use/);
