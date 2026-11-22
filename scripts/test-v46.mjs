@@ -1,0 +1,34 @@
+/** V4.6 regression guards for browser storage, personalized page caching and E2E coverage. */
+import assert from 'node:assert/strict';
+import { readFileSync, existsSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const read = path => readFileSync(resolve(root, path), 'utf8');
+const locale = read('app/components/locale-provider.tsx');
+const security = read('workers/security.ts');
+const pkg = JSON.parse(read('package.json'));
+const workflow = read('.github/workflows/quality-gate.yml');
+const smoke = read('.github/workflows/production-smoke.yml');
+
+assert.match(locale, /function readStoredLocale/);
+assert.match(locale, /localStorage\.getItem[\s\S]*catch/);
+assert.match(locale, /localStorage\.setItem[\s\S]*catch/);
+assert.match(security, /pathname === '\/services'[\s\S]*private, no-store/);
+assert.match(security, /X-Robots-Tag/);
+assert.equal(pkg.devDependencies['@playwright/test'], '1.65.1');
+assert.equal(pkg.scripts['test:e2e'], 'playwright test');
+assert.ok(pkg.scripts['check:ci'].includes('npm run test:e2e'));
+assert.ok(pkg.scripts['check:ci'].includes('npm run test:v46'));
+assert.ok(existsSync(resolve(root, 'playwright.config.ts')));
+assert.ok(existsSync(resolve(root, 'e2e/core.spec.ts')));
+assert.match(workflow, /actions\/checkout@v7/);
+assert.match(workflow, /actions\/setup-node@v7/);
+assert.match(workflow, /playwright install --with-deps chromium/);
+assert.match(smoke, /workflow_run:/);
+assert.match(smoke, /schedule:/);
+assert.match(smoke, /check-api-guest\.mjs/);
+assert.doesNotMatch(smoke, /CLOUDFLARE_API_TOKEN|SUPABASE_SERVICE_ROLE|\$\{\{\s*secrets\./i);
+
+console.log('V4.6 regression checks passed: resilient locale storage, private services caching, browser E2E and recurring production smoke.');
