@@ -23,7 +23,7 @@
     "test:v38": "node scripts/test-v38.mjs",
     "test:contact": "node scripts/test-public-contact.mjs",
     "test:v39": "node scripts/test-v39.mjs",
-    "check:ci": "npm run check:launch && npm run audit:links && npm run test:v36 && npm run test:v37 && npm run test:v38 && npm run test:data-export && npm run test:contact && npm run test:v39 && npm run test:functional && npm run test:v42 && npm run test:v43 && npm run test:v44 && npm run test:v45 && npm run typecheck && npm run build",
+    "check:ci": "npm run check:launch && npm run audit:links && npm run test:v36 && npm run test:v37 && npm run test:v38 && npm run test:data-export && npm run test:contact && npm run test:v39 && npm run test:functional && npm run test:v42 && npm run test:v43 && npm run test:v44 && npm run test:v45 && npm run test:v46 && npm run test:e2e && npm run typecheck && npm run build",
     "test:functional": "node scripts/test-v40.mjs",
     "check:api-guest": "node scripts/check-api-guest.mjs",
     "check:api-guest:json": "node scripts/check-api-guest.mjs --json",
@@ -32,7 +32,9 @@
     "test:v42": "node scripts/test-v42.mjs",
     "test:v43": "node scripts/test-v43.mjs",
     "test:v44": "node scripts/test-v44.mjs",
-    "test:v45": "node scripts/test-v45.mjs"
+    "test:v45": "node scripts/test-v45.mjs",
+    "test:e2e": "playwright test",
+    "test:v46": "node scripts/test-v46.mjs"
   },
   "dependencies": {
     "isbot": "5.1.32",
@@ -51,7 +53,8 @@
     "typescript": "5.9.3",
     "vite": "^7.0.0",
     "vite-tsconfig-paths": "5.1.4",
-    "wrangler": "4.88.0"
+    "wrangler": "4.88.0",
+    "@playwright/test": "1.65.1"
   },
   "engines": {
     "node": ">=20.19.0"
