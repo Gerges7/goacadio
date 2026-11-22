@@ -1,3 +1,5 @@
+> **أرشيف تاريخي:** هذه وثيقة لنسخة سابقة وليست تعليمات الإطلاق الحالية. راجع `docs/PRODUCT_STATUS_V46_AR.md` و`README.md` للحالة الحالية.
+
 GoAcadio V4.1 — AdSense Ownership Verification + Public SEO Launch
 ===============================================================
 
@@ -9,7 +11,7 @@ GoAcadio V4.1 — AdSense Ownership Verification + Public SEO Launch
    https://goacadio.com/ads.txt  ← google.com, pub-1551519098591089, DIRECT, f08c47fec0942fa0
    https://goacadio.com/robots.txt ← Allow: / + Sitemap URL
    https://goacadio.com/sitemap.xml ← 16 روابط عامة فقط
-   https://goacadio.com/contact  ← بريد الدعم gergesmorad17@gmail.com
+   https://goacadio.com/contact  ← بريد الدعم support@goacadio.com
 5) راجع بصفتك صاحب الموقع نص Terms (موجود كمسودة توضيحية)، وPrivacy، ومحتوى الصفحات قبل طلب المراجعة. احصل على مراجعة قانونية مناسبة عند الحاجة.
 6) من AdSense > Sites > goacadio.com اختر Meta tag method ثم Verify وRequest review بعد التحقق والنشر. ليس بإمكان ZIP إرسال الطلب نيابة عنك.
 
