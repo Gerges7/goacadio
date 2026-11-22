@@ -27,6 +27,11 @@ const pageRoutes = [
 ];
 
 test('all registered page routes render without uncaught browser errors', async ({ page }) => {
+  // Warm the local Vite client once so the route loop measures app behavior, not first-load HMR startup.
+  await page.goto('/');
+  await expect(page.locator('button.lang-toggle')).toBeVisible();
+  await page.waitForTimeout(150);
+
   const pageErrors: string[] = [];
   page.on('pageerror', error => pageErrors.push(error.message));
 
@@ -46,11 +51,11 @@ test('homepage language switch updates content direction and persists', async ({
 
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
-  await expect(page.getByRole('link', { name: 'Tools', exact: true })).toBeVisible();
+  await expect(page.locator('nav.navigation').getByRole('link', { name: 'Tools', exact: true })).toBeVisible();
 
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await expect(page.getByRole('link', { name: 'Tools', exact: true })).toBeVisible();
+  await expect(page.locator('nav.navigation').getByRole('link', { name: 'Tools', exact: true })).toBeVisible();
 });
 
 test('light and dark theme toggle persists after reload', async ({ page }) => {
@@ -75,6 +80,7 @@ test('focus timer starts and pauses without losing its countdown', async ({ page
 
   await page.getByRole('button', { name: 'ابدأ الجلسة' }).click();
   await expect(page.getByRole('button', { name: 'إيقاف مؤقت' })).toBeVisible();
+  await expect(timer).not.toHaveText('25:00', { timeout: 3000 });
   await page.getByRole('button', { name: 'إيقاف مؤقت' }).click();
   await expect(page.getByRole('button', { name: 'ابدأ الجلسة' })).toBeVisible();
   await expect(timer).toHaveText(/^24:[0-5][0-9]$/);
@@ -94,9 +100,10 @@ test('mobile navigation opens and closes with Escape', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
 
-  const menu = page.getByRole('button', { name: 'فتح القائمة' });
-  await menu.click();
-  await expect(menu).toHaveAttribute('aria-expanded', 'true');
+  const openMenu = page.getByRole('button', { name: 'فتح القائمة' });
+  await openMenu.click();
+  const closeMenu = page.getByRole('button', { name: 'إغلاق القائمة' });
+  await expect(closeMenu).toHaveAttribute('aria-expanded', 'true');
   await expect(page.getByRole('navigation', { name: 'القائمة الرئيسية' }).getByRole('link', { name: 'الأدوات' })).toBeVisible();
 
   await page.keyboard.press('Escape');
