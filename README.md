@@ -1,28 +1,94 @@
-# GoAcadio V2 — Cloudflare Workers + Supabase
+# GoAcadio
 
-A bilingual university student portal with public tools and optional authenticated accounts.
+**GoAcadio** is a bilingual (Arabic/English) student productivity platform built around a student workspace and a set of free public tools.
 
-## Implemented
-- Public home, GPA/CGPA calculator, Focus Timer, CV Builder, services and university directory.
-- No public development plan. `/roadmap` is removed and has no route.
-- Student registration/sign-in with email/password and Google OAuth (once configured).
-- Authenticated student profile and courses stored in Supabase; browser-local GPA/CV/focus remain local.
-- One-click import of legacy V1 local browser courses (with user action).
-- Real preliminary academic support inquiries, with student-only and admin-only access.
-- Admin-only catalog publishing (universities/faculties/programs) and request status updates.
-- SQL Row Level Security for student rows and admin-only catalog writes.
-- Safe disconnected mode: without Supabase build variables, free tools and local dashboard still work.
+Production: [https://goacadio.com](https://goacadio.com)
 
-## Not implemented / not ready for a public launch
-- Online payment, PDF uploads, AI assistant, auto-generated quizzes, verified university GPA policies.
-- Full account deletion workflow, legal privacy policy review, anti-abuse rate limits and support contact channel.
-- Production SEO and AdSense: public indexing is deliberately disabled by `robots.txt` and the root meta tag.
+## Current product
 
-## Setup
-Read `docs/DEPLOY_V2.md` and execute `supabase/001_v2_core.sql` in a **new** Supabase project before enabling sign-ups. Promotion to admin is done only using a one-time SQL query in Supabase SQL Editor; it cannot be performed by a website user.
+### Public tools
+- GPA and CGPA calculator with standard and custom grading systems.
+- Focus timer with local tracking and optional sync of completed focus sessions.
+- Student CV builder; CV content stays in the browser's local storage.
+- University and faculty directory for Egypt and Saudi Arabia.
+- Bilingual study guides and help pages.
 
-This is a code delivery. The Cloudflare build and the actual Supabase integration must be tested after deployment. Never put a Supabase `service_role` / secret key into `VITE_*` variables or GitHub.
+### Student workspace
+- Email/password authentication and Google OAuth when the provider is configured in Supabase.
+- Student profile, academic program and course selection.
+- Study planner and exam/task tracking.
+- AI Study Assistant with server-side authentication and daily usage limits.
+- PDF-to-quiz generation for text-based PDFs (client-side text extraction; scanned-PDF OCR is not supported).
+- Quiz history, study statistics and revision recommendations.
+- Account data export and manual account deletion requests.
+- Support/service requests with admin-only status management.
 
-## V2.1 course catalog
+### Admin and data
+- Admin-only university/faculty/catalog publishing.
+- Supabase Row Level Security policies for user-owned records and administrator actions.
+- CV and GPA calculations are local browser tools; authenticated workspace records are stored in Supabase.
+- PDF files are processed in the browser; extracted text is sent to the AI endpoint when the student requests generation.
 
-For upgrading an existing V2 production project, follow `docs/DEPLOY_V2_1.md`, including running `supabase/002_program_course_catalog.sql` before deploying the updated UI. Course curricula are not prepopulated without a verified official source.
+## Current limitations (do not treat these as implemented)
+- No flashcards or spaced-repetition review system yet.
+- No OCR for scanned PDFs.
+- No PWA/offline application shell or push notifications.
+- No Google Calendar synchronization.
+- No subscription checkout or payment processing.
+- University coverage is currently focused on Egypt and Saudi Arabia, not a complete global catalog.
+- Interface languages are Arabic and English.
+- Account deletion is handled as a request; it is not an instant self-service deletion action.
+- AI generation and authenticated persistence require working Supabase configuration and the Cloudflare Workers AI binding.
+
+## Stack
+
+- React Router 7, React, TypeScript and Vite.
+- Cloudflare Workers and Workers AI.
+- Supabase Auth, Postgres and Row Level Security.
+
+## Environment and security
+
+Set these build-time variables in the deployment environment:
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_PUBLISHABLE_KEY`
+
+Never expose a Supabase `service_role` key, database password, Cloudflare API token or other server secret through a `VITE_*` variable or committed file. The browser must use only the Supabase publishable/anon key; server-only secrets belong in the hosting environment.
+
+Supabase migrations are stored in `supabase/`. Apply them in order to the intended Supabase project and verify RLS before enabling real student accounts. Google OAuth also requires provider configuration in Supabase.
+
+## Development and tests
+
+```bash
+npm install
+npm run dev
+```
+
+Browser tests use a local Node/Vite adapter so they do not require Cloudflare credentials:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+Full CI checks (release audits, functional tests, Playwright Chromium journeys, TypeScript and production build):
+
+```bash
+npm run check:ci
+```
+
+Unauthenticated production checks:
+
+```bash
+npm run check:live
+npm run check:api-guest
+```
+
+GitHub Actions runs the quality gate on pushes and pull requests. The separate production smoke workflow checks public pages and guest API security after successful pushes to `main`, and on a six-hour schedule. These checks do not deploy the Worker; production deployment is handled separately by the Cloudflare Workers deployment integration.
+
+## Verified baseline (2026-11-22)
+
+- GitHub quality gate: Run #41 succeeded, including 11 Playwright browser tests, TypeScript and production build.
+- Production HTTP smoke: 24/24 route and public asset checks passed.
+- Guest API smoke: 4/4 unauthorized/cross-origin checks passed.
+- The HTTP smoke verifies the live domain's current responses; it does not prove that every authenticated Supabase flow or every AI inference path has been exercised.
+- Live authenticated database/RLS testing still requires a connected Supabase project and a dedicated test account.
