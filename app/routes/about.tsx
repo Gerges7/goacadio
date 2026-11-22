@@ -1,6 +1,7 @@
 import { Link, type MetaFunction } from 'react-router';
 import { useLocale } from '@/components/locale-provider';
 import { publicSeoMeta } from '@/lib/seo';
+import { OFFICIAL_SUPPORT_EMAIL, OFFICIAL_WHATSAPP_USERNAME } from '@/lib/contact';
 
 export const meta: MetaFunction = () => publicSeoMeta(
   'About GoAcadio | Student Tools & Study Guides',
@@ -46,7 +47,9 @@ export default function About() {
         <section><h2>{text('المساعدة والملاحظات', 'Support and feedback')}</h2>
           <p>{text('لو عندك مشكلة أو تصحيح، تواصل معانا من صفحة التواصل أو عبر بريد الدعم المنشور. المستخدم المسجل يقدر كمان يقدّم طلب دعم من حسابه.',
             'If a tool is broken or you notice an inaccurate explanation, use the contact page or the published support email. Signed-in students can also send in-app support requests.')}</p>
-          <p>{text('بريد الدعم:', 'Support email:')} <a href="mailto:gergesmorad17@gmail.com" dir="ltr">gergesmorad17@gmail.com</a></p>
+          <p>{text('بريد الدعم:', 'Support email:')} <a href={`mailto:${OFFICIAL_SUPPORT_EMAIL}`} dir="ltr">{OFFICIAL_SUPPORT_EMAIL}</a></p>
+          <p>{text('واتساب:', 'WhatsApp:')} <strong dir="ltr">{OFFICIAL_WHATSAPP_USERNAME}</strong></p>
+          <p className="inline-help">{text('ابحث عن اليوزر نفسه داخل واتساب للتواصل معنا.', 'Search for the exact username inside WhatsApp to contact us.')}</p>
           <div className="actions"><Link className="btn btn-primary" to="/contact">{text('تواصل معنا', 'Contact us')}</Link>
             <Link className="btn btn-soft" to="/help">{text('مركز المساعدة', 'Help center')}</Link></div></section>
       </article>

@@ -1,6 +1,7 @@
 /** Safe public contact configuration and browser-only email composition. */
 /** Public support address provided by the site owner. Not a private API key. */
-export const OFFICIAL_SUPPORT_EMAIL = 'gergesmorad17@gmail.com';
+export const OFFICIAL_SUPPORT_EMAIL = 'support@goacadio.com';
+export const OFFICIAL_WHATSAPP_USERNAME = '@GoAcadio';
 export const CONTACT_TOPICS = ['technical', 'privacy', 'general'] as const;
 export type ContactTopic = typeof CONTACT_TOPICS[number];
 

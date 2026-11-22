@@ -22,8 +22,8 @@ const TYPES: Record<string, { ar: string; en: string }> = {
 };
 
 export const meta: MetaFunction = () => [
-  { title: 'Egyptian Universities and Faculties | GoAcadio' },
-  { name: 'description', content: 'Search Egyptian universities and browse their published faculties in the GoAcadio student directory.' },
+  { title: 'Egyptian and Saudi Universities and Faculties | GoAcadio' },
+  { name: 'description', content: 'Search universities and browse published faculties in Egypt and Saudi Arabia.' },
   { name: 'robots', content: 'noindex, follow' },
 ];
 
@@ -35,6 +35,7 @@ export default function Universities() {
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [type, setType] = useState('all');
+  const [countryCode, setCountryCode] = useState<'EG' | 'SA'>('EG');
 
   useEffect(() => {
     const client = getSupabase();
@@ -45,13 +46,13 @@ export default function Universities() {
       setError('');
       const modern = await client.from('universities')
         .select('id,name_en,name_ar,country_code,institution_type,source_url')
-        .eq('country_code', 'EG').eq('is_published', true).order('name_ar');
+        .in('country_code', ['EG', 'SA']).eq('is_published', true).order('name_ar');
       let universityRows: University[];
       // Keep the page usable before the V4.4 SQL migration is applied.
       if (modern.error?.code === '42703') {
         const legacy = await client.from('universities')
           .select('id,name_en,name_ar,country_code')
-          .eq('country_code', 'EG').eq('is_published', true).order('name_en');
+          .in('country_code', ['EG', 'SA']).eq('is_published', true).order('name_en');
         if (legacy.error) throw legacy.error;
         universityRows = (legacy.data ?? []).map(x => ({ ...x, institution_type: 'other', source_url: null }));
       } else {
@@ -87,16 +88,20 @@ export default function Universities() {
     return map;
   }, [faculties]);
 
+  const countryUniversities = useMemo(() => universities.filter(university => university.country_code === countryCode), [universities, countryCode]);
+  const countryFacultyCount = countryUniversities.reduce((total, university) => total + (facultyMap.get(university.id)?.length ?? 0), 0);
+
   const visible = useMemo(() => {
     const q = search.trim().toLocaleLowerCase();
     return universities.filter(university => {
+      if (university.country_code !== countryCode) return false;
       if (type !== 'all' && (university.institution_type ?? 'other') !== type) return false;
       if (!q) return true;
       const facultyList = facultyMap.get(university.id) ?? [];
       return [university.name_ar ?? '', university.name_en, ...facultyList.flatMap(f => [f.name_ar ?? '', f.name_en])]
         .some(value => value.toLocaleLowerCase().includes(q));
     });
-  }, [universities, facultyMap, search, type]);
+  }, [universities, facultyMap, search, type, countryCode]);
 
   const label = (x: { name_ar: string | null; name_en: string }) =>
     lang === 'ar' && x.name_ar ? x.name_ar : x.name_en;
@@ -107,17 +112,21 @@ export default function Universities() {
 
   return <>
     <div className="page-hero"><div className="container">
-      <span className="section-kicker">EGYPTIAN UNIVERSITY DIRECTORY</span>
-      <h1>{text('دليل الجامعات والكليات المصرية 🎓', 'Egyptian Universities and Faculties')}</h1>
-      <p>{text('ابحث عن جامعتك، اختار نوع المؤسسة، واستعرض الكليات المنشورة. يمكنك إدخال الكلية يدويًا من لوحة الطالب إذا لم تكن مدرجة.', 'Search for your institution, filter by type, and browse published faculties. You can enter a faculty manually in your student profile if it is not listed.')}</p>
+      <span className="section-kicker">UNIVERSITY DIRECTORY</span>
+      <h1>{text('دليل الجامعات والكليات 🎓', 'University & Faculty Directory')}</h1>
+      <p>{text('اختر الدولة، وابحث عن الجامعة أو الكلية، وفلتر النتائج حسب نوع المؤسسة. الكليات غير المدرجة يمكن إدخالها يدويًا من لوحة الطالب.', 'Choose a country, search for a university or faculty, and filter by institution type. Unlisted faculties can be entered manually in the student profile.')}</p>
     </div></div>
     <div className="page-content"><div className="container stack">
       <section className="panel stack">
         <div className="toolbar" style={{ flexWrap: 'wrap' }}>
-          <div><strong>{universities.length}</strong> {text('مؤسسة تعليم عالٍ', 'institutions')} · <strong>{faculties.length}</strong> {text('كلية مدرجة', 'listed faculties')}</div>
+          <div><strong>{countryUniversities.length}</strong> {text('جامعة / مؤسسة', 'institutions')} · <strong>{countryFacultyCount}</strong> {text('كلية مدرجة', 'listed faculties')}</div>
           <Link to="/dashboard" className="btn btn-primary">{text('اختار جامعتك في حسابك', 'Choose in student profile')}</Link>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(190px,1fr))', gap: 12 }}>
+          <select className="input" value={countryCode} onChange={e => setCountryCode(e.target.value as 'EG' | 'SA')} aria-label={text('الدولة','Country')}>
+            <option value="EG">{text('🇪🇬 مصر','🇪🇬 Egypt')}</option>
+            <option value="SA">{text('🇸🇦 السعودية','🇸🇦 Saudi Arabia')}</option>
+          </select>
           <input className="input" value={search} onChange={e => setSearch(e.target.value)}
             placeholder={text('ابحث باسم الجامعة أو الكلية...', 'Search university or faculty...')} aria-label={text('البحث في دليل الجامعات','Search university directory')} />
           <select className="input" value={type} onChange={e => setType(e.target.value)} aria-label={text('نوع الجامعة','Institution type')}>

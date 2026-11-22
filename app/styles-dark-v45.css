@@ -1,0 +1,61 @@
+/* V4.5 — persistent light/dark appearance */
+:root[data-theme="dark"]{color-scheme:dark;--ink:#e9edf7;--muted:#a6b0c5;--line:#303a50;--bg:#0e1422;--white:#171f30;--violet:#958cff;--violetDark:#7b72f1;--mint:#38c7a7;--lightViolet:#292641;--shadow:0 18px 55px rgba(0,0,0,.34)}
+:root[data-theme="light"]{color-scheme:light}
+html[data-theme="dark"] body{background:var(--bg)!important;color:var(--ink)!important}
+html[data-theme="dark"] .site-header,html[data-theme="dark"] .navigation,html[data-theme="dark"] .footer,html[data-theme="dark"] .section-white,html[data-theme="dark"] .dashboard-demo,html[data-theme="dark"] .feature-card,html[data-theme="dark"] .panel,html[data-theme="dark"] .metric-card,html[data-theme="dark"] .price-card,html[data-theme="dark"] .university-tile,html[data-theme="dark"] .planner-item,html[data-theme="dark"] .quiz-question,html[data-theme="dark"] .quiz-option,html[data-theme="dark"] .student-quick-actions .quick-action,html[data-theme="dark"] .ai-study-message.is-assistant,html[data-theme="dark"] .floating-pill,html[data-theme="dark"] .admin-request,html[data-theme="dark"] .demo-course,html[data-theme="dark"] .demo-stat,html[data-theme="dark"] .small-btn,html[data-theme="dark"] .preset{background-color:var(--white)!important;color:var(--ink);border-color:var(--line)}
+html[data-theme="dark"] .site-header,html[data-theme="dark"] .footer,html[data-theme="dark"] .navigation{border-color:var(--line)!important}
+html[data-theme="dark"] .hero{background:radial-gradient(ellipse at 12% 25%,#282343 0,transparent 46%),radial-gradient(ellipse at 88% 75%,#123b38 0,transparent 42%),#111827}
+html[data-theme="dark"] .page-hero{background:linear-gradient(135deg,#211f3b,#121b2a)}
+html[data-theme="dark"] .btn{background:var(--white);color:var(--ink);border-color:var(--line)}
+html[data-theme="dark"] .btn-primary,html[data-theme="dark"] .preset.active,html[data-theme="dark"] .active-tab{background:var(--violet)!important;border-color:var(--violet)!important;color:#fff!important}
+html[data-theme="dark"] .btn-primary:hover{background:var(--violetDark)!important}
+html[data-theme="dark"] .btn-soft{background:#292641!important;border-color:#393454!important;color:#c7c2ff!important}
+html[data-theme="dark"] .btn-ghost{background:#202a3d!important;border-color:#354159!important;color:#dce2f0!important}
+html[data-theme="dark"] .theme-toggle,html[data-theme="dark"] .menu-toggle{background:#24233f!important;border-color:#393653!important;color:#eeeefe!important}
+html[data-theme="dark"] .nav-link,html[data-theme="dark"] .lang-toggle,html[data-theme="dark"] .footer-links{color:#b4bfd2}
+html[data-theme="dark"] .nav-link:hover,html[data-theme="dark"] .nav-link.active{color:var(--violet)}
+html[data-theme="dark"] .navigation .nav-link:hover,html[data-theme="dark"] .navigation .nav-link:focus-visible,html[data-theme="dark"] .navigation .nav-link.active{background:#292743!important}
+html[data-theme="dark"] .hero h1,html[data-theme="dark"] .page-hero h1,html[data-theme="dark"] .section-title,html[data-theme="dark"] .section-head h2,html[data-theme="dark"] .panel-title,html[data-theme="dark"] .feature-card h3,html[data-theme="dark"] .step h3,html[data-theme="dark"] .demo-greeting,html[data-theme="dark"] .demo-section,html[data-theme="dark"] .course-item b,html[data-theme="dark"] .quiz-question-title h3,html[data-theme="dark"] .quiz-empty h2,html[data-theme="dark"] .ai-study-empty h3{color:var(--ink)}
+html[data-theme="dark"] .lead,html[data-theme="dark"] .hero-points,html[data-theme="dark"] .step p,html[data-theme="dark"] .footer p,html[data-theme="dark"] .footer-note,html[data-theme="dark"] .footer-links,html[data-theme="dark"] .page-hero p,html[data-theme="dark"] .panel-description,html[data-theme="dark"] .field label,html[data-theme="dark"] .inline-help,html[data-theme="dark"] .tiny-muted,html[data-theme="dark"] .demo-stat small,html[data-theme="dark"] .demo-course small,html[data-theme="dark"] .result-label,html[data-theme="dark"] .metric-card span,html[data-theme="dark"] .timer-ring span,html[data-theme="dark"] .course-item small,html[data-theme="dark"] .price-card ul,html[data-theme="dark"] .admin-table small,html[data-theme="dark"] .admin-request p,html[data-theme="dark"] .admin-request small,html[data-theme="dark"] .planner-course,html[data-theme="dark"] .planner-notes,html[data-theme="dark"] .focus-bar-col small,html[data-theme="dark"] .quiz-explanation,html[data-theme="dark"] .quiz-history-course-head span,html[data-theme="dark"] .quiz-attempt-detail small,html[data-theme="dark"] .revision-card-head small,html[data-theme="dark"] .revision-card-metrics,html[data-theme="dark"] .help-question p,html[data-theme="dark"] .guide-intro,html[data-theme="dark"] .guide-section p,html[data-theme="dark"] .guide-section ul,html[data-theme="dark"] .guide-cta p,html[data-theme="dark"] .trust-content section p,html[data-theme="dark"] .trust-home p{color:var(--muted)!important}
+html[data-theme="dark"] .input,html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="dark"] select{background:#111a2a!important;color:var(--ink)!important;border-color:#3b465d!important;color-scheme:dark}
+html[data-theme="dark"] select option{background:#111a2a;color:var(--ink)}
+html[data-theme="dark"] .input::placeholder{color:#8290a8}
+html[data-theme="dark"] .note{background:#202943!important;color:#c6d0e7!important}
+html[data-theme="dark"] .note.warn{background:#3a3020!important;color:#f1d69a!important}
+html[data-theme="dark"] .tag{background:#2a3048!important;color:#d1d6ed!important}
+html[data-theme="dark"] .tag.green{background:#17392f!important;color:#8be0bd!important}
+html[data-theme="dark"] .tag.orange{background:#3c3020!important;color:#f2cb83!important}
+html[data-theme="dark"] .eyebrow{background:#292644!important;color:#c9c4ff!important}
+html[data-theme="dark"] .demo-avatar,html[data-theme="dark"] .demo-course-icon,html[data-theme="dark"] .feature-icon,html[data-theme="dark"] .floating-pill span{background:#292743!important}
+html[data-theme="dark"] .feature-icon.mint{background:#173a35!important}
+html[data-theme="dark"] .feature-icon.peach{background:#3b2c27!important}
+html[data-theme="dark"] .feature-icon.blue{background:#1e3449!important}
+html[data-theme="dark"] .feature-icon.pink{background:#3c2938!important}
+html[data-theme="dark"] .demo-stat,html[data-theme="dark"] .demo-course{border-color:var(--line)}
+html[data-theme="dark"] .progress,html[data-theme="dark"] .focus-bar-track,html[data-theme="dark"] .quiz-history-track{background:#2a3449!important}
+html[data-theme="dark"] .timer-ring{border-color:#34304f;box-shadow:0 0 0 1px #34304f}
+html[data-theme="dark"] .placeholder{background:#141e2f!important;border-color:#3c4860!important;color:var(--muted)!important}
+html[data-theme="dark"] .planner-item.is-done{background:#192334!important}
+html[data-theme="dark"] .planner-item-date{color:#b4adff!important}
+html[data-theme="dark"] .ai-study-message.is-user{background:#292641!important;color:#e1ddff!important}
+html[data-theme="dark"] .quiz-option:has(input:checked){background:#292641!important;border-color:#8178e9!important;color:#d7d2ff!important}
+html[data-theme="dark"] .quiz-option.correct{background:#17382f!important;border-color:#3d9b72!important;color:#9ce2c3!important}
+html[data-theme="dark"] .quiz-option.incorrect{background:#40252d!important;border-color:#bd6877!important;color:#ffc1c9!important}
+html[data-theme="dark"] .quiz-score{background:#17382f!important;border-color:#326d55!important;color:#a9e6c9!important}
+html[data-theme="dark"] .guide-cta{background:#25243f!important}
+html[data-theme="dark"] .trust-feature-grid>div{background:#1b2639!important;border-color:var(--line)!important}
+html[data-theme="dark"] .student-quick-actions .quick-action:hover,html[data-theme="dark"] .student-quick-actions .quick-action:focus-visible{background:#292641!important}
+html[data-theme="dark"] .skip-to-content{background:var(--white)!important;color:var(--ink)!important}
+html[data-theme="dark"] .cv-resume{background:#fff!important;color:#141f38!important;border-color:#dce0eb!important}
+html[data-theme="dark"] .cv-resume p{color:#3f485b!important}
+html[data-theme="dark"] .cv-resume .cv-contact{color:#6c788c!important}
+.theme-toggle{display:grid;place-items:center;min-width:38px;min-height:38px;padding:0 9px;border:1px solid var(--line);border-radius:10px;background:#f5f5ff;color:var(--ink);font-size:19px;line-height:1;transition:background .2s,border-color .2s}
+.theme-toggle:hover{background:var(--lightViolet)}
+.footer-contact{display:grid;gap:4px;font-size:12px;color:var(--muted);direction:ltr;text-align:start}
+.footer-contact a{color:var(--violet);font-weight:800;overflow-wrap:anywhere}
+.footer-contact span{direction:rtl}
+.footer-contact strong{direction:ltr;display:inline-block}
+.contact-whatsapp-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.contact-whatsapp-row .small-btn{width:fit-content}
+@media(max-width:700px){.nav-actions .theme-toggle{min-width:40px;min-height:44px;padding:0}.footer-contact{width:100%}}
+@media print{:root[data-theme="dark"]{color-scheme:light;--ink:#141f38;--muted:#6f7891;--line:#e7eaf2;--bg:#fff;--white:#fff;--violet:#5952dc;--violetDark:#4841b6;--mint:#0cad95;--lightViolet:#f0eeff;--shadow:none}body{background:#fff!important;color:#141f38!important}}

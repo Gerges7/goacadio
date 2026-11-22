@@ -3,7 +3,7 @@ import { Link, useLoaderData, type MetaFunction } from 'react-router';
 import { useLocale } from '@/components/locale-provider';
 import { useAuth } from '@/components/auth-provider';
 import { publicSeoMeta } from '@/lib/seo';
-import { composeContactMailto, OFFICIAL_SUPPORT_EMAIL, type ContactTopic } from '@/lib/contact';
+import { composeContactMailto, OFFICIAL_SUPPORT_EMAIL, OFFICIAL_WHATSAPP_USERNAME, type ContactTopic } from '@/lib/contact';
 
 export const meta: MetaFunction = () => publicSeoMeta(
   'Contact & Support | GoAcadio',
@@ -20,10 +20,21 @@ export default function Contact(){
   const {supportEmail} = useLoaderData<typeof loader>();
   const {text} = useLocale();
   const {user} = useAuth();
+  const whatsappUsername = OFFICIAL_WHATSAPP_USERNAME;
+  const [whatsappCopied,setWhatsappCopied] = useState(false);
   const [topic,setTopic] = useState<ContactTopic>('technical');
   const [subject,setSubject] = useState('');
   const [message,setMessage] = useState('');
   const mailto = supportEmail ? composeContactMailto(supportEmail,topic,subject,message) : null;
+  async function copyWhatsAppUsername(){
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(whatsappUsername);
+      setWhatsappCopied(true);
+    } catch {
+      setWhatsappCopied(false);
+    }
+  }
   return <>
     <div className="page-hero"><div className="container"><span className="section-kicker">CONTACT GOACADIO</span>
       <h1>{text('تواصل معانا','Contact & support')}</h1>
@@ -62,6 +73,8 @@ export default function Contact(){
       </section>
       <aside className="panel stack">
         <h2 className="panel-title">{text('طرق تانية للمساعدة','Other help options')}</h2>
+        <div className="field"><label>{text('يوزر واتساب الرسمي','Official WhatsApp username')}</label><div className="contact-whatsapp-row"><strong className="contact-email" dir="ltr">{whatsappUsername}</strong><button type="button" className="small-btn" onClick={()=>void copyWhatsAppUsername()}>{whatsappCopied?text('تم النسخ ✓','Copied ✓'):text('نسخ اليوزر','Copy username')}</button></div></div>
+        <p className="inline-help">{text('ابحث عن @GoAcadio بالاسم نفسه داخل واتساب لبدء المحادثة. لا تحتاج لمشاركة رقم الهاتف.', 'Search for @GoAcadio by its exact username inside WhatsApp to start a chat. You do not need to share a phone number.')}</p>
         <p>{text('لو عندك حساب تقدر تبعت طلب من داخل المنصة وتتابع حالته. ده مختلف عن رسالة البريد الخارجية.',
           'Signed-in students can submit an in-app request and track its status. That is separate from external email.')}</p>
         <Link to={user?'/account':'/auth'} className="btn btn-outline">{user?text('طلب دعم من حسابي','Account support request'):text('تسجيل الدخول للدعم','Sign in for account support')}</Link>

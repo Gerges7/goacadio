@@ -3,6 +3,7 @@ import type { LinksFunction, MetaFunction } from 'react-router';
 import { LocaleProvider } from '@/components/locale-provider';
 import Chrome from '@/components/chrome';
 import { AuthProvider } from '@/components/auth-provider';
+import { ThemeProvider } from '@/components/theme-provider';
 import { useLocale } from '@/components/locale-provider';
 import stylesHref from './styles.css?url';
 
@@ -23,10 +24,12 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesHref },
   { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
 ];
+const themeInitScript = "try{const t=localStorage.getItem('goacadio:v1:theme');document.documentElement.dataset.theme=t==='dark'?'dark':'light'}catch{document.documentElement.dataset.theme='light'}";
+
 export function Layout({ children }: { children: React.ReactNode }) {
-  return <html lang="ar" dir="rtl"><head><meta charSet="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  return <html lang="ar" dir="rtl" suppressHydrationWarning><head><meta charSet="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="color-scheme" content="light dark" /><script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       <meta name="google-adsense-account" content="ca-pub-1551519098591089" /><Meta /><Links /></head>
-    <body><LocaleProvider><AuthProvider><Chrome>{children}</Chrome></AuthProvider></LocaleProvider><ScrollRestoration /><Scripts /></body></html>;
+    <body><ThemeProvider><LocaleProvider><AuthProvider><Chrome>{children}</Chrome></AuthProvider></LocaleProvider></ThemeProvider><ScrollRestoration /><Scripts /></body></html>;
 }
 export default function App() { return <Outlet />; }
 export function ErrorBoundary({ error }: { error: unknown }) {
