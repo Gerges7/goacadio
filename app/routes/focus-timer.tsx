@@ -48,7 +48,7 @@ export default function Focus(){
 
   useEffect(()=>{
     const saved = loadLocal<Stats>(storageKeys.focus,{day:todayKey(),sessions:0,minutes:0});
-    if(saved.day === todayKey() && Number.isFinite(saved.sessions) && Number.isFinite(saved.minutes)) setStats(saved);
+    if(saved && typeof saved==='object' && saved.day === todayKey() && Number.isInteger(saved.sessions) && saved.sessions>=0 && saved.sessions<=1000 && Number.isFinite(saved.minutes) && saved.minutes>=0 && saved.minutes<=180000) setStats(saved);
     const savedSettings=normalizeFocusSettings(loadLocal<unknown>(storageKeys.focusSettings, DEFAULT_FOCUS_SETTINGS));
     setSettings(savedSettings);
     setDraft({
@@ -230,7 +230,7 @@ export default function Focus(){
             const label=key==='focusMinutes'?text('دقائق التركيز','Focus minutes')
               :key==='shortBreakMinutes'?text('الراحة القصيرة','Short break')
               :key==='longBreakMinutes'?text('الراحة الطويلة','Long break')
-              :text('استراحة طويلة بعد جلسات','Long break every N sessions');
+              :text('اقترح راحة طويلة كل عدد جلسات','Long-break reminder every N sessions');
             return <div className="field" key={key}>
               <label htmlFor={'focus-setting-'+key}>{label}</label>
               <input type="number" className="input" id={'focus-setting-'+key}
