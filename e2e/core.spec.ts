@@ -43,7 +43,7 @@ test('all registered page routes render without uncaught browser errors', async 
     const response = await page.goto(path);
     expect(response?.status(), `HTTP status for ${path}`).toBe(200);
     await expect(page.locator('main'), `main landmark for ${path}`).toBeVisible();
-    await expect(page.locator('main').locator(':scope > *').first(), `page content for ${path}`).toBeVisible();
+    await expect(page.locator('main').locator(':scope > :not(script)').first(), `page content for ${path}`).toBeVisible();
   }
 
   expect(pageErrors, 'uncaught browser errors across route smoke test').toEqual([]);
