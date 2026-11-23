@@ -166,3 +166,28 @@ test('account labels and validation remain usable in English on mobile', async (
   }));
   expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport + 1);
 });
+
+test('student profile fields and course editor have accessible labels', async ({ page }) => {
+  await fakeSupabase(page);
+  await page.goto('/auth');
+  await page.locator('#email').fill(EMAIL);
+  await page.locator('#password').fill('valid-test-password');
+  await page.getByRole('button', { name: 'دخول', exact: true }).click();
+  await expect(page).toHaveURL(/\/dashboard$/);
+
+  await expect(page.getByRole('textbox', { name: 'الاسم', exact: true })).toBeVisible();
+  await expect(page.getByRole('combobox', { name: 'الدولة' })).toBeVisible();
+  await expect(page.getByRole('combobox', { name: 'الجامعة' })).toBeVisible();
+  await expect(page.getByRole('combobox', { name: 'الكلية' })).toBeVisible();
+  await expect(page.getByRole('combobox', { name: 'البرنامج' })).toBeVisible();
+  await expect(page.getByRole('combobox', { name: 'المستوى' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'اسم الجامعة غير المدرجة' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'اسم الكلية غير المدرجة' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'اسم البرنامج غير المدرج' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'المادة', exact: true })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'الكود (اختياري)' })).toBeVisible();
+
+  await page.getByRole('textbox', { name: 'المادة', exact: true }).fill('Linear Algebra');
+  await page.getByRole('button', { name: 'إضافة مادة' }).click();
+  await expect(page.getByRole('button', { name: 'حذف المادة: Linear Algebra' })).toBeVisible();
+});
