@@ -71,7 +71,7 @@ assert.match(read('app/routes/home.tsx'), /\/tools\/flashcards/);
 const view = read('app/routes/flashcards.tsx');
 assert.match(view, /sanitizeFlashcards\(loadLocal/);
 assert.match(view, /saveLocal\(storageKeys\.flashcards/);
-assert.match(view, /noindex, follow/);
+assert.match(view, /publicSeoMeta/);
 assert.match(view, /createFlashcard/);
 assert.match(view, /scheduleFlashcard/);
 assert.match(view, /type="file"/);
