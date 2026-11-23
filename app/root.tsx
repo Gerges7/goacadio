@@ -16,10 +16,10 @@ export const meta: MetaFunction = () => [
   { property: 'og:type', content: 'website' },
 ];
 export const links: LinksFunction = () => [
-  // Start external font connections in the HTML head rather than behind a CSS @import.
+  // Prevent late webfont swaps from shifting text on slow devices; system fallback is acceptable.
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
-  { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap' },
+  { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&display=optional' },
   // One bundled site stylesheet instead of three independent render-blocking requests.
   { rel: 'stylesheet', href: stylesHref },
   { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
