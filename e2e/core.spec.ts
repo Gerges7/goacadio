@@ -6,6 +6,7 @@ const pageRoutes = [
   '/tools/gpa-calculator',
   '/tools/focus-timer',
   '/tools/cv-builder',
+  '/tools/flashcards',
   '/guides',
   '/dashboard',
   '/planner',
@@ -141,7 +142,7 @@ test('guest AI endpoints reject requests before inference', async ({ request }) 
 
 test('core public pages do not overflow a narrow mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const path of ['/', '/tools', '/tools/gpa-calculator', '/tools/focus-timer', '/tools/cv-builder', '/guides', '/contact']) {
+  for (const path of ['/', '/tools', '/tools/gpa-calculator', '/tools/focus-timer', '/tools/cv-builder', '/tools/flashcards', '/guides', '/contact']) {
     await page.goto(path);
     const width = await page.evaluate(() => ({
       viewport: document.documentElement.clientWidth,
@@ -149,4 +150,24 @@ test('core public pages do not overflow a narrow mobile viewport', async ({ page
     }));
     expect(width.content, `horizontal overflow on ${path}`).toBeLessThanOrEqual(width.viewport + 1);
   }
+});
+
+test('flashcards: create, reveal, schedule and retain local cards after reload', async ({ page }) => {
+  await page.goto('/tools/flashcards');
+  await page.locator('#flashcard-front').fill('What is a variable?');
+  await page.locator('#flashcard-back').fill('A named storage location for a value.');
+  await page.locator('#flashcard-deck').fill('Programming');
+  await page.getByRole('button', { name: 'إضافة بطاقة' }).click();
+
+  await expect(page.locator('.flashcard-item')).toContainText('What is a variable?');
+  await page.getByRole('button', { name: 'راجع البطاقات' }).click();
+  await expect(page.locator('.flashcard-review')).toContainText('What is a variable?');
+  await page.getByRole('button', { name: 'اعرض الإجابة' }).click();
+  await expect(page.locator('.flashcard-answer')).toContainText('A named storage location');
+  await page.getByRole('button', { name: 'جيد' }).click();
+  await expect(page.locator('.flashcard-review-panel .placeholder')).toContainText('لا توجد بطاقات مستحقة');
+
+  await page.reload();
+  await expect(page.locator('.flashcard-item')).toContainText('What is a variable?');
+  await expect(page.locator('.flashcards-stats')).toContainText('1');
 });

@@ -2,7 +2,7 @@ import { publicSeoMeta } from '@/lib/seo';
 import type { MetaFunction } from 'react-router';
 export const meta: MetaFunction = () => publicSeoMeta(
   'Free Student Tools | GoAcadio',
-  'Free GPA and CGPA calculator, Focus Timer and Student CV Builder, plus personal study tools.',
+  'Free GPA and CGPA calculator, Focus Timer, Flashcards and Student CV Builder, plus personal study tools.',
   '/tools',
 );
 import { Link } from 'react-router';
@@ -11,6 +11,7 @@ const list = [
   {url:'/tools/gpa-calculator',emoji:'🎓',name:'GPA & CGPA Calculator',ar:'حساب المعدل الفصلي والتراكمي من الدرجات والساعات',en:'Weighted semester and cumulative GPA calculator',status:true},
   {url:'/tools/focus-timer',emoji:'⏱️',name:'Focus Mode',ar:'جلسات بومودورو وإحصائيات مذاكرة مع مزامنة اختيارية',en:'Pomodoro sessions with optional account syncing',status:true},
   {url:'/tools/cv-builder',emoji:'📄',name:'CV Builder',ar:'بناء CV بسيط وقابل للطباعة PDF',en:'Build a simple CV and print to PDF',status:true},
+  {url:'/tools/flashcards',emoji:'🗂️',name:'Flashcards & Spaced Review',ar:'بطاقات أسئلة وإجابات مع مواعيد مراجعة ذكية وحفظ محلي',en:'Create cards and schedule spaced review without an account',status:true},
   {url:'/quiz-generator',emoji:'📝',name:'PDF Quiz Generator',ar:'حوّل محاضرات PDF النصية لأسئلة تدريبية مع تصحيح',en:'Generate and grade practice quizzes from text-based lecture PDFs',status:true},
   {url:'/ai-study',emoji:'🧠',name:'AI Study Assistant',ar:'شرح المفاهيم وأسئلة تدريبية من موادك بعد تسجيل الدخول',en:'Study explanations and practice questions for signed-in students',status:true},
   {url:'/dashboard',emoji:'🎯',name:'Student Dashboard',ar:'احتفظ بملفك الجامعي وموادك داخل حسابك',en:'Save your study profile and courses to your account',status:true},

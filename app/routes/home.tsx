@@ -14,7 +14,7 @@ const tools = [
   {icon:'📝', className:'blue', ar:'PDF Quiz Generator', en:'PDF Quiz Generator', descAr:'حوّل محاضراتك لاختبارات MCQ وTrue/False.', descEn:'Create practice questions from lecture PDFs.', href:'/quiz-generator', ready:true},
   {icon:'📄', className:'peach', ar:'CV Builder', en:'CV Builder', descAr:'كوّن سيرة ذاتية منظمة واطبعها بصيغة PDF بسهولة.', descEn:'Create and export a clean, print-ready CV.', href:'/tools/cv-builder', ready:true},
   {icon:'🧠', className:'blue', ar:'AI Study Assistant', en:'AI Study Assistant', descAr:'شرح وأسئلة تدريبية مرتبطة بموادك بعد تسجيل الدخول.', descEn:'Ask course-aware questions and get practice problems after signing in.', href:'/ai-study', ready:true},
-  {icon:'✨', className:'mint', ar:'Student Dashboard', en:'Student Dashboard', descAr:'نظّم موادك وخططك الدراسية في مكان واحد.', descEn:'Your study profile, courses and progress in one place.', href:'/dashboard', ready:true}
+  {icon:'🗂️', className:'mint', ar:'Flashcards & Spaced Review', en:'Flashcards & Spaced Review', descAr:'اصنع بطاقات مراجعة وراجعها على فترات من دون حساب.', descEn:'Practice active recall with local cards and spaced review.', href:'/tools/flashcards', ready:true}
 ];
 export default function Home() {
   const { text } = useLocale();

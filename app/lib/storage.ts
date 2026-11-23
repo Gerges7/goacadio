@@ -5,7 +5,8 @@ export const storageKeys = {
   cv: 'goacadio:v1:cv',
   focus: 'goacadio:v1:focus',
   locale: 'goacadio:v1:locale',
-  theme: 'goacadio:v1:theme'
+  theme: 'goacadio:v1:theme',
+  flashcards: 'goacadio:v1:flashcards'
 };
 
 export function loadLocal<T>(key: string, fallback: T): T {
