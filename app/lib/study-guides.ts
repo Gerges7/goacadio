@@ -197,7 +197,341 @@ export const studyGuides: readonly StudyGuide[] = [
     toolUrl: '/quiz-generator', toolLabel: { ar: 'جرّب مولّد الاختبارات (بحساب)', en: 'Try the quiz generator (account required)' },
     seoTitle: 'How to Make Practice Questions from Lectures | GoAcadio',
     seoDescription: 'A student-friendly guide to writing meaningful MCQs and true-or-false questions from lectures, with worked examples and error review.',
+  },,
+{
+  "slug": "flashcards-spaced-repetition-study-guide",
+  "icon": "🗂️",
+  "category": {
+    "ar": "المراجعة النشطة",
+    "en": "Active recall & memory"
   },
+  "title": {
+    "ar": "طريقة عمل بطاقات Flashcards والمراجعة المتباعدة: مثال عملي لمدة أسبوع",
+    "en": "How to use flashcards and spaced review: a worked one-week plan"
+  },
+  "description": {
+    "ar": "حوّل الملاحظات لأسئلة تختبر الفهم، واعمل بطاقات جيدة وجدول مراجعتها مع مثال واقعي يمكن تكراره.",
+    "en": "Turn lecture notes into effective recall questions, schedule reviews and follow a realistic one-week worked example."
+  },
+  "intro": {
+    "ar": "البطاقة مش ملخص طويل بيتقلب على الشاشة؛ هي سؤال محدد تحاول تجاوبه قبل ما تشوف الحل. GoAcadio بتساعدك تراجع البطاقات المستحقة وتختار مستوى التذكر، لكن المواعيد تقديرية ومش ضمان إنك حفظت المعلومة.",
+    "en": "A flashcard is not a tiny slide of notes: it is a precise question you answer from memory before revealing the back. GoAcadio schedules cards using your recall ratings, but those intervals are a simple study aid, not a guarantee of retention."
+  },
+  "sections": [
+    {
+      "title": {
+        "ar": "1. قسم المحاضرة لأسئلة قابلة للإجابة",
+        "en": "1. Convert a lecture into testable questions"
+      },
+      "paragraphs": [
+        {
+          "ar": "افترض إنك بتذاكر محاضرة Data Structures وفيها Stack وQueue. بدل ما تنسخ تعريف 10 سطور، اكتب على وجه البطاقة «لو أضفت 3 ثم 5 ثم 7 إلى Stack، إيه أول عنصر يخرج؟» وعلى الظهر «7، لأن Stack يعمل بمبدأ Last In, First Out (LIFO)». السؤال يختبر تطبيق المبدأ، مش مجرد تذكر اسمه.",
+          "en": "Suppose your Data Structures notes cover stacks and queues. Instead of copying a ten-line definition, put “After pushing 3, then 5, then 7 onto a stack, which item is popped first?” on the front. On the back: “7, because a stack follows last-in, first-out (LIFO).” This tests applying the rule, not only reciting its name."
+        },
+        {
+          "ar": "اعمل بطاقة تانية: «أضفت A ثم B ثم C إلى Queue، أي حرف يخرج أولاً؟» والإجابة «A؛ لأن Queue يعمل First In, First Out (FIFO)». ممكن تضيف بطاقة ثالثة تقارن بين الحالتين، لكن بلاش تحشر ثلاث أسئلة مستقلة في نفس الوجه.",
+          "en": "Add a second card: “If A, B and C enter a queue in that order, which leaves first?” Answer: “A, because a queue is first-in, first-out (FIFO).” A third card can compare the two structures, but avoid asking three unrelated questions on one front."
+        }
+      ],
+      "points": [
+        {
+          "ar": "خلي لكل بطاقة إجابة واحدة قصيرة يمكن التحقق منها.",
+          "en": "Give each card one checkable answer."
+        },
+        {
+          "ar": "اكتب الأمثلة والأرقام بنفسك بدل نسخ فقرات من المحاضرة.",
+          "en": "Use your own examples rather than copying lecture paragraphs."
+        },
+        {
+          "ar": "لو نسيت شرح الكلمة، أضف بطاقة تطبيق جديدة بدل ما تكدس كلاماً على الظهر.",
+          "en": "If you miss a concept, add a new application card rather than piling notes onto the back."
+        }
+      ]
+    },
+    {
+      "title": {
+        "ar": "2. اختبر نفسك قبل كشف الإجابة",
+        "en": "2. Recall first, reveal second"
+      },
+      "paragraphs": [
+        {
+          "ar": "اقرأ وجه البطاقة، وابعد إيدك عن زر «اعرض الإجابة» من خمس إلى عشر ثوانٍ. حاول تقول الإجابة وسببها بصوت منخفض أو تكتبها من غير فتح المحاضرة. بعد الكشف قارن الفكرة الأساسية، مش نفس الجملة حرفياً.",
+          "en": "Read the front and wait five to ten seconds before selecting Reveal answer. Say or write an answer and explain why it is true without reopening your notes. Once revealed, compare the important idea rather than requiring identical wording."
+        },
+        {
+          "ar": "لو جاوبت 7 بدل 3 لكن من غير ما تعرف تفسير LIFO، ما تعتبرهاش بطاقة سهلة. قيّم جودة الاسترجاع: «لم أتذكر» لو الإجابة غير صحيحة؛ «صعب» لو احتجت وقتاً أو مساعدة؛ «جيد» لو صح بفهم؛ «سهل» لو سريع وواضح.",
+          "en": "If you answered “7” by guessing but cannot explain LIFO, do not rate the card Easy. Use Again for a missed answer, Hard for a slow or shaky recall, Good for a correct explained answer, and Easy when the concept is immediately clear."
+        }
+      ]
+    },
+    {
+      "title": {
+        "ar": "3. مثال أسبوع مراجعة من 12 بطاقة",
+        "en": "3. A one-week example with 12 cards"
+      },
+      "paragraphs": [
+        {
+          "ar": "اليوم 1: اقرأ جزءاً من المحاضرة، وأنشئ 12 بطاقة: 4 تعريفات، و4 مقارنة، و4 تطبيق. جرّب الإجابة على الكل مرة واحدة بدون الملاحظات؛ أول محاولة بتكشف أسئلة صياغتها غامضة. لا ترفع العدد لمجرد الوصول لهدف شكلي.",
+          "en": "Day 1: read one small lecture section and make 12 cards: four recall questions, four comparisons and four applications. Attempt each card once without notes. The first attempt often reveals poorly worded questions; do not increase the count merely to hit a target."
+        },
+        {
+          "ar": "اليومان 2 و3: افتح «راجع البطاقات» واشتغل على المستحق فقط، ثم حل مسألة قصيرة من نفس الموضوع من غير مساعدة. اليوم 4: اختبر الفرق بين Stack وQueue بمثال جديد مثل ترتيب الطلبات في صف انتظار. اليومان 5 و6: راجع البطاقات المستحقة ودوّن الأخطاء المتكررة. اليوم 7: حل 5 أسئلة جديدة من المحاضرة ولا تكتفي بالبطاقات.",
+          "en": "Days 2 and 3: review only due cards, then solve a short problem independently. Day 4: apply the stack-versus-queue idea to a new case, such as requests waiting in line. Days 5 and 6: review due cards and record repeated misconceptions. Day 7: solve five fresh questions based on the lecture instead of relying on cards alone."
+        },
+        {
+          "ar": "المواعيد المعروضة في GoAcadio تختلف بحسب تقييمك: «لم أتذكر» تعيد البطاقة بعد حوالي 10 دقائق، وباقي الاختيارات قد تؤخرها أياماً. الجدول الأسبوعي هنا مثال على طريقة الاستخدام وليس وعداً بأن كل بطاقة ستظهر في يوم معين.",
+          "en": "GoAcadio's next due date depends on your rating. Again reschedules a card for roughly ten minutes later; other responses can move it days ahead. This one-week plan is an example of habits, not a promise that every card will appear on a specific date."
+        }
+      ]
+    },
+    {
+      "title": {
+        "ar": "4. اعرف الفرق بين مراجعة حقيقية ونجاح وهمي",
+        "en": "4. Avoid the illusion of knowing"
+      },
+      "paragraphs": [
+        {
+          "ar": "لو السؤال «ما معنى FIFO؟» وحفظت الاختصار، اعمل بطاقة ثانية تسألك عن حالة جديدة: «لو الناس دخلت شباك التذاكر بترتيب سارة، علي، منى؛ مين يتخدم أولاً في طابور عادي؟». القدرة على نقل الفكرة لموقف جديد مؤشر أقوى من تكرار الحروف.",
+          "en": "Memorizing the letters in FIFO is easier than understanding a queue. Add a transfer question: “Sara, Ali and Mona join a normal ticket line in that order. Who is served first?” Correctly applying the idea to a new situation is stronger evidence than repeating an abbreviation."
+        },
+        {
+          "ar": "لو بتجاوب نفس البطاقة غلط مرتين، ارجع للمصدر وعدّل صياغة السؤال أو اكتب السبب اللي كنت فاهمه خطأ. البطاقة وحدها لا تصلح فجوة فهم كبيرة؛ جرّب شرحاً أو مسألة ثم ارجع للمراجعة.",
+          "en": "If you miss the same card twice, reopen the source and rewrite an ambiguous question or explain the misconception. Cards alone cannot repair a major gap in understanding; use a worked explanation or problem and then return to review."
+        }
+      ]
+    },
+    {
+      "title": {
+        "ar": "5. احفظ بطاقاتك واحمِ خصوصية ملاحظاتك",
+        "en": "5. Keep your cards and lecture notes private"
+      },
+      "paragraphs": [
+        {
+          "ar": "GoAcadio تحفظ البطاقات ومجموعاتها ومواعيدها في المتصفح على جهازك، حتى من غير حساب. مفيش مزامنة تلقائية بين الموبايل واللابتوب في الإصدار ده. استخدم «تصدير JSON» كل فترة، واحفظ الملف في مكان آمن، واستورده من نفس أداة Flashcards على جهاز آخر.",
+          "en": "GoAcadio stores cards, decks and due dates locally in your browser, even without an account. This version does not automatically sync those cards between phone and laptop. Periodically export a JSON backup, store it securely and import it into Flashcards on another device."
+        },
+        {
+          "ar": "مسح بيانات المتصفح أو استخدام نافذة خاصة ممكن يضيّع البطاقات المحلية. ما تكتبش معلومات طلاب شخصية أو أسرار في البطاقات اللي هتشارك نسخها مع الآخرين، وماترفعش مواد محمية الحقوق بدون إذن.",
+          "en": "Clearing browser data or using a private window can erase local cards. Avoid personal student information or confidential notes in backups you plan to share, and respect permissions for any copyrighted lecture material."
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": {
+        "ar": "هل المراجعة المتباعدة بتغني عن حل المسائل؟",
+        "en": "Can spaced review replace problem solving?"
+      },
+      "answer": {
+        "ar": "لا. البطاقات مفيدة لاسترجاع مفاهيم صغيرة، لكن المواد اللي فيها تطبيق تحتاج مسائل جديدة وشرح خطوات الحل.",
+        "en": "No. Cards help retrieve small concepts, but application-heavy subjects still need novel problems and explained solutions."
+      }
+    },
+    {
+      "question": {
+        "ar": "هل البطاقات بتتزامن لو سجلت دخول؟",
+        "en": "Will cards sync if I sign in?"
+      },
+      "answer": {
+        "ar": "لا، البطاقات حالياً محفوظة على نفس الجهاز. صدّر ملف JSON لاستعادتها لاحقاً أو نقلها.",
+        "en": "Not yet. Cards currently stay on the device. Export a JSON file to back them up or move them."
+      }
+    },
+    {
+      "question": {
+        "ar": "أعمل كام بطاقة في اليوم؟",
+        "en": "How many cards should I create per day?"
+      },
+      "answer": {
+        "ar": "ابدأ بمجموعة صغيرة لا تستهلك وقتك كله في الكتابة؛ مثلاً 8 إلى 12 بطاقة على جزء واحد، ثم اختبر جودتها في المراجعة.",
+        "en": "Start with a small manageable set, for example eight to twelve cards on one lecture segment, then refine them after testing recall."
+      }
+    },
+    {
+      "question": {
+        "ar": "هل «سهل» معناها إني مش هنسى المعلومة؟",
+        "en": "Does an Easy rating mean I will never forget?"
+      },
+      "answer": {
+        "ar": "لا. هو فقط تقييمك الحالي الذي يؤثر في موعد المراجعة التالية، وليس شهادة بحفظ المعلومة للأبد.",
+        "en": "No. Easy is your current self-assessment for scheduling the next review, not proof of permanent retention."
+      }
+    }
+  ],
+  "toolUrl": "/tools/flashcards",
+  "toolLabel": {
+    "ar": "افتح بطاقات Flashcards المجانية",
+    "en": "Open free Flashcards"
+  },
+  "seoTitle": "Spaced Repetition Flashcards: Worked One-Week Study Plan | GoAcadio",
+  "seoDescription": "Create useful flashcards from class notes, use spaced review ratings, and follow a step-by-step one-week study example with privacy tips."
+},
+{
+  "slug": "student-project-to-internship-cv",
+  "icon": "🧪",
+  "category": {
+    "ar": "الاستعداد للتدريب",
+    "en": "Internships & careers"
+  },
+  "title": {
+    "ar": "من مشروع جامعي إلى خبرة مفيدة في CV: مثال لطالب بدون خبرة",
+    "en": "Turn a university project into an internship-ready CV: a worked example"
+  },
+  "description": {
+    "ar": "دليل لتوثيق مساهمتك الحقيقية في مشروع الجامعة وكتابة نقاط CV واقعية وتجنب الادعاءات المبالغ فيها.",
+    "en": "Document your real contribution to a class project, write credible CV bullet points and prepare a portfolio for a first internship."
+  },
+  "intro": {
+    "ar": "لو لسه ما اشتغلتش وظيفة، مشروع جامعي متقن ممكن يوضح طريقة تفكيرك. المشكلة مش نقص وظيفة سابقة؛ المشكلة إن كثير من السير الذاتية تكتب «عملت مشروع» بدون توضيح الدور أو الدليل. هنا هنستخدم مثال تطبيقي منظم.",
+    "en": "If you have no paid work experience yet, a solid class project can demonstrate how you work. The problem is not necessarily the missing job title: it is vague claims such as “worked on a project” without describing your responsibility or evidence. Here is a practical way to show the work."
+  },
+  "sections": [
+    {
+      "title": {
+        "ar": "1. اكتب المشروع كقصة مشكلة وحل",
+        "en": "1. Describe the problem before the technology"
+      },
+      "paragraphs": [
+        {
+          "ar": "تخيل فريقاً دراسياً عمل تطبيق مواعيد امتحانات مبسطاً. المشكلة: الطالب كان بيبحث في أكثر من ملف PDF ليعرف وقت امتحانه. الحل في المشروع: نموذج يبحث باسم الطالب ويعرض اليوم والساعة والمكان من بيانات تدريبية. المثال افتراضي، مش مشروعاً من أعمال GoAcadio.",
+          "en": "Imagine a class team building a simple examination timetable lookup. The problem: students had to search multiple PDF schedules to find an exam time. The classroom prototype lets them enter a name and see a day, time and room from mock data. This is an illustrative example, not a claim about a completed GoAcadio project."
+        },
+        {
+          "ar": "قبل الكتابة في السيرة الذاتية حدد 3 حقائق: إيه المشكلة؟ إيه الجزء اللي نفذته بنفسك؟ إيه الدليل الموجود (تجربة، ملف README، صورة شاشة، أو اختبار)؟ بلاش تكتب إن التطبيق مستخدم من آلاف الطلاب لو ماعندكش أرقام موثقة.",
+          "en": "Before writing your CV, identify three facts: what problem did the project address, which part did you personally implement, and what evidence exists (a demo, README, screenshot or test)? Do not claim thousands of users or impressive accuracy figures unless you can substantiate them."
+        }
+      ]
+    },
+    {
+      "title": {
+        "ar": "2. اعمل سجل مساهمات بسيط قبل كتابة CV",
+        "en": "2. Build a simple contribution log"
+      },
+      "paragraphs": [
+        {
+          "ar": "اكتب جدول صغير من 4 خانات: المهمة، دورك، الأدوات، الدليل. مثال: «ربط صفحة البحث ببيانات JSON»؛ الدور «كتابة دالة تصفية وترتيب النتائج»؛ الأدوات «JavaScript وHTML»؛ الدليل «اختبار بحث باسم جزئي ولقطة للشاشة». وجود الدليل يخليك تشرح المشروع بثقة في المقابلة.",
+          "en": "Create a four-column note: task, your role, tools and evidence. Example: “Connect timetable search to JSON data”; role: “Implemented filtering and result ordering”; tools: JavaScript and HTML; evidence: “Tested a partial-name search and saved a screenshot.” Having evidence makes interview follow-ups easier."
+        },
+        {
+          "ar": "لو المشروع جماعي، اكتب بوضوح أنت عملت إيه، واذكر إنك تعاونت مع فريق من غير ما تنسب لنفسك قاعدة البيانات أو التصميم بالكامل. لو المشروع غير منشور، ممكن تعرض README وصور شاشة بعد ما تتأكد من عدم كشف بيانات طلاب حقيقية.",
+          "en": "For team projects, be precise about your work and acknowledge teamwork without implying that you built the entire database or design alone. For a private project, a README and sanitized screenshots can be enough, provided no real student records are exposed."
+        }
+      ],
+      "points": [
+        {
+          "ar": "اسم المشروع + جملة واحدة تشرح فائدته.",
+          "en": "Project name and one sentence explaining the benefit."
+        },
+        {
+          "ar": "تقنيتان أو ثلاث استخدمتهما فعلاً.",
+          "en": "Two or three technologies you actually used."
+        },
+        {
+          "ar": "نقطة واحدة مثبتة عن مساهمتك ومسؤوليتك.",
+          "en": "One defensible contribution or responsibility."
+        }
+      ]
+    },
+    {
+      "title": {
+        "ar": "3. من جملة ضعيفة إلى نقطة قوية",
+        "en": "3. Rewrite a weak CV bullet into a credible one"
+      },
+      "paragraphs": [
+        {
+          "ar": "ضعيف: «كنت مسؤول عن مشروع تخرج مذهل باستخدام تقنيات كثيرة». أفضل: «طوّرت واجهة بحث في نموذج جدول امتحانات باستخدام JavaScript، مع تصفية بالاسم وعرض اليوم والساعة، واختبرت إدخال أسماء كاملة وجزئية». الصياغة الثانية أقوى لأنها قابلة للسؤال والتحقق.",
+          "en": "Weak: “Responsible for an amazing final project using many technologies.” Better: “Built a JavaScript timetable search interface that filters student names and displays exam dates and times; tested full and partial-name inputs.” The second version is more useful because a reviewer can ask how it worked."
+        },
+        {
+          "ar": "لو عندك نتائج حقيقية، اذكرها مع سياقها. مثلاً «خفضت زمن البحث من 8 ثوانٍ إلى ثانيتين في اختبار محلي من 50 اسماً» لو أنت أجريت القياس ده بالفعل واحتفظت بالطريقة والنتيجة. لو ما قستش، احذف الأرقام تماماً.",
+          "en": "When real measurements exist, give their context. For example, “Reduced lookup time from eight to two seconds in a 50-name local test” is suitable only if you actually ran, documented and can explain that measurement. Without an experiment, omit the numbers entirely."
+        }
+      ]
+    },
+    {
+      "title": {
+        "ar": "4. جهز README وبورتفوليو صغير",
+        "en": "4. Prepare a minimal README and portfolio"
+      },
+      "paragraphs": [
+        {
+          "ar": "صفحة واحدة للمشروع تكفي كبداية: المشكلة، صورة أو فيديو قصير للواجهة، طريقة التشغيل، التقنيات، و3 اختبارات أجريتها. مثال اختبارات البحث: اسم مطابق، اسم جزئي، اسم غير موجود. صور الشاشة لازم تخفي أي بيانات شخصية أو رقم طالب.",
+          "en": "A one-page project README is often enough: problem, interface screenshot or short demo, setup instructions, technologies and three tests you actually performed. For search, example cases are an exact name, a partial name and a nonexistent name. Remove identifying student records from screenshots."
+        },
+        {
+          "ar": "افصل بين مشروع تدريبي وبرنامج منشور فعلاً. كتابة «prototype» أو «course project» توضح نطاق الشغل من غير ما تقلل قيمته. اعمل رابط GitHub فقط لو المستودع ملكك، مسموح بمشاركته، وفيه تعليمات تشغيل.",
+          "en": "Distinguish a classroom prototype from a production service. Labeling it a “prototype” or “course project” clarifies scope without minimizing real work. Add a GitHub link only if you own or can share the repository and it includes usable setup instructions."
+        }
+      ]
+    },
+    {
+      "title": {
+        "ar": "5. اختبر وصف مشروعك قبل التقديم",
+        "en": "5. Check your claims before applying"
+      },
+      "paragraphs": [
+        {
+          "ar": "اقرأ كل سطر في الـCV واسأل: هل أقدر أشرح خطوات التنفيذ من غير ما أفتح كود شخص تاني؟ هل أي نتيجة ذكرتها لها دليل؟ هل الأدوات المكتوبة استخدمتها بالفعل؟ لو الإجابة لا، عدّل العبارة.",
+          "en": "For every CV line ask: could I explain how I implemented this without relying on someone else's code? Can I support each outcome with evidence? Did I personally use every listed technology? Rewrite anything you cannot defend."
+        },
+        {
+          "ar": "استخدم CV Builder لكتابة مسودة قابلة للطباعة، ثم اطبعها PDF من المتصفح وراجع الروابط والإملاء وقابلية القراءة. خليك مستعد تشرح اختيارك لتقسيم المهمة أو معالجة خطأ تقني؛ الإجابة الصادقة أهم من الكلمات الكبيرة.",
+          "en": "Use the CV Builder to draft and print a PDF, then review links, spelling and readability. Prepare to explain one design choice or bug you fixed. A specific, truthful explanation will usually serve you better than inflated buzzwords."
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": {
+        "ar": "هل ينفع أكتب مشروع مادة صغيرة في CV؟",
+        "en": "Can I list a small coursework project on my CV?"
+      },
+      "answer": {
+        "ar": "أيوه لو مرتبط بالتدريب وتقدر توضح مسؤوليتك ودليل على النتيجة، حتى لو مش مشروع تخرج.",
+        "en": "Yes, if it relates to the internship and you can explain your contribution and evidence, even if it was not a capstone."
+      }
+    },
+    {
+      "question": {
+        "ar": "هل لازم يكون عندي GitHub علني؟",
+        "en": "Do I need a public GitHub repository?"
+      },
+      "answer": {
+        "ar": "لا. ممكن تعرض مشروعاً خاصاً بملخص وطريقة تشغيل وصور خالية من بيانات شخصية، مع مراعاة حقوق الفريق.",
+        "en": "No. You can document a private project with a description, reproducible steps and sanitized screenshots while respecting team rights."
+      }
+    },
+    {
+      "question": {
+        "ar": "أكتب نتائج بالأرقام لو ماعملتش قياس؟",
+        "en": "Should I add numerical results I never measured?"
+      },
+      "answer": {
+        "ar": "لا. وصف الدالة أو الخطوات الحقيقية كفاية. الأرقام غير الموثقة بتضر المصداقية.",
+        "en": "No. Describe the real implementation instead. Unsupported metrics weaken credibility."
+      }
+    },
+    {
+      "question": {
+        "ar": "هل CV Builder بيبعت معلوماتي للسيرفر؟",
+        "en": "Does the CV Builder upload my details to a server?"
+      },
+      "answer": {
+        "ar": "مسودة الـCV في الأداة العامة محفوظة محلياً على جهازك. راجع صفحة الخصوصية قبل إدخال بيانات حساسة.",
+        "en": "The public CV draft is stored locally on your device. Review the privacy page before entering sensitive details."
+      }
+    }
+  ],
+  "toolUrl": "/tools/cv-builder",
+  "toolLabel": {
+    "ar": "افتح باني السيرة الذاتية",
+    "en": "Open the CV Builder"
+  },
+  "seoTitle": "Student Project to Internship CV: Realistic Worked Example | GoAcadio",
+  "seoDescription": "Convert a university project into credible CV bullet points with a contribution log, honest evidence and a practical internship-ready checklist."
+}
 ];
 
 export function getStudyGuide(slug: string | undefined): StudyGuide | undefined {
