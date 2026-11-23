@@ -199,7 +199,7 @@ export const studyGuides: readonly StudyGuide[] = [
     seoDescription: 'A student-friendly guide to writing meaningful MCQs and true-or-false questions from lectures, with worked examples and error review.',
   },
 {
-  "slug": "flashcards-spaced-repetition-study-guide",
+  slug: 'flashcards-spaced-repetition-study-guide',
   "icon": "🗂️",
   "category": {
     "ar": "المراجعة النشطة",
@@ -368,7 +368,7 @@ export const studyGuides: readonly StudyGuide[] = [
   "seoDescription": "Create useful flashcards from class notes, use spaced review ratings, and follow a step-by-step one-week study example with privacy tips."
 },
 {
-  "slug": "student-project-to-internship-cv",
+  slug: 'student-project-to-internship-cv',
   "icon": "🧪",
   "category": {
     "ar": "الاستعداد للتدريب",
