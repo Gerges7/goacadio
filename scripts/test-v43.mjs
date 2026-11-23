@@ -36,6 +36,14 @@ test('Utility pages remain noindex and personalized services HTML is no-store',(
 test('Live audit checks utility noindex and guide URLs',()=>{for(const path of ['/services','/universities'])assert.ok(TEST_CASES.some(x=>x.path===path&&x.category==='utility'));for(const slug of expected)assert.ok(TEST_CASES.some(x=>x.path==='/guides/'+slug&&x.category==='public'));});
 test('Utility pages fail audit if indexable',()=>{const t=TEST_CASES.find(x=>x.path==='/services');const h=new Headers({'content-type':'text/html','x-content-type-options':'nosniff','x-frame-options':'DENY','strict-transport-security':'max-age=31536000'});const bad=`<html><head><meta name="robots" content="index, follow"><meta name="google-adsense-account" content="ca-pub-1551519098591089"></head></html>`;assert.ok(inspectResponse(t,200,h,bad).some(x=>/noindex/i.test(x)));h.set('x-robots-tag','noindex, follow');const good=bad.replace('index, follow','noindex, follow');assert.deepEqual(inspectResponse(t,200,h,good),[]);});
 test('Launch inventory still rejects private, missing and duplicate entries',()=>{const inventory=validateLaunchInventory({routesText:read('app/routes.ts'),sitemapXml:read('public/sitemap.xml'),robotsText:read('public/robots.txt'),seoSource:read('app/lib/seo.ts'),rootSource:read('app/root.tsx'),exists:()=>true,publicFolder:'/public'});assert.deepEqual(inventory.failures,[]);});
-test('Public tools contain worked guidance and internal links',()=>{const s=read('app/routes/tools.tsx');assert.match(s,/three practical examples/);assert.match(s,/seven-day-exam-revision-plan/);assert.match(read('app/routes/guides.tsx'),/guide-method-heading/);});
+test('Public tools contain worked guidance and internal links',()=>{const s=read('app/routes/tools.tsx');assert.match(s,/four practical examples/);assert.match(s,/seven-day-exam-revision-plan/);assert.match(read('app/routes/guides.tsx'),/guide-method-heading/);});
+test('Public editorial pages describe active tools without claiming an AdSense approval',()=>{
+  assert.match(read('app/routes/about.tsx'),/spaced-review flashcards/);
+  assert.match(read('app/routes/help.tsx'),/Where are my Flashcards saved/);
+  assert.match(read('app/routes/privacy.tsx'),/not automatically synced to your account/);
+  assert.match(read('app/routes/tools.tsx'),/LIFO/);
+  assert.match(read('app/routes/terms.tsx'),/locally stored flashcards/);
+  assert.doesNotMatch(read('app/routes/privacy.tsx'),/We are currently verifying AdSense ownership/);
+});
 test('No automatic ad-serving script enabled',()=>assert.doesNotMatch(read('app/root.tsx'),/adsbygoogle\.js|pagead2\.googlesyndication\.com/));
 console.log(`\n${passed}/${passed} V4.3 editorial and indexing checks passed.`);
