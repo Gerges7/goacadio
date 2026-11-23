@@ -11,6 +11,7 @@ export const TEST_CASES = Object.freeze([
   ...PUBLIC_PATHS.map(path => ({path, category:'public', expectedStatus:200})),
   {path:'/services',category:'utility',expectedStatus:200},
   {path:'/universities',category:'utility',expectedStatus:200},
+  {path:'/tools/flashcards',category:'utility',expectedStatus:200},
   {path:'/account',category:'private',expectedStatus:200},
   {path:'/dashboard',category:'private',expectedStatus:200},
   {path:'/guides/goacadio-guide-not-found-1234',category:'missing',expectedStatus:404},
