@@ -23,8 +23,8 @@ export default function Terms(){
           <p>{text('توضح هذه الشروط قواعد استخدام GoAcadio وحدود الخدمات المتاحة حاليًا. لا تُلغي أي حقوق يضمنها القانون المعمول به، ولا نزعم أن الخدمات الأكاديمية أو نتائج الذكاء الاصطناعي رسمية.',
             'These terms explain how GoAcadio currently operates and the limits of its services. They do not override rights granted by applicable law, and we do not present academic or AI results as official.')}</p></div>
         <section><h2>{text('1. طبيعة الخدمة', '1. What the service provides')}</h2>
-          <p>{text('GoAcadio بتوفر أدوات تعليمية وإنتاجية تشمل حاسبة GPA وCGPA، مؤقت التركيز، إنشاء سيرة ذاتية، خطة للمذاكرة، وأدوات للمراجعة بمساعدة الذكاء الاصطناعي. ليست جهة أكاديمية معتمدة، ولا تعطي شهادات أو درجات رسمية.',
-            'GoAcadio offers study and productivity tools: GPA and CGPA calculations, a focus timer, CV drafts, study planning and AI-assisted revision. It is not an accredited academic institution and does not issue official grades or credentials.')}</p></section>
+          <p>{text('GoAcadio بتوفر أدوات تعليمية وإنتاجية تشمل حاسبة GPA وCGPA، مؤقت تركيز قابل للتخصيص، بطاقات Flashcards محلية، إنشاء سيرة ذاتية، خطة للمذاكرة، وأدوات للمراجعة بمساعدة الذكاء الاصطناعي. ليست جهة أكاديمية معتمدة، ولا تعطي شهادات أو درجات رسمية.',
+            'GoAcadio offers study and productivity tools: GPA and CGPA calculations, a customizable focus timer, locally stored flashcards, CV drafts, study planning and AI-assisted revision. It is not an accredited academic institution and does not issue official grades or credentials.')}</p></section>
         <section><h2>{text('2. الاستخدام المسؤول', '2. Responsible use')}</h2>
           <p>{text('استخدم الأدوات بصورة قانونية ومراعية لحقوق الآخرين. ما ترفعش بيانات شديدة الحساسية أو مستندات ما عندكش حق استخدامها، وما تحاولش تتجاوز حدود الطلبات أو الوصول لبيانات مستخدمين آخرين.',
             'Use tools lawfully and respect others’ rights. Do not upload highly sensitive information or material you lack permission to use, circumvent request limits or try to access another user’s records.')}</p></section>
