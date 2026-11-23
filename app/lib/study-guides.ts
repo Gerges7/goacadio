@@ -370,7 +370,7 @@ export const studyGuides: readonly StudyGuide[] = [
     "ar": "افتح بطاقات Flashcards المجانية",
     "en": "Open free Flashcards"
   },
-  "seoTitle": "Spaced Repetition Flashcards: Worked One-Week Study Plan | GoAcadio",
+  "seoTitle": "Flashcards Study Plan and Spaced Review | GoAcadio",
   "seoDescription": "Create useful flashcards from class notes, use spaced review ratings, and follow a step-by-step one-week study example with privacy tips."
 },
 {
@@ -535,7 +535,7 @@ export const studyGuides: readonly StudyGuide[] = [
     "ar": "افتح باني السيرة الذاتية",
     "en": "Open the CV Builder"
   },
-  "seoTitle": "Student Project to Internship CV: Realistic Worked Example | GoAcadio",
+  "seoTitle": "Student Project to Internship CV Guide | GoAcadio",
   "seoDescription": "Convert a university project into credible CV bullet points with a contribution log, honest evidence and a practical internship-ready checklist."
 }
 ];
