@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from 'react';
-import type { MetaFunction } from 'react-router';
+import { Link, type MetaFunction } from 'react-router';
+import { publicSeoMeta } from '@/lib/seo';
 import { useLocale } from '@/components/locale-provider';
 import { loadLocal, saveLocal, storageKeys } from '@/lib/storage';
 import {
@@ -8,12 +9,11 @@ import {
   type Flashcard, type ReviewRating,
 } from '@/lib/flashcards';
 
-export const meta: MetaFunction = () => [
-  { title: 'Free Flashcards & Spaced Review | GoAcadio' },
-  { name: 'description', content: 'Create bilingual flashcards and practice spaced review in your browser without creating an account.' },
-  // Initially noindex until live content, accessibility and indexing are reviewed.
-  { name: 'robots', content: 'noindex, follow' },
-];
+export const meta: MetaFunction = () => publicSeoMeta(
+  'Free Flashcards and Spaced Review for Students | GoAcadio',
+  'Build study flashcards in your browser, practice active recall and schedule reviews. Learn with worked examples and export a private JSON backup.',
+  '/tools/flashcards',
+);
 
 export default function FlashcardsPage() {
   const { text, lang } = useLocale();
@@ -245,6 +245,32 @@ export default function FlashcardsPage() {
         </>}
         <p className="inline-help">{text('«لم أتذكر» تعيد السؤال بعد 10 دقائق. الخيارات الأخرى تؤجّل المراجعة أيامًا حسب تقييمك.', 'Again repeats the question after 10 minutes. Other ratings schedule later reviews based on your recall.')}</p>
       </section>}
+      <section className="panel stack flashcards-learning" aria-labelledby="flashcards-howto-title">
+        <h2 id="flashcards-howto-title">{text('إزاي تستخدم بطاقات المراجعة بفاعلية؟', 'How to study with flashcards effectively')}</h2>
+        <p>{text(
+          'ابدأ بمحاضرة صغيرة واختار فكرة واحدة لكل بطاقة. اكتب على الوجه سؤالاً تستطيع الإجابة عنه من الذاكرة، وخلي الظهر إجابة قصيرة يمكن التحقق منها. القراءة المتكررة لنفس النص ليست بديلاً عن محاولة التذكر.',
+          'Start with one lecture section and one idea per card. Put a question you can answer from memory on the front, and a short, checkable explanation on the back. Simply rereading the same text is not the same as attempting recall.',
+        )}</p>
+        <h3>{text('مثال عملي: Stack وQueue', 'Worked example: Stack versus Queue')}</h3>
+        <p>{text(
+          'وجه البطاقة: «أضفت 3 ثم 5 ثم 7 إلى Stack؛ مين أول عنصر يخرج؟» الظهر: «7؛ لأن المكدس يعمل بمبدأ آخر عنصر يدخل أول عنصر يخرج (LIFO)». وبطاقة ثانية: «أضفت A ثم B ثم C إلى Queue؛ مين يخرج الأول؟» الإجابة «A، وفق FIFO». اسأل نفسك قبل كشف الإجابة.',
+          'Front: “I pushed 3, then 5, then 7 onto a stack. Which item is popped first?” Back: “7, because a stack is last-in, first-out (LIFO).” Another card can ask, “A, B and C entered a queue. Which leaves first?” Answer: “A, under FIFO.” Attempt each answer before revealing the back.',
+        )}</p>
+        <h3>{text('كيف تختار تقييم الإجابة؟', 'How should you rate your recall?')}</h3>
+        <p>{text(
+          'بعد ما تشوف الظهر، اختار «لم أتذكر» لو الإجابة غلط، «صعب» لو وصلت لها بمجهود كبير، «جيد» لو جاوبت صح وفاهم السبب، و«سهل» لو وصلت لها بسرعة. «لم أتذكر» يعيد البطاقة تقريباً بعد 10 دقائق؛ باقي الخيارات تؤخرها وفق جدول مبسّط، وليست ضماناً للحفظ.',
+          'After revealing the answer, choose Again if you missed it, Hard if recall was slow, Good if you explained it correctly, or Easy when recall was immediate. Again returns the card after roughly ten minutes; other ratings delay its next review using a simple heuristic, not a promise of permanent memory.',
+        )}</p>
+        <h3>{text('الخصوصية والنسخ الاحتياطية', 'Privacy and backups')}</h3>
+        <p>{text(
+          'البطاقات ومجموعاتها ومواعيد مراجعتها محفوظة على المتصفح في هذا الجهاز، ومش بتتزامن تلقائياً مع حساب GoAcadio. صدّر ملف JSON قبل ما تمسح بيانات المتصفح أو تغيّر جهازك. تجنّب وضع بيانات شخصية حساسة في ملفات ممكن تشاركها.',
+          'Cards, decks and review dates are stored in this device’s browser. They are not automatically synced to your GoAcadio account. Export a JSON backup before clearing browser data or switching devices, and avoid sharing backups containing sensitive personal details.',
+        )}</p>
+        <div className="actions">
+          <Link to="/guides/flashcards-spaced-repetition-study-guide" className="btn btn-soft">{text('دليل كامل بخطة مراجعة لأسبوع', 'Read the worked one-week review plan')}</Link>
+          <Link to="/guides/lecture-to-practice-questions" className="btn btn-outline">{text('إزاي تكتب أسئلة تدريبية؟', 'How to write good practice questions')}</Link>
+        </div>
+      </section>
     </div></div>
   </>;
 }
