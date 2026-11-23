@@ -204,7 +204,7 @@ export default function FlashcardsPage() {
             <h2 className="panel-title">{text('بطاقاتي', 'My cards')} ({visible.length})</h2>
             <div className="actions">
               <button className="small-btn" type="button" disabled={!cards.length} onClick={exportCards}>{text('تصدير JSON', 'Export JSON')}</button>
-              <label className="small-btn flashcards-import" htmlFor="flashcards-import">{text('استيراد JSON', 'Import JSON')}</label>
+              <button type="button" className="small-btn flashcards-import" onClick={() => document.getElementById('flashcards-import')?.click()}>{text('استيراد JSON', 'Import JSON')}</button>
               <input id="flashcards-import" className="flashcards-file-input" type="file" accept=".json,application/json" onChange={e => void importCards(e)} />
             </div>
           </div>
