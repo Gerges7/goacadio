@@ -191,10 +191,18 @@ export default function Focus(){
   const today=stats.day===todayKey()?stats:{day:todayKey(),sessions:0,minutes:0};
   return <><div className="page-hero"><div className="container"><span className="section-kicker">PRODUCTIVITY</span>
     <h1>{text('Focus Mode — وقتك أهم حاجة ⏱️','Focus Mode — Your time matters ⏱️')}</h1>
-    <p>{text('استخدم مؤقت التركيز مجانًا. لو مسجل دخول، جلسات الـ25 دقيقة المكتملة تتزامن مع حسابك.', 'Use the timer for free. Sign in to sync completed 25-minute focus sessions across devices.')}</p></div></div>
+    <p>{text('حدّد مدة التركيز والاستراحات بالشكل المناسب ليومك. جلسات التركيز المكتملة تتزامن مع حسابك بعد تسجيل الدخول.', 'Choose your focus and break lengths. Completed focus sessions sync when you sign in.')}</p></div></div>
     <div className="page-content"><div className="container two-col">
     <section className="panel center"><h2 className="panel-title">{text('اختار نوع الجلسة','Choose a session')}</h2>
-      <div className="preset-row">{[[25,text('تركيز 25 دقيقة','Focus · 25 min')],[5,text('راحة 5 دقائق','Break · 5 min')],[15,text('راحة طويلة 15','Long break · 15')]].map(([time,label])=><button key={time} type="button" className={'preset '+(duration===time?'active':'')} onClick={()=>change(Number(time))}>{label}</button>)}</div>
+      <div className="preset-row">{([
+        ['focus',text('تركيز','Focus')],
+        ['shortBreak',text('راحة قصيرة','Short break')],
+        ['longBreak',text('راحة طويلة','Long break')],
+      ] as const).map(([item,label])=><button key={item} type="button"
+        aria-pressed={mode===item} disabled={!loaded||running}
+        className={'preset '+(mode===item?'active':'')} onClick={()=>change(item)}>
+        {label} · {focusModeMinutes(settings,item)} {text('دقيقة','min')}
+      </button>)}</div>
       {user&&<div className="field" style={{maxWidth:320,margin:'18px auto',textAlign:'start'}}>
         <label htmlFor="focus-course">{text('المادة (اختياري)','Course (optional)')}</label>
         <select id="focus-course" className="input" value={courseId} disabled={running} onChange={e=>setCourseId(e.target.value)}>
@@ -202,8 +210,9 @@ export default function Focus(){
           {courses.map(course=><option key={course.id} value={course.id}>{course.code?`${course.code} — `:''}{course.name}</option>)}
         </select>
       </div>}
-      <div className="timer-ring"><div><div role="timer" aria-live="off" className="timer-display compact">{display}</div><span>{duration===25?text('جلسة تركيز','Focus session'):text('وقت الراحة','Break time')}</span></div></div>
-      <div className="actions" style={{justifyContent:'center'}}><button type="button" className="btn btn-primary" onClick={toggle}>{running?text('إيقاف مؤقت','Pause'):text('ابدأ الجلسة','Start session')}</button><button type="button" className="btn btn-outline" onClick={reset}>{text('إعادة ضبط','Reset')}</button></div>
+      <div className="timer-ring"><div><div role="timer" aria-live="off" className="timer-display compact">{display}</div><span>{mode==='focus'?text('جلسة تركيز','Focus session'):text('وقت الراحة','Break time')}</span></div></div>
+      <div className="actions" style={{justifyContent:'center'}}><button type="button" className="btn btn-primary" disabled={!loaded} onClick={toggle}>{running?text('إيقاف مؤقت','Pause'):text('ابدأ الجلسة','Start session')}</button><button type="button" className="btn btn-outline" onClick={reset}>{text('إعادة ضبط','Reset')}</button></div>
+      {completionNote&&<p className="note" role="status">{completionNote}</p>
       <p className="inline-help">{text('الجلسة المكتملة فقط بتتحسب. إغلاق الصفحة قبل نهايتها بيوقف التسجيل.','Only completed sessions count. Closing the tab before the end stops recording.')}</p>
     </section>
     <aside className="panel"><h2 className="panel-title">{text('إنجازاتك اليوم','Today’s progress')}</h2>
@@ -214,6 +223,28 @@ export default function Focus(){
         {pendingCount>0&&<div className="note warn" role="status">{text(`${pendingCount} جلسة في انتظار المزامنة`,`${pendingCount} session(s) awaiting sync`)} <button className="small-btn" type="button" onClick={()=>void syncQueued()}>{text('إعادة المحاولة','Retry')}</button></div>}
         {syncStatus&&<p className="inline-help" role="status">{syncStatus}</p>}
       </>:<div className="actions"><Link to="/auth" className="btn btn-outline">{text('سجّل لحفظ تقدمك','Sign in to save progress')}</Link></div>}
-      <div className="note" style={{marginTop:18}}>{text('💡 جرّب 25 دقيقة تركيز + 5 دقائق راحة. عدّل المواعيد حسب ظروفك.','💡 Try 25 minutes of focus followed by a 5-minute break.')}</div>
+      <form className="focus-settings stack" onSubmit={saveSettings}>
+        <h3 className="panel-title">{text('تخصيص المؤقت','Customize your timer')}</h3>
+        <div className="focus-settings-grid">
+          {FOCUS_SETTING_FIELDS.map(key=>{
+            const label=key==='focusMinutes'?text('دقائق التركيز','Focus minutes')
+              :key==='shortBreakMinutes'?text('الراحة القصيرة','Short break')
+              :key==='longBreakMinutes'?text('الراحة الطويلة','Long break')
+              :text('استراحة طويلة بعد جلسات','Long break every N sessions');
+            return <div className="field" key={key}>
+              <label htmlFor={'focus-setting-'+key}>{label}</label>
+              <input type="number" className="input" id={'focus-setting-'+key}
+                min={FOCUS_SETTING_LIMITS[key].min} max={FOCUS_SETTING_LIMITS[key].max}
+                step={1} required disabled={!loaded||running}
+                value={draft[key]}
+                onChange={event=>setDraft(old=>({...old,[key]:event.target.value}))}/>
+              <small className="inline-help">{FOCUS_SETTING_LIMITS[key].min}–{FOCUS_SETTING_LIMITS[key].max}</small>
+            </div>;
+          })}
+        </div>
+        <button type="submit" className="btn btn-primary" disabled={!loaded||running}>{text('حفظ الإعدادات','Save preferences')}</button>
+        {settingsNotice&&<p className="inline-help" role="status">{settingsNotice}</p>}
+        <p className="inline-help">{text('الإعدادات محفوظة على الجهاز. حفظ تعديل جديد يعيد ضبط الجلسة الحالية، والاستراحات لا تدخل في ساعات المذاكرة.', 'Settings stay on this device. Saving changes resets the current timer; breaks do not count as study time.')}</p>
+      </form>
     </aside></div></div></>;
 }
