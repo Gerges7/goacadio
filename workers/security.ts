@@ -36,7 +36,7 @@ export function secureResponse(request: Request, response: Response): Response {
   if (html && pathname === '/services') {
     headers.set('Cache-Control', 'private, no-store, max-age=0');
   }
-  if (html && (pathname === '/services' || pathname === '/universities')) {
+  if (html && (pathname === '/services' || pathname === '/universities' || pathname === '/tools/flashcards')) {
     headers.set('X-Robots-Tag', 'noindex, follow');
   }
   if (isPrivate) {
