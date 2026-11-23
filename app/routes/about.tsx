@@ -21,22 +21,22 @@ export default function About() {
     <div className="page-content"><div className="container trust-layout">
       <article className="panel stack trust-content">
         <section><h2>{text('إيه هي GoAcadio؟', 'What is GoAcadio?')}</h2>
-          <p>{text('GoAcadio مشروع أدوات تعليمية مستقل للطلاب. بنجمع أدوات حساب المعدل، وتنظيم المذاكرة، وإنشاء CV، وأدلة دراسية عامة في مكان واحد. مش جامعة أو جهة رسمية، ومش بنصدر شهادات أو درجات معتمدة.',
-            'GoAcadio is an independent student-tools project. It brings GPA calculation, study planning, CV creation and practical guides together. We are not a university or an official academic authority; we do not issue credentials or official grades.')}</p></section>
+          <p>{text('GoAcadio مشروع أدوات تعليمية مستقل للطلاب. بنجمع حاسبة المعدل، ومؤقت التركيز القابل للتخصيص، وبطاقات المراجعة، وإنشاء CV، وأدلة دراسية عملية في مكان واحد. مش جامعة أو جهة رسمية، ومش بنصدر شهادات أو درجات معتمدة.',
+            'GoAcadio is an independent student-tools project. It brings GPA calculation, customizable focus sessions, spaced-review flashcards, study planning, CV creation and practical guides together. We are not a university or an official academic authority; we do not issue credentials or official grades.')}</p></section>
         <section><h2>{text('تقدر تعمل إيه؟', 'What can you do here?')}</h2>
           <div className="trust-feature-grid">
             <div><strong>{text('احسب المعدل', 'Calculate GPA')}</strong><p>{text('اختار سلم التقديرات واحسب المتوسط الموزون بالساعات. ارجع للائحة برنامجك لتأكيد النتائج.',
               'Choose your grade-point scale and calculate a weighted average. Check your institution’s rules for official results.')}</p></div>
-            <div><strong>{text('ذاكر وراجع', 'Study and revise')}</strong><p>{text('استخدم مؤقت التركيز وخطة المذاكرة، وأنشئ أسئلة تدريبية من نصوص محاضراتك بعد تسجيل الدخول.',
-              'Use the focus timer and planner, and create practice questions from lecture text when signed in.')}</p></div>
+            <div><strong>{text('ذاكر وراجع', 'Study and revise')}</strong><p>{text('اضبط مدة التركيز والراحة حسب احتياجك، وراجع البطاقات التعليمية مجانًا بدون حساب، أو أنشئ اختبارات من محاضراتك بعد تسجيل الدخول.',
+              'Customize focus and break lengths, use local flashcards for active recall without an account, and generate lecture-based quizzes after signing in.')}</p></div>
             <div><strong>{text('جهّز السيرة الذاتية', 'Build a student CV')}</strong><p>{text('أنشئ مسودة قابلة للطباعة بدون رفع بيانات السيرة الذاتية لقاعدة حسابك.',
               'Prepare a printable CV draft without uploading your CV details to your account database.')}</p></div>
             <div><strong>{text('افهم قبل ما تستخدم', 'Learn the basics')}</strong><p>{text('اقرأ الأدلة التعليمية عن GPA وطريقة بومودورو وكتابة CV، ثم جرّب الأدوات بنفسك.',
               'Read guides about GPA, Pomodoro and student CV writing, then try the corresponding tools.')}</p></div>
           </div></section>
         <section><h2>{text('إزاي بنتعامل مع بياناتك؟', 'How do we handle student data?')}</h2>
-          <p>{text('بعض الأدوات الأساسية بتخزن المسودات محليًا في متصفحك. بعد تسجيل الدخول، بيانات ملفك الدراسي ومهامك وملخصات نتائج الاختبارات المحفوظة بتتزامن عبر Supabase. في مولّد الاختبارات، ملف PDF بيتقرأ داخل المتصفح والنص المستخرج فقط هو اللي بيتبعت لخدمة توليد الأسئلة. مش بنحفظ النص الكامل للمحاضرة أو الأسئلة في حسابك.',
-            'Some public tools keep drafts in your browser. After sign-in, your study profile, tasks and optional quiz score summaries sync through Supabase. With the quiz generator, the PDF is parsed in your browser and only extracted text is sent to the quiz-generation service. Full lecture text and generated questions are not saved in your account database.')}</p>
+          <p>{text('حاسبة المعدل وCV وبطاقات المراجعة وإعدادات التركيز بتحفظ بياناتها محليًا في متصفحك. بعد تسجيل الدخول، بيانات ملفك الدراسي ومهامك وملخصات نتائج الاختبارات المحفوظة بتتزامن عبر Supabase. في مولّد الاختبارات، ملف PDF بيتقرأ داخل المتصفح والنص المستخرج فقط هو اللي بيتبعت لخدمة توليد الأسئلة. مش بنحفظ النص الكامل للمحاضرة أو الأسئلة في حسابك.',
+            'GPA, CV drafts, flashcards and focus preferences are saved locally in your browser. After sign-in, your study profile, tasks and optional quiz score summaries sync through Supabase. With the quiz generator, the PDF is parsed in your browser and only extracted text is sent to the quiz-generation service. Full lecture text and generated questions are not saved in your account database.')}</p>
           <p>{text('اعرف تفاصيل أكتر عن البيانات والقيود وطلبات التصدير والحذف من صفحة الخصوصية ومركز الحساب.',
             'Read more about data, limitations, export and deletion requests on the privacy and account pages.')}</p>
           <div className="actions"><Link className="btn btn-outline" to="/privacy">{text('الخصوصية', 'Privacy information')}</Link>
