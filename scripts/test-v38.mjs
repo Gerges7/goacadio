@@ -17,7 +17,7 @@ let passed=0;
 function test(label,fn){try{fn();console.log('PASS '+label);passed++;}catch(e){console.error('FAIL '+label);throw e;}}
 function rejects(changes,match){const errors=validateLaunchInventory({...base,...changes}).failures.join('; ');assert.match(errors,match);}
 test('Current public review inventory is valid',()=>assert.deepEqual(validateLaunchInventory(base).failures,[]));
-test('Current public sitemap holds exactly 16 unique URLs',()=>{const a=sitemapLocations(base.sitemapXml);assert.equal(a.length,16);assert.equal(new Set(a).size,16);});
+test('Current public sitemap holds exactly 19 unique URLs',()=>{const a=sitemapLocations(base.sitemapXml);assert.equal(a.length,19);assert.equal(new Set(a).size,19);});
 test('Public sitemap has all essential public paths',()=>{const paths=validateLaunchInventory(base).publicPaths;for(const p of PUBLIC_ROUTES)assert.ok(paths.includes(p),p);});
 test('Sitemap excludes protected routes',()=>{for(const p of validateLaunchInventory(base).publicPaths)assert.ok(!isPrivatePublicPath(p),p);});
 test('Site has no public Roadmap',()=>assert.ok(!base.routesText.includes("route('roadmap'")));
