@@ -326,3 +326,12 @@ html[data-theme="dark"] .cv-resume .cv-contact{color:#6c788c!important}
 .preset-row{flex-wrap:wrap}
 .preset-row .preset{min-width:0;white-space:normal}
 @media(max-width:520px){.focus-settings-grid{grid-template-columns:minmax(0,1fr)}}
+
+
+/* Crawl/Lighthouse accessibility fixes — preserve dark-theme contrast overrides. */
+.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.tiny-muted{color:#535f77}
+.demo-stat small{color:#535f77}
+.footer-links{color:#53617a}
+.footer-note{color:#5d687f}
+.footer p{color:#59647b}
