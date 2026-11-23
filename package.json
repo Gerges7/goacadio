@@ -38,7 +38,8 @@
     "dev:e2e": "vite --config vite.e2e.config.ts --host 127.0.0.1",
     "test:e2e:auth": "playwright test --config=playwright.auth.config.ts",
     "test:v47": "node scripts/test-v47.mjs",
-    "test:focus-settings": "node scripts/test-focus-settings.mjs"
+    "test:focus-settings": "node scripts/test-focus-settings.mjs",
+    "audit:browser-performance": "node scripts/audit-browser-performance.mjs"
   },
   "dependencies": {
     "isbot": "5.1.32",
