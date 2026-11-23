@@ -197,7 +197,7 @@ export const studyGuides: readonly StudyGuide[] = [
     toolUrl: '/quiz-generator', toolLabel: { ar: 'جرّب مولّد الاختبارات (بحساب)', en: 'Try the quiz generator (account required)' },
     seoTitle: 'How to Make Practice Questions from Lectures | GoAcadio',
     seoDescription: 'A student-friendly guide to writing meaningful MCQs and true-or-false questions from lectures, with worked examples and error review.',
-  },,
+  },
 {
   "slug": "flashcards-spaced-repetition-study-guide",
   "icon": "🗂️",
