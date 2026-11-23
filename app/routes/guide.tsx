@@ -39,6 +39,13 @@ export default function GuidePage() {
     <div className="page-content"><div className="container guide-layout">
       <article className="panel guide-article">
         <p className="guide-intro">{t(guide.intro)}</p>
+        <div className="note guide-method-note">
+          <strong>{text('عن طريقة إعداد الدليل', 'How this guide is written')}</strong>
+          <p>{text(
+            'تقدم GoAcadio شرحاً تعليمياً عاماً وأمثلة تدريبية يمكن تكرارها. لا نعرض الأمثلة على أنها نتائج دراسة علمية أصلية أو لوائح جامعة محددة. لو وجدت خطأ في المعادلة أو المثال، راسلنا لنراجعه.',
+            'GoAcadio prepares general educational explanations and reproducible worked examples. Examples are not presented as original research findings or official university regulations. If you spot a calculation or explanation error, please report it for correction.',
+          )} <Link to="/contact">{text('أبلغ عن تصحيح', 'Suggest a correction')}</Link>.</p>
+        </div>
         {guide.sections.map((section, index) => <section key={index} className="guide-section">
           <h2>{t(section.title)}</h2>
           {section.paragraphs.map((paragraph, i) => <p key={i}>{t(paragraph)}</p>)}
