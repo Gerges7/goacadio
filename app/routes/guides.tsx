@@ -5,7 +5,7 @@ import { publicSeoMeta } from '@/lib/seo';
 
 export const meta: MetaFunction = () => publicSeoMeta(
   'Free Study Guides for University Students | GoAcadio',
-  'Practical guides to GPA calculation, Pomodoro study sessions and student CV writing, with free tools and clear examples.',
+  'Original bilingual worked examples for GPA, active recall, spaced repetition, exam planning, project portfolios and student CVs, with free tools.',
   '/guides',
 );
 
@@ -15,7 +15,7 @@ export default function Guides() {
     <div className="page-hero"><div className="container">
       <span className="section-kicker">STUDENT GUIDES</span>
       <h1>{text('أدلة عملية لحياتك الجامعية', 'Practical guides for university life')}</h1>
-      <p>{text('شرح بسيط وتطبيقات تساعدك تفهم وتحسب وتذاكر وتجهز لسوق العمل، مع أدوات مجانية تقدر تستخدمها فورًا.', 'Clear explanations and examples for grades, studying and career preparation, paired with free tools you can use today.')}</p>
+      <p>{text('أمثلة حسابية وخطط مذاكرة وبطاقات استرجاع ونماذج CV بمواقف واقعية تقدر تطبقها بنفسك، مع روابط للأدوات المجانية.', 'Worked problems and examples for grades, spaced review, exam planning and student projects, linked to free tools you can use today.')}</p>
     </div></div>
     <div className="page-content"><div className="container">
       <div className="guide-cards">
