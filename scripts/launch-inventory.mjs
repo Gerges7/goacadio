@@ -2,7 +2,7 @@
 export const SITE='https://goacadio.com';
 export const PUBLIC_ROUTES=Object.freeze([
   '/', '/tools', '/tools/gpa-calculator','/tools/focus-timer','/tools/cv-builder',
-  '/guides','/help','/contact','/privacy','/about','/terms',
+  '/tools/flashcards','/guides','/help','/contact','/privacy','/about','/terms',
 ]);
 export const PROTECTED_PREFIXES=Object.freeze([
   '/account','/admin','/auth','/dashboard','/api','/quiz-generator',
@@ -46,6 +46,6 @@ export function validateLaunchInventory({routesText,sitemapXml,robotsText,seoSou
   }
   for(const expected of PUBLIC_ROUTES)require(publicPaths.includes(expected), `Public sitemap missing ${expected}`);
   require(new Set(urls).size===urls.length, 'Sitemap has duplicate URLs');
-  require(urls.length>=16, 'Sitemap has fewer public pages than expected');
+  require(urls.length>=19, 'Sitemap has fewer public pages than expected');
   return {failures,publicPaths,urls};
 }
