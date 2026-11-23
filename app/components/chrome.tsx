@@ -24,7 +24,6 @@ export default function Chrome({ children }: { children: React.ReactNode }) {
   }, [expanded]);
   const nav = [
     { href: '/tools', ar: 'الأدوات', en: 'Tools' },
-    { href: '/universities', ar: 'الجامعات', en: 'Universities' },
     { href: '/planner', ar: 'خطتي الدراسية', en: 'Study Planner' },
     { href: '/ai-study', ar: 'مساعد AI', en: 'AI Study' },
     { href: '/services', ar: 'مساعدة أكاديمية', en: 'Expert Help' }

@@ -222,3 +222,52 @@ test('flashcards: invalid JSON import is rejected without wiping existing cards'
   await expect(page.getByRole('status')).toContainText('ملف غير صالح');
   await expect(page.locator('.flashcard-item')).toContainText('Unchanged');
 });
+
+test('universities is absent from the main menu while its directory stays reachable', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('nav.navigation a[href="/universities"]')).toHaveCount(0);
+  const response = await page.goto('/universities');
+  expect(response?.status()).toBe(200);
+  await expect(page.locator('main')).toBeVisible();
+});
+
+test('custom focus and break lengths persist without altering the study totals', async ({ page }) => {
+  await page.goto('/tools/focus-timer');
+  await expect(page.getByRole('timer')).toHaveText('25:00');
+  await page.locator('#focus-setting-focusMinutes').fill('40');
+  await page.locator('#focus-setting-shortBreakMinutes').fill('7');
+  await page.locator('#focus-setting-longBreakMinutes').fill('18');
+  await page.locator('#focus-setting-longBreakEvery').fill('3');
+  await page.getByRole('button', { name: 'حفظ الإعدادات' }).click();
+  await expect(page.getByRole('timer')).toHaveText('40:00');
+  await page.locator('.preset-row button').nth(1).click();
+  await expect(page.getByRole('timer')).toHaveText('07:00');
+  await page.locator('.preset-row button').nth(2).click();
+  await expect(page.getByRole('timer')).toHaveText('18:00');
+  await page.reload();
+  await expect(page.getByRole('timer')).toHaveText('40:00');
+  await expect(page.locator('#focus-setting-focusMinutes')).toHaveValue('40');
+  await page.locator('#focus-setting-focusMinutes').fill('999');
+  await page.getByRole('button', { name: 'حفظ الإعدادات' }).click();
+  await expect(page.locator('#focus-setting-focusMinutes')).toHaveAttribute('max', '180');
+  await expect(page.getByRole('timer')).toHaveText('40:00');
+});
+
+test('a completed one-minute focus session is counted but a break is not', async ({ page }) => {
+  await page.clock.install();
+  await page.goto('/tools/focus-timer');
+  await page.locator('#focus-setting-focusMinutes').fill('1');
+  await page.locator('#focus-setting-shortBreakMinutes').fill('1');
+  await page.getByRole('button', { name: 'حفظ الإعدادات' }).click();
+  await expect(page.getByRole('timer')).toHaveText('01:00');
+  await page.getByRole('button', { name: 'ابدأ الجلسة' }).click();
+  await page.clock.fastForward(61_000);
+  await expect(page.locator('.metric-row .metric-card strong').nth(0)).toHaveText('1');
+  await expect(page.locator('.metric-row .metric-card strong').nth(1)).toHaveText('1');
+  await page.locator('.preset-row button').nth(1).click();
+  await expect(page.getByRole('timer')).toHaveText('01:00');
+  await page.getByRole('button', { name: 'ابدأ الجلسة' }).click();
+  await page.clock.fastForward(61_000);
+  await expect(page.locator('.metric-row .metric-card strong').nth(0)).toHaveText('1');
+  await expect(page.locator('.metric-row .metric-card strong').nth(1)).toHaveText('1');
+});
