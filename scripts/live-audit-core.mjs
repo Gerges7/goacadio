@@ -1,17 +1,17 @@
 /** Pure checks for prelaunch, unauthenticated HTTP smoke testing. No personal data. */
 export const SITE = 'https://goacadio.com';
 export const PUBLIC_PATHS = Object.freeze([
-  '/', '/tools', '/tools/gpa-calculator', '/tools/focus-timer', '/tools/cv-builder',
+  '/', '/tools', '/tools/gpa-calculator', '/tools/focus-timer', '/tools/cv-builder', '/tools/flashcards',
   '/guides', '/guides/how-to-calculate-gpa', '/guides/pomodoro-study-timer',
   '/guides/student-cv-guide', '/guides/seven-day-exam-revision-plan',
-  '/guides/lecture-to-practice-questions', '/help', '/contact', '/privacy',
+  '/guides/lecture-to-practice-questions', '/guides/flashcards-spaced-repetition-study-guide',
+  '/guides/student-project-to-internship-cv', '/help', '/contact', '/privacy',
   '/about', '/terms',
 ]);
 export const TEST_CASES = Object.freeze([
   ...PUBLIC_PATHS.map(path => ({path, category:'public', expectedStatus:200})),
   {path:'/services',category:'utility',expectedStatus:200},
   {path:'/universities',category:'utility',expectedStatus:200},
-  {path:'/tools/flashcards',category:'utility',expectedStatus:200},
   {path:'/account',category:'private',expectedStatus:200},
   {path:'/dashboard',category:'private',expectedStatus:200},
   {path:'/guides/goacadio-guide-not-found-1234',category:'missing',expectedStatus:404},

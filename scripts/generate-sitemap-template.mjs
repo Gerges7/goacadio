@@ -12,7 +12,7 @@ const routes = read('app/routes.ts');
 const guideSource = read('app/lib/study-guides.ts');
 const site = 'https://goacadio.com';
 const staticPublic = [
-  '/', '/tools', '/tools/gpa-calculator', '/tools/focus-timer', '/tools/cv-builder',
+  '/', '/tools', '/tools/gpa-calculator', '/tools/focus-timer', '/tools/cv-builder', '/tools/flashcards',
   '/guides', '/help', '/contact', '/privacy',
   '/about', '/terms',
 ];

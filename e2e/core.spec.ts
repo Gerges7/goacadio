@@ -9,6 +9,8 @@ const pageRoutes = [
   '/tools/cv-builder',
   '/tools/flashcards',
   '/guides',
+  '/guides/flashcards-spaced-repetition-study-guide',
+  '/guides/student-project-to-internship-cv',
   '/dashboard',
   '/planner',
   '/study-stats',
@@ -41,7 +43,7 @@ test('all registered page routes render without uncaught browser errors', async 
     const response = await page.goto(path);
     expect(response?.status(), `HTTP status for ${path}`).toBe(200);
     await expect(page.locator('main'), `main landmark for ${path}`).toBeVisible();
-    await expect(page.locator('main').locator(':scope > *').first(), `page content for ${path}`).toBeVisible();
+    await expect(page.locator('main').locator(':scope > :not(script)').first(), `page content for ${path}`).toBeVisible();
   }
 
   expect(pageErrors, 'uncaught browser errors across route smoke test').toEqual([]);
@@ -270,4 +272,28 @@ test('a completed one-minute focus session is counted but a break is not', async
   await page.clock.fastForward(61_000);
   await expect(page.locator('.metric-row .metric-card strong').nth(0)).toHaveText('1');
   await expect(page.locator('.metric-row .metric-card strong').nth(1)).toHaveText('1');
+});
+
+test('indexable learning content links a published flashcard example and an original guide', async ({ page }) => {
+  await page.goto('/tools/flashcards');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /index, follow/);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://goacadio.com/tools/flashcards');
+  await expect(page.getByRole('heading', { name: 'مثال عملي: Stack وQueue' })).toBeVisible();
+  await page.getByRole('link', { name: 'دليل كامل بخطة مراجعة لأسبوع' }).click();
+  await expect(page).toHaveURL(/\/guides\/flashcards-spaced-repetition-study-guide$/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Flashcards');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /index, follow/);
+});
+
+test('guides are discoverable in primary navigation on desktop and mobile', async ({ page }) => {
+  await page.goto('/');
+  const nav = page.locator('nav.navigation');
+  await expect(nav.getByRole('link',{name:'أدلة الطلاب'})).toHaveAttribute('href','/guides');
+  await expect(nav.getByRole('link',{name:'مساعدة أكاديمية'})).toHaveCount(0);
+  await page.setViewportSize({width:390,height:844});
+  await page.getByRole('button',{name:'فتح القائمة'}).click();
+  await expect(nav.getByRole('link',{name:'أدلة الطلاب'})).toBeVisible();
+  await nav.getByRole('link',{name:'أدلة الطلاب'}).click();
+  await expect(page).toHaveURL(/\/guides$/);
+  await expect(page.getByRole('link',{name:'اقرأ الدليل'})).toHaveCount(7);
 });

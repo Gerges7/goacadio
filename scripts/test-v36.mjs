@@ -94,7 +94,7 @@ test('Origin is strictly HTTPS and pathless',()=>{
 test('Live audit includes every published guide and basic public route',()=>{
   const guideSource=read('app/lib/study-guides.ts');
   const slugs=[...guideSource.matchAll(/\bslug:\s*'([a-z0-9-]+)'/g)].map(m=>m[1]);
-  assert.equal(slugs.length,5);
+  assert.equal(slugs.length,7);
   for(const slug of slugs) assert.ok(PUBLIC_PATHS.includes('/guides/'+slug));
   assert.equal(new Set(PUBLIC_PATHS).size,PUBLIC_PATHS.length);
   assert.ok(PUBLIC_PATHS.includes('/contact'));

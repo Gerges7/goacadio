@@ -11,8 +11,8 @@ const read=p=>readFileSync(resolve(root,p),'utf8');
 let passed=0;function test(label,fn){fn();passed++;console.log('PASS '+label);}
 const content=read('app/lib/study-guides.ts');
 const guideSlugs=[...content.matchAll(/\bslug:\s*'([a-z0-9-]+)'/g)].map(x=>x[1]);
-const expected=['how-to-calculate-gpa','pomodoro-study-timer','student-cv-guide','seven-day-exam-revision-plan','lecture-to-practice-questions'];
-test('Five unique editorial guides',()=>assert.deepEqual(guideSlugs,expected));
+const expected=['how-to-calculate-gpa','pomodoro-study-timer','student-cv-guide','seven-day-exam-revision-plan','lecture-to-practice-questions','flashcards-spaced-repetition-study-guide','student-project-to-internship-cv'];
+test('Seven unique editorial guides',()=>assert.deepEqual(guideSlugs,expected));
 const transpiled=ts.transpileModule(content,{fileName:'study-guides.ts',compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022},reportDiagnostics:true});
 test('Guide source compiles',()=>assert.equal((transpiled.diagnostics??[]).filter(x=>x.category===ts.DiagnosticCategory.Error).length,0));
 const {studyGuides}=await import('data:text/javascript;base64,'+Buffer.from(transpiled.outputText).toString('base64'));
@@ -30,7 +30,7 @@ test('Every guide has practical content in both languages',()=>{
 });
 test('Exam guide includes specific seven-day example and error correction',()=>{const x=studyGuides.find(g=>g.slug==='seven-day-exam-revision-plan');assert.equal(x.sections.length,5);assert.match(x.sections.map(y=>y.paragraphs.map(z=>z.en).join(' ')).join(' '),/Day 7:/);assert.ok(x.faqs.length>=3);});
 test('Quiz guide includes worked MCQ, true-false and privacy limits',()=>{const x=studyGuides.find(g=>g.slug==='lecture-to-practice-questions');const text=x.sections.flatMap(y=>y.paragraphs.map(z=>z.en)).join(' ');assert.match(text,/binary search/i);assert.match(text,/true or false/i);assert.match(text,/extracted or pasted text is sent to the AI service/);});
-test('New guides are public and have published URLs',()=>{const urls=sitemapLocations(read('public/sitemap.xml')).map(u=>new URL(u).pathname);for(const slug of expected)assert.ok(urls.includes('/guides/'+slug));assert.equal(urls.length,16);assert.deepEqual([...urls].sort(),[...PUBLIC_PATHS].sort());});
+test('New guides are public and have published URLs',()=>{const urls=sitemapLocations(read('public/sitemap.xml')).map(u=>new URL(u).pathname);for(const slug of expected)assert.ok(urls.includes('/guides/'+slug));assert.equal(urls.length,19);assert.deepEqual([...urls].sort(),[...PUBLIC_PATHS].sort());});
 test('Utility directory and inquiry pages removed from index sitemap',()=>{const urls=sitemapLocations(read('public/sitemap.xml'));assert.ok(!urls.some(x=>/\/(universities|services)$/.test(x)));for(const p of ['universities','services']){const src=read('app/routes/'+p+'.tsx');assert.match(src,/noindex, follow/);assert.doesNotMatch(src,/publicSeoMeta/);}});
 test('Utility pages remain noindex and personalized services HTML is no-store',()=>{const s=read('workers/security.ts');assert.match(s,/pathname === '\/services'/);assert.match(s,/pathname === '\/universities'/);assert.match(s,/pathname === '\/services'[\s\S]*private, no-store/);assert.match(s,/X-Robots-Tag/);assert.match(s,/if \(isPrivate\)/);});
 test('Live audit checks utility noindex and guide URLs',()=>{for(const path of ['/services','/universities'])assert.ok(TEST_CASES.some(x=>x.path===path&&x.category==='utility'));for(const slug of expected)assert.ok(TEST_CASES.some(x=>x.path==='/guides/'+slug&&x.category==='public'));});
@@ -44,6 +44,18 @@ test('Public editorial pages describe active tools without claiming an AdSense a
   assert.match(read('app/routes/tools.tsx'),/LIFO/);
   assert.match(read('app/routes/terms.tsx'),/locally stored flashcards/);
   assert.doesNotMatch(read('app/routes/privacy.tsx'),/We are currently verifying AdSense ownership/);
+});
+test('New guides have original worked examples and bilingual learning objectives',()=>{
+  const flash=studyGuides.find(g=>g.slug==='flashcards-spaced-repetition-study-guide');
+  const cv=studyGuides.find(g=>g.slug==='student-project-to-internship-cv');
+  assert.ok(flash && cv);
+  assert.ok(flash.sections.length>=5 && cv.sections.length>=5);
+  assert.match(flash.sections.flatMap(s=>s.paragraphs.map(p=>p.en)).join(' '),/Day 7:/);
+  assert.match(cv.sections.flatMap(s=>s.paragraphs.map(p=>p.en)).join(' '),/documented|README/i);
+  assert.match(read('app/routes/flashcards.tsx'),/publicSeoMeta/);
+  assert.match(read('app/routes/flashcards.tsx'),/Worked example: Stack versus Queue/);
+  assert.ok(!read('workers/security.ts').includes("pathname === '/tools/flashcards'"));
+  assert.match(read('app/components/chrome.tsx'),/Study Guides/);
 });
 test('No automatic ad-serving script enabled',()=>assert.doesNotMatch(read('app/root.tsx'),/adsbygoogle\.js|pagead2\.googlesyndication\.com/));
 console.log(`\n${passed}/${passed} V4.3 editorial and indexing checks passed.`);
