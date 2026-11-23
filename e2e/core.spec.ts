@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
 
 const pageRoutes = [
@@ -170,4 +171,54 @@ test('flashcards: create, reveal, schedule and retain local cards after reload',
   await page.reload();
   await expect(page.locator('.flashcard-item')).toContainText('What is a variable?');
   await expect(page.locator('.flashcards-stats')).toContainText('1');
+});
+
+test('flashcards: edit, export, delete and restore a JSON backup', async ({ page }) => {
+  await page.goto('/tools/flashcards');
+  await page.locator('#flashcard-front').fill('Old question');
+  await page.locator('#flashcard-back').fill('Old answer');
+  await page.getByRole('button', { name: 'إضافة بطاقة' }).click();
+  await expect(page.locator('.flashcard-item')).toContainText('Old question');
+
+  await page.getByRole('button', { name: 'تعديل', exact: true }).click();
+  await page.locator('#flashcard-front').fill('Updated question');
+  await page.locator('#flashcard-back').fill('Updated answer');
+  await page.getByRole('button', { name: 'احفظ التعديل' }).click();
+  await expect(page.locator('.flashcard-item')).toContainText('Updated question');
+
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'تصدير JSON' }).click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toBe('goacadio-flashcards.json');
+  const backupFile = await download.path();
+  expect(backupFile).toBeTruthy();
+  const backup = await readFile(backupFile!, 'utf8');
+  expect(JSON.parse(backup).cards).toHaveLength(1);
+
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', { name: 'حذف', exact: true }).click();
+  await expect(page.locator('.flashcard-item')).toHaveCount(0);
+
+  await page.locator('#flashcards-import').setInputFiles({
+    name: 'backup.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(backup),
+  });
+  await expect(page.locator('.flashcard-item')).toContainText('Updated question');
+  await page.reload();
+  await expect(page.locator('.flashcard-item')).toContainText('Updated question');
+});
+
+test('flashcards: invalid JSON import is rejected without wiping existing cards', async ({ page }) => {
+  await page.goto('/tools/flashcards');
+  await page.locator('#flashcard-front').fill('Unchanged');
+  await page.locator('#flashcard-back').fill('Preserved');
+  await page.getByRole('button', { name: 'إضافة بطاقة' }).click();
+
+  await page.locator('#flashcards-import').setInputFiles({
+    name: 'broken.json', mimeType: 'application/json',
+    buffer: Buffer.from('{ this is not JSON'),
+  });
+  await expect(page.getByRole('status')).toContainText('ملف غير صالح');
+  await expect(page.locator('.flashcard-item')).toContainText('Unchanged');
 });
