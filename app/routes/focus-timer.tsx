@@ -212,7 +212,7 @@ export default function Focus(){
       </div>}
       <div className="timer-ring"><div><div role="timer" aria-live="off" className="timer-display compact">{display}</div><span>{mode==='focus'?text('جلسة تركيز','Focus session'):text('وقت الراحة','Break time')}</span></div></div>
       <div className="actions" style={{justifyContent:'center'}}><button type="button" className="btn btn-primary" disabled={!loaded} onClick={toggle}>{running?text('إيقاف مؤقت','Pause'):text('ابدأ الجلسة','Start session')}</button><button type="button" className="btn btn-outline" onClick={reset}>{text('إعادة ضبط','Reset')}</button></div>
-      {completionNote&&<p className="note" role="status">{completionNote}</p>
+      {completionNote&&<p className="note" role="status">{completionNote}</p>}
       <p className="inline-help">{text('الجلسة المكتملة فقط بتتحسب. إغلاق الصفحة قبل نهايتها بيوقف التسجيل.','Only completed sessions count. Closing the tab before the end stops recording.')}</p>
     </section>
     <aside className="panel"><h2 className="panel-title">{text('إنجازاتك اليوم','Today’s progress')}</h2>
