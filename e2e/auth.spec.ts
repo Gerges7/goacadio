@@ -29,10 +29,16 @@ async function fakeSupabase(page: Page) {
     const path = url.pathname;
     const method = request.method();
     calls.push(method + ' ' + path);
+    const cors = {
+      'access-control-allow-origin': 'http://127.0.0.1:5173',
+      'access-control-allow-methods': 'GET,POST,DELETE,OPTIONS',
+      'access-control-allow-headers': 'apikey,authorization,content-type,x-client-info,prefer,accept,x-supabase-api-version',
+    };
+    if (method === 'OPTIONS') return route.fulfill({ status: 204, headers: cors });
     const json = async (data: unknown, status = 200) => route.fulfill({
       status,
       contentType: 'application/json',
-      headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*' },
+      headers: cors,
       body: JSON.stringify(data),
     });
 
