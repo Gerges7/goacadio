@@ -42,7 +42,7 @@
     "audit:browser-performance": "node scripts/audit-browser-performance.mjs"
   },
   "dependencies": {
-    "isbot": "5.1.32",
+    "isbot": "5.2.3",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-router": "7.18.6",
