@@ -4,6 +4,7 @@ export const storageKeys = {
   gpa: 'goacadio:v1:gpa',
   cv: 'goacadio:v1:cv',
   focus: 'goacadio:v1:focus',
+  focusSettings: 'goacadio:v1:focus:settings',
   locale: 'goacadio:v1:locale',
   theme: 'goacadio:v1:theme',
   flashcards: 'goacadio:v1:flashcards'
