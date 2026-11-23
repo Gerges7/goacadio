@@ -1,5 +1,5 @@
 import { publicSeoMeta } from '@/lib/seo';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
 import type { MetaFunction } from 'react-router';
 import { Link } from 'react-router';
 import { useLocale } from '@/components/locale-provider';
@@ -7,6 +7,11 @@ import { useAuth } from '@/components/auth-provider';
 import { getSupabase } from '@/lib/supabase';
 import { loadLocal, saveLocal, storageKeys, todayKey } from '@/lib/storage';
 import type { PendingFocusSession } from '@/lib/focus';
+import {
+  DEFAULT_FOCUS_SETTINGS, FOCUS_SETTING_FIELDS, FOCUS_SETTING_LIMITS,
+  normalizeFocusSettings, parseFocusSettings, focusModeMinutes, recommendedBreak,
+  type FocusMode, type FocusSettings,
+} from '@/lib/focus-settings';
 
 export const meta: MetaFunction = () => publicSeoMeta(
   'Focus Timer & Study Sessions | GoAcadio',
@@ -21,6 +26,13 @@ const queueKey = (userId:string) => `goacadio:focus:pending:${userId}`;
 export default function Focus(){
   const {text,lang} = useLocale();
   const {user} = useAuth();
+  const [settings,setSettings] = useState<FocusSettings>({...DEFAULT_FOCUS_SETTINGS});
+  const [draft,setDraft] = useState<Record<keyof FocusSettings,string>>({
+    focusMinutes:'25',shortBreakMinutes:'5',longBreakMinutes:'15',longBreakEvery:'4',
+  });
+  const [mode,setMode] = useState<FocusMode>('focus');
+  const [settingsNotice,setSettingsNotice] = useState('');
+  const [completionNote,setCompletionNote] = useState('');
   const [duration,setDuration] = useState(25);
   const [remaining,setRemaining] = useState(25*60);
   const [running,setRunning] = useState(false);
@@ -37,6 +49,16 @@ export default function Focus(){
   useEffect(()=>{
     const saved = loadLocal<Stats>(storageKeys.focus,{day:todayKey(),sessions:0,minutes:0});
     if(saved.day === todayKey() && Number.isFinite(saved.sessions) && Number.isFinite(saved.minutes)) setStats(saved);
+    const savedSettings=normalizeFocusSettings(loadLocal<unknown>(storageKeys.focusSettings, DEFAULT_FOCUS_SETTINGS));
+    setSettings(savedSettings);
+    setDraft({
+      focusMinutes:String(savedSettings.focusMinutes),
+      shortBreakMinutes:String(savedSettings.shortBreakMinutes),
+      longBreakMinutes:String(savedSettings.longBreakMinutes),
+      longBreakEvery:String(savedSettings.longBreakEvery),
+    });
+    setDuration(savedSettings.focusMinutes);
+    setRemaining(savedSettings.focusMinutes*60);
     setLoaded(true);
   },[]);
   useEffect(()=>{if(loaded)saveLocal(storageKeys.focus,stats);},[stats,loaded]);
@@ -86,15 +108,23 @@ export default function Focus(){
   function completedFocus(){
     if(completed.current)return;
     completed.current=true;
-    if(duration!==25)return;
+    if(mode!=='focus'){
+      setCompletionNote(text('انتهت الاستراحة. جاهز لجلسة تركيز جديدة؟','Break complete. Ready for your next focus session?'));
+      return;
+    }
     const day=todayKey();
+    const nextSessions=(stats.day===day?stats.sessions:0)+1;
+    const nextBreak=recommendedBreak(nextSessions,settings);
+    setCompletionNote(nextBreak==='longBreak'
+      ?text('جلسة تركيز مكتملة! يُنصح باستراحة طويلة الآن.','Focus session complete! Consider a long break.')
+      :text('جلسة تركيز مكتملة! يُنصح باستراحة قصيرة.','Focus session complete! Consider a short break.'));
     setStats(prev=>{
       const base=prev.day===day?prev:{day,sessions:0,minutes:0};
-      return {day,sessions:base.sessions+1,minutes:base.minutes+25};
+      return {day,sessions:base.sessions+1,minutes:base.minutes+duration};
     });
     if(user){
       const entry:PendingFocusSession={
-        client_session_id:crypto.randomUUID(),minutes:25,
+        client_session_id:crypto.randomUUID(),minutes:duration,
         completed_at:new Date().toISOString(),course_id:courseId||null,
       };
       const key=queueKey(user.id);
@@ -114,7 +144,7 @@ export default function Focus(){
       if(left===0){setRunning(false);deadline.current=null;completedFocus();}
     },250);
     return ()=>clearInterval(interval);
-  },[running,duration,courseId,user?.id,syncQueued]);
+  },[running,duration,mode,courseId,user?.id,syncQueued]);
 
   function pause(){
     if(deadline.current)setRemaining(Math.max(0,Math.ceil((deadline.current-Date.now())/1000)));
@@ -128,8 +158,35 @@ export default function Focus(){
     deadline.current=Date.now()+seconds*1000;
     setRunning(true);
   }
-  function change(minutes:number){setRunning(false);deadline.current=null;completed.current=false;setDuration(minutes);setRemaining(minutes*60);}
-  function reset(){setRunning(false);deadline.current=null;completed.current=false;setRemaining(duration*60);}
+  function change(nextMode:FocusMode){
+    if(running)return;
+    deadline.current=null;
+    completed.current=false;
+    setMode(nextMode);
+    const minutes=focusModeMinutes(settings,nextMode);
+    setDuration(minutes);
+    setRemaining(minutes*60);
+    setCompletionNote('');
+  }
+  function saveSettings(event:FormEvent<HTMLFormElement>){
+    event.preventDefault();
+    if(running)return;
+    const next=parseFocusSettings(draft);
+    if(!next){
+      setSettingsNotice(text('أدخل أرقامًا صحيحة ضمن الحدود الموضحة لكل إعداد.','Enter whole numbers within the limits for each setting.'));
+      return;
+    }
+    setSettings(next);
+    saveLocal(storageKeys.focusSettings,next);
+    const minutes=focusModeMinutes(next,mode);
+    deadline.current=null;
+    completed.current=false;
+    setDuration(minutes);
+    setRemaining(minutes*60);
+    setCompletionNote('');
+    setSettingsNotice(text('تم حفظ الإعدادات وتحديث المؤقت.','Preferences saved and timer reset.'));
+  }
+  function reset(){setRunning(false);deadline.current=null;completed.current=false;setRemaining(duration*60);setCompletionNote('');}
   const display=`${String(Math.floor(remaining/60)).padStart(2,'0')}:${String(remaining%60).padStart(2,'0')}`;
   const today=stats.day===todayKey()?stats:{day:todayKey(),sessions:0,minutes:0};
   return <><div className="page-hero"><div className="container"><span className="section-kicker">PRODUCTIVITY</span>
