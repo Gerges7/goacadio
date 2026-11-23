@@ -54,7 +54,7 @@ test('New guides have original worked examples and bilingual learning objectives
   assert.match(cv.sections.flatMap(s=>s.paragraphs.map(p=>p.en)).join(' '),/documented|README/i);
   assert.match(read('app/routes/flashcards.tsx'),/publicSeoMeta/);
   assert.match(read('app/routes/flashcards.tsx'),/Worked example: Stack versus Queue/);
-  assert.doesNotMatch(read('workers/security.ts'),/pathname === '\\/tools\\/flashcards'/);
+  assert.ok(!read('workers/security.ts').includes("pathname === '/tools/flashcards'"));
   assert.match(read('app/components/chrome.tsx'),/Study Guides/);
 });
 test('No automatic ad-serving script enabled',()=>assert.doesNotMatch(read('app/root.tsx'),/adsbygoogle\.js|pagead2\.googlesyndication\.com/));
