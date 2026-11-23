@@ -73,6 +73,7 @@ export default function FlashcardsPage() {
       const card = createFlashcard(id, nextFront, nextBack, nextDeck);
       if (!card) return;
       setCards(previous => [...previous, card]);
+      setClock(Date.now());
       setNotice(text('البطاقة جاهزة للمراجعة.', 'Card is ready for review.'));
     }
     clearEditor();
@@ -122,6 +123,7 @@ export default function FlashcardsPage() {
       const additions = incoming.filter(card => !existing.has(card.id))
         .slice(0, Math.max(0, MAX_FLASHCARDS - cards.length));
       setCards(previous => [...previous, ...additions]);
+      setClock(Date.now());
       setNotice(additions.length
         ? text('تم استيراد ' + additions.length + ' بطاقة.', 'Imported ' + additions.length + ' cards.')
         : text('لا توجد بطاقات جديدة قابلة للاستيراد.', 'No new cards could be imported.'));
