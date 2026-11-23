@@ -297,3 +297,19 @@ test('guides are discoverable in primary navigation on desktop and mobile', asyn
   await expect(page).toHaveURL(/\/guides$/);
   await expect(page.getByRole('link',{name:'اقرأ الدليل'})).toHaveCount(7);
 });
+
+test('SEO: focus and CV tools explain usage with worked examples', async ({ page }) => {
+  await page.goto('/tools/focus-timer');
+  await expect(page.getByRole('heading', { name: 'مثال عملي: مذاكرة لمدة 110 دقائق' })).toBeVisible();
+  await expect(page.locator('a[href="/guides/pomodoro-study-timer"]')).toBeVisible();
+  await page.goto('/tools/cv-builder');
+  await expect(page.getByRole('heading', { name: 'Worked example: a clear project bullet' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'مثال تطبيقي: من جملة عامة إلى نتيجة موثقة' })).toBeVisible();
+  await expect(page.locator('a[href="/guides/student-project-to-internship-cv"]')).toBeVisible();
+});
+
+test('tools directory headings follow h1 to h2 before tool cards', async ({ page }) => {
+  await page.goto('/tools');
+  await expect(page.locator('main h1')).toHaveCount(1);
+  await expect(page.locator('main h2').first()).toContainText('الأدوات المتاحة');
+});

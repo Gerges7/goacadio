@@ -246,5 +246,17 @@ export default function Focus(){
         {settingsNotice&&<p className="inline-help" role="status">{settingsNotice}</p>}
         <p className="inline-help">{text('الإعدادات محفوظة على الجهاز. حفظ تعديل جديد يعيد ضبط الجلسة الحالية، والاستراحات لا تدخل في ساعات المذاكرة.', 'Settings stay on this device. Saving changes resets the current timer; breaks do not count as study time.')}</p>
       </form>
-    </aside></div></div></>;
+    </aside></div>
+    <div className="container" style={{marginTop:24}}>
+      <section className="panel stack focus-method-guide" aria-labelledby="focus-method-heading">
+        <h2 id="focus-method-heading">{text('كيف تختار مدة تركيز مناسبة؟', 'How to choose an effective focus interval')}</h2>
+        <p>{text('جلسة الـ25 دقيقة مجرد نقطة بداية، مش قانون لكل المواد. لو بتراجع تعريفات أو بطاقات سريعة جرّب 20 دقيقة، ولو بتحل مسألة برمجة طويلة جرّب 40 دقيقة. راقب عدد المهام اللي خلصتها والأخطاء اللي صححتها، مش عدد الدقائق لوحده.', 'A 25-minute session is a starting point, not a universal rule. Try 20 minutes for short recall exercises or 40 minutes for a difficult programming problem. Evaluate the tasks completed and mistakes corrected rather than treating time alone as proof of learning.')}</p>
+        <h3>{text('مثال عملي: مذاكرة لمدة 110 دقائق', 'Worked example: a 110-minute study block')}</h3>
+        <p>{text('ابدأ بـ40 دقيقة لحل 3 مسائل بدون فتح الحلول. خد استراحة 10 دقائق بعيد عن الشاشة. ارجع 40 دقيقة لتصحيح أخطاء المسائل وإعادة حلها، وبعدين خصص 20 دقيقة لكتابة أسئلة مراجعة. كده عندك 100 دقيقة عمل مخطط و10 دقائق راحة؛ ومش لازم كل طالب يمشي على نفس التقسيم.', 'Start with 40 minutes solving three problems without opening the answers. Take a 10-minute break away from the screen. Spend 40 more minutes checking and retrying mistakes, followed by 20 minutes writing recall questions. That is 100 minutes of planned work and ten minutes of rest; adjust the split to the task and your own circumstances.')}</p>
+        <h3>{text('إزاي تستخدم النتائج بدون ما تخدع نفسك؟', 'How to interpret your focus totals')}</h3>
+        <p>{text('الأداة تسجّل جلسة التركيز عند اكتمالها فقط، والاستراحات لا تزود وقت المذاكرة. لو قفلت التبويب قبل نهاية الجلسة مش هتتحسب مكتملة. عند تسجيل الدخول يمكن مزامنة الجلسات المكتملة، لكن إعدادات المؤقت نفسها محلية على الجهاز.', 'Only finished focus sessions count toward local study totals; breaks do not. Closing the browser tab before completion means that session is not recorded as finished. After signing in, completed sessions can sync, but timer preferences remain local to this device.')}</p>
+        <p>{text('في نهاية اليوم اسأل نفسك: هل أقدر أحل سؤال جديد بدون ملاحظات؟ لو لأ، ممكن تحتاج تعديل صعوبة المهمة أو طريقة المراجعة بدلاً من إطالة المؤقت.', 'At the end of a session, ask whether you can solve a fresh question without notes. If not, change the task or review method instead of simply extending the timer.')}</p>
+        <div className="actions"><Link className="btn btn-soft" to="/guides/pomodoro-study-timer">{text('اقرأ دليل بومودورو', 'Read the Pomodoro guide')}</Link><Link className="btn btn-outline" to="/guides/seven-day-exam-revision-plan">{text('خطة أسبوع قبل الامتحان', 'Seven-day revision plan')}</Link></div>
+      </section>
+    </div></div></>;
 }
