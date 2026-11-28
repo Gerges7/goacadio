@@ -313,3 +313,23 @@ test('tools directory headings follow h1 to h2 before tool cards', async ({ page
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('main h2').first()).toContainText('الأدوات المتاحة');
 });
+
+
+test('approved GoAcadio brand icon loads in header and footer and remains usable on mobile and dark mode', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/brand-icon.png');
+  const icons = page.locator('.brand-logo');
+  await expect(icons).toHaveCount(2);
+  for (const icon of await icons.all()) {
+    await expect(icon).toBeVisible();
+    await expect.poll(() => icon.evaluate((node) => (node as HTMLImageElement).naturalWidth)).toBe(112);
+  }
+  await page.getByRole('button', { name: 'التبديل للوضع الداكن' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(icons.first()).toBeVisible();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.getByRole('link', { name: 'GoAcadio Home' })).toBeVisible();
+  await expect(page.locator('.site-header .brand-logo')).toBeVisible();
+  const headerFits = await page.locator('.nav-row').evaluate(el => el.scrollWidth <= el.clientWidth + 1);
+  expect(headerFits).toBe(true);
+});

@@ -22,7 +22,7 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap' },
   // One bundled site stylesheet instead of three independent render-blocking requests.
   { rel: 'stylesheet', href: stylesHref },
-  { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
+  { rel: 'icon', type: 'image/png', sizes: '112x112', href: '/brand-icon.png' },
 ];
 const themeInitScript = "try{const t=localStorage.getItem('goacadio:v1:theme');document.documentElement.dataset.theme=t==='dark'?'dark':'light'}catch{document.documentElement.dataset.theme='light'}";
 

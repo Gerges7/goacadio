@@ -335,3 +335,15 @@ html[data-theme="dark"] .cv-resume .cv-contact{color:#6c788c!important}
 .footer-links{color:#53617a}
 .footer-note{color:#5d687f}
 .footer p{color:#59647b}
+
+/* GoAcadio approved logo: lightweight original mark with responsive live wordmark. */
+.brand{gap:7px;flex-shrink:0;color:#0052e8}
+.brand .brand-accent{color:#171d4c}
+.brand-logo{display:block;width:42px;height:42px;object-fit:contain;flex:none}
+.brand-footer .brand-logo{width:34px;height:34px}
+html[data-theme="dark"] .brand{color:#80b5ff}
+html[data-theme="dark"] .brand .brand-accent{color:#f2f5ff}
+html[data-theme="dark"] .brand-logo{background:#fff;border-radius:9px}
+@media(max-width:550px){.nav-row{gap:8px}.site-header .brand{gap:5px}.site-header .brand-logo{width:34px;height:34px}}
+@media(max-width:390px){.site-header .brand-logo{width:30px;height:30px}.site-header .brand{font-size:18px}}
+@media(max-width:360px){.site-header .brand-name{display:none}}
